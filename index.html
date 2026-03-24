@@ -48,6 +48,18 @@ body{font-family:'DM Sans',sans-serif;background:#FAFAF8;color:#1a1a1a;min-heigh
 .tq-sty:hover .tq-sty-name{color:#E8604C}
 .tq-sty.on{border-color:#E8604C;background:#FFF5F3}
 .tq-sty.on .tq-sty-name{color:#E8604C;font-weight:500}
+
+/* Budget selector */
+.tq-budgets{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tq-budget{padding:12px 8px;text-align:center;border:1px solid #DDD8D2;border-radius:12px;cursor:pointer;background:#fff;transition:all 0.12s;user-select:none}
+.tq-budget-icon{font-size:18px;display:block;margin-bottom:5px}
+.tq-budget-name{font-size:12px;font-weight:500;color:#1a1a1a;display:block;margin-bottom:2px}
+.tq-budget-desc{font-size:10px;color:#aaa;font-weight:300}
+.tq-budget:hover{border-color:#E8604C}
+.tq-budget:hover .tq-budget-name{color:#E8604C}
+.tq-budget.on{border-color:#E8604C;background:#FFF5F3}
+.tq-budget.on .tq-budget-name{color:#E8604C;font-weight:500}
+
 .tq-custom{display:none;margin-top:8px}
 .tq-custom.show{display:block}
 .tq-err{background:#FFF5F3;border:1px solid #F5C4BB;border-radius:10px;padding:10px 14px;font-size:13px;color:#C0392B;margin-bottom:1.25rem;display:none;font-weight:300}
@@ -79,20 +91,33 @@ body{font-family:'DM Sans',sans-serif;background:#FAFAF8;color:#1a1a1a;min-heigh
 .tq-day{margin-bottom:1.75rem;animation:fadeUp 0.3s ease forwards}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .tq-day-label{font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#E8604C;margin-bottom:5px}
-.tq-day-theme{font-family:'DM Serif Display',serif;font-size:19px;font-weight:400;color:#1a1a1a;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #E8E4DF}
+.tq-day-theme{font-family:'DM Serif Display',serif;font-size:19px;font-weight:400;color:#1a1a1a;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #E8E4DF;display:flex;align-items:center;justify-content:space-between}
+.tq-maps-btn{font-size:11px;font-weight:500;color:#E8604C;text-decoration:none;font-family:'DM Sans',sans-serif;display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid #F5C4BB;border-radius:100px;background:#FFF5F3;transition:all 0.12s;white-space:nowrap;flex-shrink:0;margin-left:10px}
+.tq-maps-btn:hover{background:#E8604C;color:#fff;border-color:#E8604C}
 .tq-act{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid #F0EDE9}
 .tq-act:last-child{border-bottom:none}
 .tq-act-time{font-size:11px;color:#aaa;min-width:58px;padding-top:3px;flex-shrink:0;font-weight:300}
 .tq-act-name{font-size:14px;color:#1a1a1a;font-weight:500;margin-bottom:2px}
 .tq-act-note{font-size:12px;color:#6b6560;font-weight:300;line-height:1.5}
-.tq-footer{margin-top:3rem;text-align:center;font-size:12px;color:#bbb;font-weight:300}
+
+/* Booking links section */
+.tq-booking{background:#fff;border:1px solid #E8E4DF;border-radius:14px;padding:1.25rem;margin-bottom:1.75rem}
+.tq-booking-title{font-size:12px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:#888;margin-bottom:12px}
+.tq-booking-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tq-booking-btn{display:flex;align-items:center;gap:8px;padding:11px 14px;border:1px solid #DDD8D2;border-radius:10px;background:#FAFAF8;text-decoration:none;transition:all 0.12s}
+.tq-booking-btn:hover{border-color:#E8604C;background:#FFF5F3}
+.tq-booking-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.tq-booking-label{font-size:12px;font-weight:500;color:#1a1a1a;display:block}
+.tq-booking-sub{font-size:10px;color:#aaa;font-weight:300}
+
+.tq-footer{margin-top:3rem;text-align:center;font-size:12px;color:#bbb;font-weight:300;line-height:1.8}
 .tq-footer em{color:#E8604C;font-style:normal}
 .tq-spinner{display:none;flex-direction:column;align-items:center;padding:3rem 0;gap:14px}
 .tq-spinner.show{display:flex}
 .tq-spinner-ring{width:32px;height:32px;border:2px solid #F0EDE9;border-top-color:#E8604C;border-radius:50%;animation:spin 0.7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .tq-spinner-text{font-size:13px;color:#aaa;font-weight:300}
-@media print{.tq-actions,.tq-back,.tq-footer,.tq-saved-list{display:none!important}body{background:#fff}.tq{padding:1rem}}
+@media print{.tq-actions,.tq-back,.tq-footer,.tq-saved-list,.tq-booking{display:none!important}body{background:#fff}.tq{padding:1rem}}
 </style>
 </head>
 <body>
@@ -161,6 +186,14 @@ body{font-family:'DM Sans',sans-serif;background:#FAFAF8;color:#1a1a1a;min-heigh
       </div>
     </div>
     <div class="tq-field">
+      <label class="tq-label">What's your budget?</label>
+      <div class="tq-budgets">
+        <div class="tq-budget" data-v="budget"><span class="tq-budget-icon">🎒</span><span class="tq-budget-name">Budget</span><span class="tq-budget-desc">Hostels & street food</span></div>
+        <div class="tq-budget on" data-v="mid-range"><span class="tq-budget-icon">✈️</span><span class="tq-budget-name">Mid-range</span><span class="tq-budget-desc">Hotels & restaurants</span></div>
+        <div class="tq-budget" data-v="luxury"><span class="tq-budget-icon">💎</span><span class="tq-budget-name">Luxury</span><span class="tq-budget-desc">5-star & fine dining</span></div>
+      </div>
+    </div>
+    <div class="tq-field">
       <label class="tq-label">Interests <span>(optional)</span></label>
       <input class="tq-text" id="interests" type="text" placeholder="e.g. street food, temples, nightlife, hiking"/>
     </div>
@@ -191,20 +224,45 @@ body{font-family:'DM Sans',sans-serif;background:#FAFAF8;color:#1a1a1a;min-heigh
         Email
       </button>
     </div>
+
+    <!-- Booking links -->
+    <div class="tq-booking" id="booking-section" style="display:none">
+      <div class="tq-booking-title">Book your trip</div>
+      <div class="tq-booking-grid">
+        <a class="tq-booking-btn" id="link-booking" href="#" target="_blank" rel="noopener">
+          <div class="tq-booking-icon" style="background:#003580;color:#fff;font-size:11px;font-weight:700;">B.</div>
+          <div><span class="tq-booking-label">Booking.com</span><span class="tq-booking-sub">Find hotels</span></div>
+        </a>
+        <a class="tq-booking-btn" id="link-skyscanner" href="#" target="_blank" rel="noopener">
+          <div class="tq-booking-icon" style="background:#0770E3;color:#fff;font-size:11px;font-weight:700;">✈</div>
+          <div><span class="tq-booking-label">Skyscanner</span><span class="tq-booking-sub">Find flights</span></div>
+        </a>
+        <a class="tq-booking-btn" id="link-airbnb" href="#" target="_blank" rel="noopener">
+          <div class="tq-booking-icon" style="background:#FF5A5F;color:#fff;font-size:14px;">⌂</div>
+          <div><span class="tq-booking-label">Airbnb</span><span class="tq-booking-sub">Find stays</span></div>
+        </a>
+        <a class="tq-booking-btn" id="link-viator" href="#" target="_blank" rel="noopener">
+          <div class="tq-booking-icon" style="background:#28A745;color:#fff;font-size:13px;">🎫</div>
+          <div><span class="tq-booking-label">Viator</span><span class="tq-booking-sub">Find activities</span></div>
+        </a>
+      </div>
+    </div>
+
     <div class="tq-spinner" id="spinner">
       <div class="tq-spinner-ring"></div>
       <div class="tq-spinner-text">Building your itinerary…</div>
     </div>
     <div id="itin-days"></div>
   </div>
+
   <div class="tq-footer">
-  Made with <em>Tripiq</em> · Built by Deep Shah<br>
-  <span style="font-size:10px;color:#ccc;">Itineraries are AI-generated suggestions only. Always verify details before travel. Tripiq is not responsible for any inaccuracies.</span>
-</div>
+    Made with <em>Tripiq</em> · Built by Deep Shah<br>
+    <span style="font-size:10px;color:#ccc;">Itineraries are AI-generated suggestions only. Always verify details before travel. Tripiq is not responsible for any inaccuracies.</span>
+  </div>
 </div>
 
 <script>
-let days=7,style='Friends',selectedDest='',currentItinerary=null;
+let days=7,style='Friends',budget='mid-range',selectedDest='',currentItinerary=null,currentArrivalDate='',currentDays=7;
 
 const CITIES=[
   {name:'Tokyo',country:'Japan'},{name:'Kyoto',country:'Japan'},{name:'Osaka',country:'Japan'},{name:'Sapporo',country:'Japan'},
@@ -266,10 +324,18 @@ document.querySelectorAll('.tq-pill').forEach(c=>{
   });
 });
 document.getElementById('custom-days').addEventListener('input',e=>{days=parseInt(e.target.value)||null});
+
 document.querySelectorAll('.tq-sty').forEach(c=>{
   c.addEventListener('click',()=>{
     document.querySelectorAll('.tq-sty').forEach(x=>x.classList.remove('on'));
     c.classList.add('on');style=c.dataset.v;
+  });
+});
+
+document.querySelectorAll('.tq-budget').forEach(c=>{
+  c.addEventListener('click',()=>{
+    document.querySelectorAll('.tq-budget').forEach(x=>x.classList.remove('on'));
+    c.classList.add('on');budget=c.dataset.v;
   });
 });
 
@@ -301,6 +367,7 @@ function loadSaved(itin){
   document.getElementById('itin-sub').textContent=itin.subtitle;
   renderDays(itin.days);
   document.getElementById('action-bar').style.display='grid';
+  document.getElementById('booking-section').style.display='block';
   document.getElementById('form-view').style.display='none';
   document.getElementById('result-view').style.display='block';
 }
@@ -312,10 +379,31 @@ function renderDays(daysArr){
   daysArr.forEach(d=>{
     const el=document.createElement('div');
     el.className='tq-day';
-    el.innerHTML=`<div class="tq-day-label">Day ${d.day}</div><div class="tq-day-theme">${d.theme}</div>`+
+    // Build maps link from all activity names
+    const places=d.activities.map(a=>a.name).join('|');
+    const firstPlace=encodeURIComponent(d.activities[0]?.name||'');
+    const mapsUrl=`https://www.google.com/maps/search/${firstPlace}`;
+    el.innerHTML=`<div class="tq-day-label">Day ${d.day}</div>
+      <div class="tq-day-theme">
+        <span>${d.theme}</span>
+        <a href="${mapsUrl}" target="_blank" rel="noopener" class="tq-maps-btn">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1C3.57 1 2 2.57 2 4.5c0 2.63 3.5 5.5 3.5 5.5S9 7.13 9 4.5C9 2.57 7.43 1 5.5 1z" stroke="currentColor" stroke-width="1.1"/><circle cx="5.5" cy="4.5" r="1.2" stroke="currentColor" stroke-width="1.1"/></svg>
+          View on Maps
+        </a>
+      </div>`+
       d.activities.map(a=>`<div class="tq-act"><div class="tq-act-time">${a.time}</div><div><div class="tq-act-name">${a.name}</div>${a.note?`<div class="tq-act-note">${a.note}</div>`:''}</div></div>`).join('');
     cont.appendChild(el);
   });
+}
+
+function updateBookingLinks(dest,arrDate,numDays){
+  const destEnc=encodeURIComponent(dest.split(',')[0]);
+  const checkIn=arrDate||today;
+  const checkOut=new Date(new Date(checkIn).getTime()+numDays*86400000).toISOString().split('T')[0];
+  document.getElementById('link-booking').href=`https://www.booking.com/searchresults.html?ss=${destEnc}&checkin=${checkIn}&checkout=${checkOut}`;
+  document.getElementById('link-skyscanner').href=`https://www.skyscanner.com/flights-to/${destEnc}`;
+  document.getElementById('link-airbnb').href=`https://www.airbnb.com/s/${destEnc}/homes?checkin=${checkIn}&checkout=${checkOut}`;
+  document.getElementById('link-viator').href=`https://www.viator.com/searchResults/all?text=${destEnc}`;
 }
 
 function formatPlainText(itin){
@@ -334,6 +422,7 @@ document.getElementById('back-btn').addEventListener('click',()=>{
   document.getElementById('itin-days').innerHTML='';
   document.getElementById('spinner').classList.remove('show');
   document.getElementById('action-bar').style.display='none';
+  document.getElementById('booking-section').style.display='none';
   currentItinerary=null;
 });
 
@@ -379,13 +468,18 @@ document.getElementById('gen-btn').addEventListener('click',async()=>{
   document.getElementById('itin-sub').textContent=`${style} trip · ${days} day${days>1?'s':''}${arrDate?' · Arriving '+arrDate:''}`;
   document.getElementById('itin-days').innerHTML='';
   document.getElementById('action-bar').style.display='none';
+  document.getElementById('booking-section').style.display='none';
   document.getElementById('spinner').classList.add('show');
+  currentArrivalDate=arrDate;currentDays=days;
+
   const arrivalInfo=arrDate?(`, arriving ${arrDate}${arrTime?' at '+arrTime:''}`):'';
-  const prompt=`Create a ${days}-day travel itinerary for ${dest} for a ${style} trip${arrivalInfo}${int?`, interests: ${int}`:''}.
+  const prompt=`Create a ${days}-day travel itinerary for ${dest} for a ${style} trip with a ${budget} budget${arrivalInfo}${int?`, interests: ${int}`:''}.
+Tailor accommodation and dining recommendations to the ${budget} budget level.
 Consider arrival time for Day 1 — if arriving late, suggest lighter evening activities.
 IMPORTANT: Respond ONLY with a raw JSON object. No markdown. No backticks. No explanation. Start your response with { and end with }.
 Use this exact structure:
 {"title":"X Days in Destination","subtitle":"Style trip · X days · Arriving date","days":[{"day":1,"theme":"Theme name","activities":[{"time":"9:00 AM","name":"Activity name","note":"Short helpful tip"}]}]}`;
+
   try{
     const res=await fetch('/api/itinerary',{
       method:'POST',
@@ -402,6 +496,8 @@ Use this exact structure:
     document.getElementById('itin-title').textContent=p.title;
     document.getElementById('itin-sub').textContent=p.subtitle;
     document.getElementById('action-bar').style.display='grid';
+    document.getElementById('booking-section').style.display='block';
+    updateBookingLinks(dest,arrDate,days);
     renderDays(p.days);
   }catch(e){
     document.getElementById('spinner').classList.remove('show');
