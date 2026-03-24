@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tripiq — AI Travel Itineraries</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#FAFAF8;color:#1a1a1a;min-height:100vh}
+.tq{max-width:480px;margin:0 auto;padding:2.5rem 1.5rem 4rem}
+.tq-brand{display:flex;align-items:center;gap:12px;margin-bottom:1.5rem}
+.tq-logomark{width:40px;height:40px;border-radius:12px;background:#E8604C;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tq-logomark svg{width:22px;height:22px}
+.tq-brandname{font-family:'DM Serif Display',serif;font-size:26px;color:#1a1a1a;letter-spacing:-0.3px}
+.tq-brandname em{color:#E8604C;font-style:normal}
+.tq-hero{border-top:1px solid #E8E4DF;padding-top:1.25rem;margin-bottom:2rem}
+.tq-hero h1{font-family:'DM Serif Display',serif;font-size:30px;font-weight:400;color:#1a1a1a;line-height:1.2;margin-bottom:8px}
+.tq-hero h1 em{font-style:italic;color:#E8604C}
+.tq-hero p{font-size:14px;color:#6b6560;font-weight:300;line-height:1.65}
+.tq-field{margin-bottom:1.75rem;position:relative}
+.tq-label{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:#888;margin-bottom:10px;display:block}
+.tq-label span{font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:#aaa}
+.tq-text{width:100%;padding:13px 16px;font-size:15px;font-family:'DM Sans',sans-serif;font-weight:300;border:1px solid #DDD8D2;border-radius:10px;background:#fff;color:#1a1a1a;outline:none;transition:border-color 0.15s,box-shadow 0.15s}
+.tq-text:focus{border-color:#E8604C;box-shadow:0 0 0 3px rgba(232,96,76,0.1)}
+.tq-text::placeholder{color:#bbb}
+.tq-dropdown{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1px solid #DDD8D2;border-radius:10px;overflow:hidden;z-index:100;display:none;box-shadow:0 4px 16px rgba(0,0,0,0.08)}
+.tq-dropdown.open{display:block}
+.tq-drop-item{padding:11px 16px;font-size:14px;font-weight:300;color:#1a1a1a;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background 0.1s}
+.tq-drop-item:hover{background:#FAFAF8}
+.tq-drop-item svg{flex-shrink:0;color:#aaa}
+.tq-drop-item span{color:#aaa;font-size:12px;margin-left:auto;padding-left:8px;white-space:nowrap}
+.tq-date-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tq-date-wrap{position:relative}
+.tq-date-wrap svg{position:absolute;right:13px;top:50%;transform:translateY(-50%);pointer-events:none;color:#bbb}
+.tq-text[type="date"],.tq-text[type="time"]{padding-right:36px;color:#1a1a1a}
+.tq-text[type="date"]::-webkit-calendar-picker-indicator,.tq-text[type="time"]::-webkit-calendar-picker-indicator{opacity:0;position:absolute;right:0;top:0;width:100%;height:100%;cursor:pointer}
+.tq-pills{display:flex;flex-wrap:wrap;gap:8px}
+.tq-pill{padding:9px 16px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:400;border:1px solid #DDD8D2;border-radius:100px;cursor:pointer;background:#fff;color:#6b6560;transition:all 0.12s;user-select:none}
+.tq-pill:hover{border-color:#E8604C;color:#E8604C}
+.tq-pill.on{background:#E8604C;border-color:#E8604C;color:#fff;font-weight:500}
+.tq-styles{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.tq-sty{padding:14px 6px 10px;text-align:center;border:1px solid #DDD8D2;border-radius:12px;cursor:pointer;background:#fff;transition:all 0.12s;user-select:none}
+.tq-sty-icon{font-size:20px;display:block;margin-bottom:6px}
+.tq-sty-name{font-size:11px;font-weight:400;color:#6b6560}
+.tq-sty:hover{border-color:#E8604C}
+.tq-sty:hover .tq-sty-name{color:#E8604C}
+.tq-sty.on{border-color:#E8604C;background:#FFF5F3}
+.tq-sty.on .tq-sty-name{color:#E8604C;font-weight:500}
+.tq-custom{display:none;margin-top:8px}
+.tq-custom.show{display:block}
+.tq-err{background:#FFF5F3;border:1px solid #F5C4BB;border-radius:10px;padding:10px 14px;font-size:13px;color:#C0392B;margin-bottom:1.25rem;display:none;font-weight:300}
+.tq-submit{width:100%;padding:15px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;border:none;border-radius:12px;background:#E8604C;color:#fff;cursor:pointer;letter-spacing:0.01em;transition:background 0.15s,transform 0.1s}
+.tq-submit:hover{background:#D4503C}
+.tq-submit:active{transform:scale(0.99)}
+.tq-submit:disabled{background:#F5C4BB;cursor:not-allowed}
+.tq-back{display:inline-flex;align-items:center;gap:6px;background:none;border:none;padding:0;font-size:13px;font-family:'DM Sans',sans-serif;color:#888;cursor:pointer;margin-bottom:2rem}
+.tq-back:hover{color:#E8604C}
+.tq-itin-head{margin-bottom:1.5rem}
+.tq-itin-title{font-family:'DM Serif Display',serif;font-size:26px;font-weight:400;color:#1a1a1a;margin-bottom:4px}
+.tq-itin-meta{font-size:13px;color:#888;font-weight:300;margin-bottom:1.25rem}
+.tq-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:1.75rem;padding-bottom:1.75rem;border-bottom:1px solid #E8E4DF}
+.tq-action-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 8px;border:1px solid #DDD8D2;border-radius:12px;background:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:#6b6560;letter-spacing:0.03em;text-transform:uppercase;transition:all 0.12s}
+.tq-action-btn svg{color:#888;transition:color 0.12s}
+.tq-action-btn:hover{border-color:#E8604C;color:#E8604C}
+.tq-action-btn:hover svg{color:#E8604C}
+.tq-action-btn.success{border-color:#2ecc71;color:#2ecc71}
+.tq-action-btn.success svg{color:#2ecc71}
+.tq-saved-list{margin-bottom:1.75rem;display:none}
+.tq-saved-list.show{display:block}
+.tq-saved-label{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:#888;margin-bottom:8px}
+.tq-saved-item{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#fff;border:1px solid #DDD8D2;border-radius:10px;margin-bottom:6px;cursor:pointer;transition:border-color 0.12s}
+.tq-saved-item:hover{border-color:#E8604C}
+.tq-saved-item-name{font-size:14px;color:#1a1a1a;font-weight:400}
+.tq-saved-item-meta{font-size:11px;color:#aaa;font-weight:300}
+.tq-saved-item-del{background:none;border:none;color:#ddd;cursor:pointer;font-size:18px;padding:0 0 0 8px;line-height:1;transition:color 0.12s}
+.tq-saved-item-del:hover{color:#E8604C}
+.tq-day{margin-bottom:1.75rem;animation:fadeUp 0.3s ease forwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.tq-day-label{font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#E8604C;margin-bottom:5px}
+.tq-day-theme{font-family:'DM Serif Display',serif;font-size:19px;font-weight:400;color:#1a1a1a;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #E8E4DF}
+.tq-act{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid #F0EDE9}
+.tq-act:last-child{border-bottom:none}
+.tq-act-time{font-size:11px;color:#aaa;min-width:58px;padding-top:3px;flex-shrink:0;font-weight:300}
+.tq-act-name{font-size:14px;color:#1a1a1a;font-weight:500;margin-bottom:2px}
+.tq-act-note{font-size:12px;color:#6b6560;font-weight:300;line-height:1.5}
+.tq-footer{margin-top:3rem;text-align:center;font-size:12px;color:#bbb;font-weight:300}
+.tq-footer em{color:#E8604C;font-style:normal}
+.tq-spinner{display:none;flex-direction:column;align-items:center;padding:3rem 0;gap:14px}
+.tq-spinner.show{display:flex}
+.tq-spinner-ring{width:32px;height:32px;border:2px solid #F0EDE9;border-top-color:#E8604C;border-radius:50%;animation:spin 0.7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.tq-spinner-text{font-size:13px;color:#aaa;font-weight:300}
+@media print{.tq-actions,.tq-back,.tq-footer,.tq-saved-list{display:none!important}body{background:#fff}.tq{padding:1rem}}
+</style>
+</head>
+<body>
+<div class="tq">
+  <div class="tq-brand">
+    <div class="tq-logomark">
+      <svg viewBox="0 0 22 22" fill="none">
+        <path d="M11 2C7.13 2 4 5.13 4 9c0 5.25 7 11 7 11s7-5.75 7-11c0-3.87-3.13-7-7-7z" fill="white" opacity="0.9"/>
+        <circle cx="11" cy="9" r="2.5" fill="#E8604C"/>
+      </svg>
+    </div>
+    <div class="tq-brandname">Trip<em>iq</em></div>
+  </div>
+  <div class="tq-hero">
+    <h1>Plan your next<br><em>perfect trip.</em></h1>
+    <p>Tell us where you're headed and we'll build a day-by-day itinerary tailored just for you.</p>
+  </div>
+
+  <div class="tq-saved-list" id="saved-list">
+    <div class="tq-saved-label">Saved itineraries</div>
+    <div id="saved-items"></div>
+  </div>
+
+  <div id="form-view">
+    <div class="tq-field">
+      <label class="tq-label">Where are you going?</label>
+      <input class="tq-text" id="dest" type="text" placeholder="e.g. Tokyo, Japan" autocomplete="off"/>
+      <div class="tq-dropdown" id="dest-dropdown"></div>
+    </div>
+    <div class="tq-field">
+      <label class="tq-label">When are you arriving?</label>
+      <div class="tq-date-row">
+        <div class="tq-date-wrap">
+          <input class="tq-text" id="arrival-date" type="date"/>
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="3" width="13" height="11" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M1 7h13M5 1v3M10 1v3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="tq-date-wrap">
+          <input class="tq-text" id="arrival-time" type="time"/>
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M7.5 4.5V8l2.5 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="tq-field">
+      <label class="tq-label">How many days?</label>
+      <div class="tq-pills">
+        <div class="tq-pill" data-v="1">1 day</div>
+        <div class="tq-pill" data-v="2">2 days</div>
+        <div class="tq-pill" data-v="3">3 days</div>
+        <div class="tq-pill" data-v="4">4 days</div>
+        <div class="tq-pill" data-v="5">5 days</div>
+        <div class="tq-pill on" data-v="7">7 days</div>
+        <div class="tq-pill" data-v="10">10 days</div>
+        <div class="tq-pill" data-v="14">14 days</div>
+        <div class="tq-pill" data-v="custom">Custom</div>
+      </div>
+      <input class="tq-text tq-custom" id="custom-days" type="number" min="1" max="30" placeholder="Enter number of days"/>
+    </div>
+    <div class="tq-field">
+      <label class="tq-label">Who's travelling?</label>
+      <div class="tq-styles">
+        <div class="tq-sty" data-v="Family"><span class="tq-sty-icon">👨‍👩‍👧</span><span class="tq-sty-name">Family</span></div>
+        <div class="tq-sty" data-v="Couple"><span class="tq-sty-icon">💑</span><span class="tq-sty-name">Couple</span></div>
+        <div class="tq-sty" data-v="Solo"><span class="tq-sty-icon">🎒</span><span class="tq-sty-name">Solo</span></div>
+        <div class="tq-sty" data-v="Business"><span class="tq-sty-icon">💼</span><span class="tq-sty-name">Business</span></div>
+        <div class="tq-sty on" data-v="Friends"><span class="tq-sty-icon">🎉</span><span class="tq-sty-name">Friends</span></div>
+      </div>
+    </div>
+    <div class="tq-field">
+      <label class="tq-label">Interests <span>(optional)</span></label>
+      <input class="tq-text" id="interests" type="text" placeholder="e.g. street food, temples, nightlife, hiking"/>
+    </div>
+    <div class="tq-err" id="err"></div>
+    <button class="tq-submit" id="gen-btn">Build my itinerary →</button>
+  </div>
+
+  <div id="result-view" style="display:none">
+    <button class="tq-back" id="back-btn">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Plan another trip
+    </button>
+    <div class="tq-itin-head">
+      <div class="tq-itin-title" id="itin-title"></div>
+      <div class="tq-itin-meta" id="itin-sub"></div>
+    </div>
+    <div class="tq-actions" id="action-bar" style="display:none">
+      <button class="tq-action-btn" id="btn-save">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 3h9l3 3v9a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.3"/><path d="M6 3v4h6V3M6 16v-5h6v5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        Save
+      </button>
+      <button class="tq-action-btn" id="btn-pdf">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 2h7l4 4v11a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" stroke-width="1.3"/><path d="M11 2v4h4M6 10h6M6 13h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        PDF
+      </button>
+      <button class="tq-action-btn" id="btn-email">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="4" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2 5l7 5 7-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        Email
+      </button>
+    </div>
+    <div class="tq-spinner" id="spinner">
+      <div class="tq-spinner-ring"></div>
+      <div class="tq-spinner-text">Building your itinerary…</div>
+    </div>
+    <div id="itin-days"></div>
+  </div>
+  <div class="tq-footer">Made with <em>Tripiq</em></div>
+</div>
+
+<script>
+let days=7,style='Friends',selectedDest='',currentItinerary=null;
+
+const CITIES=[
+  {name:'Tokyo',country:'Japan'},{name:'Kyoto',country:'Japan'},{name:'Osaka',country:'Japan'},{name:'Sapporo',country:'Japan'},
+  {name:'Bangkok',country:'Thailand'},{name:'Phuket',country:'Thailand'},{name:'Chiang Mai',country:'Thailand'},{name:'Koh Samui',country:'Thailand'},
+  {name:'Paris',country:'France'},{name:'Nice',country:'France'},{name:'Lyon',country:'France'},{name:'Marseille',country:'France'},
+  {name:'London',country:'United Kingdom'},{name:'Edinburgh',country:'United Kingdom'},{name:'Manchester',country:'United Kingdom'},
+  {name:'New York',country:'United States'},{name:'Los Angeles',country:'United States'},{name:'Miami',country:'United States'},{name:'San Francisco',country:'United States'},{name:'Chicago',country:'United States'},{name:'Las Vegas',country:'United States'},{name:'New Orleans',country:'United States'},{name:'Nashville',country:'United States'},
+  {name:'Barcelona',country:'Spain'},{name:'Madrid',country:'Spain'},{name:'Seville',country:'Spain'},{name:'Valencia',country:'Spain'},
+  {name:'Rome',country:'Italy'},{name:'Florence',country:'Italy'},{name:'Venice',country:'Italy'},{name:'Milan',country:'Italy'},{name:'Naples',country:'Italy'},
+  {name:'Amsterdam',country:'Netherlands'},{name:'Berlin',country:'Germany'},{name:'Munich',country:'Germany'},
+  {name:'Dubai',country:'UAE'},{name:'Abu Dhabi',country:'UAE'},{name:'Singapore',country:'Singapore'},
+  {name:'Sydney',country:'Australia'},{name:'Melbourne',country:'Australia'},{name:'Brisbane',country:'Australia'},
+  {name:'Cape Town',country:'South Africa'},{name:'Istanbul',country:'Turkey'},{name:'Cappadocia',country:'Turkey'},
+  {name:'Bali',country:'Indonesia'},{name:'Mumbai',country:'India'},{name:'Delhi',country:'India'},{name:'Goa',country:'India'},{name:'Jaipur',country:'India'},
+  {name:'Lisbon',country:'Portugal'},{name:'Porto',country:'Portugal'},
+  {name:'Prague',country:'Czech Republic'},{name:'Vienna',country:'Austria'},{name:'Budapest',country:'Hungary'},
+  {name:'Copenhagen',country:'Denmark'},{name:'Stockholm',country:'Sweden'},{name:'Oslo',country:'Norway'},
+  {name:'Mexico City',country:'Mexico'},{name:'Cancún',country:'Mexico'},
+  {name:'Buenos Aires',country:'Argentina'},{name:'Rio de Janeiro',country:'Brazil'},
+  {name:'Toronto',country:'Canada'},{name:'Vancouver',country:'Canada'},{name:'Montreal',country:'Canada'},
+  {name:'Seoul',country:'South Korea'},{name:'Busan',country:'South Korea'},
+  {name:'Marrakech',country:'Morocco'},{name:'Cairo',country:'Egypt'},
+  {name:'Reykjavik',country:'Iceland'},{name:'Athens',country:'Greece'},{name:'Santorini',country:'Greece'},
+  {name:'Maldives',country:'Maldives'},{name:'Hanoi',country:'Vietnam'},{name:'Ho Chi Minh City',country:'Vietnam'},{name:'Hoi An',country:'Vietnam'},
+  {name:'Kuala Lumpur',country:'Malaysia'},{name:'Penang',country:'Malaysia'},
+  {name:'Manila',country:'Philippines'},{name:'Palawan',country:'Philippines'},
+  {name:'Taipei',country:'Taiwan'},{name:'Hong Kong',country:'China'},{name:'Shanghai',country:'China'},{name:'Beijing',country:'China'},
+  {name:'Doha',country:'Qatar'},{name:'Tbilisi',country:'Georgia'},
+];
+
+const destInput=document.getElementById('dest');
+const dropdown=document.getElementById('dest-dropdown');
+function showDropdown(q){
+  if(!q){dropdown.classList.remove('open');return;}
+  const ql=q.toLowerCase();
+  const matches=CITIES.filter(c=>c.name.toLowerCase().startsWith(ql)||c.country.toLowerCase().startsWith(ql)).slice(0,6);
+  if(!matches.length){dropdown.classList.remove('open');return;}
+  dropdown.innerHTML=matches.map(c=>`<div class="tq-drop-item" data-name="${c.name}, ${c.country}"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1C4.01 1 2 3.01 2 5.5c0 3.5 4.5 6.5 4.5 6.5S11 9 11 5.5C11 3.01 8.99 1 6.5 1z" stroke="currentColor" stroke-width="1.1"/><circle cx="6.5" cy="5.5" r="1.5" stroke="currentColor" stroke-width="1.1"/></svg>${c.name}<span>${c.country}</span></div>`).join('');
+  dropdown.classList.add('open');
+  dropdown.querySelectorAll('.tq-drop-item').forEach(item=>{
+    item.addEventListener('mousedown',e=>{e.preventDefault();destInput.value=item.dataset.name;selectedDest=item.dataset.name;dropdown.classList.remove('open');});
+  });
+}
+destInput.addEventListener('input',e=>{selectedDest='';showDropdown(e.target.value.trim())});
+destInput.addEventListener('blur',()=>setTimeout(()=>dropdown.classList.remove('open'),150));
+destInput.addEventListener('focus',()=>showDropdown(destInput.value.trim()));
+
+const today=new Date().toISOString().split('T')[0];
+document.getElementById('arrival-date').min=today;
+document.getElementById('arrival-date').value=today;
+
+document.querySelectorAll('.tq-pill').forEach(c=>{
+  c.addEventListener('click',()=>{
+    document.querySelectorAll('.tq-pill').forEach(x=>x.classList.remove('on'));
+    c.classList.add('on');
+    const cd=document.getElementById('custom-days');
+    if(c.dataset.v==='custom'){cd.classList.add('show');days=null;}
+    else{cd.classList.remove('show');days=parseInt(c.dataset.v);}
+  });
+});
+document.getElementById('custom-days').addEventListener('input',e=>{days=parseInt(e.target.value)||null});
+document.querySelectorAll('.tq-sty').forEach(c=>{
+  c.addEventListener('click',()=>{
+    document.querySelectorAll('.tq-sty').forEach(x=>x.classList.remove('on'));
+    c.classList.add('on');style=c.dataset.v;
+  });
+});
+
+function getSaved(){try{return JSON.parse(localStorage.getItem('tripiq_saved')||'[]');}catch(e){return[];}}
+function setSaved(arr){localStorage.setItem('tripiq_saved',JSON.stringify(arr));}
+function renderSavedList(){
+  const arr=getSaved();
+  const list=document.getElementById('saved-list');
+  const items=document.getElementById('saved-items');
+  if(!arr.length){list.classList.remove('show');return;}
+  list.classList.add('show');
+  items.innerHTML=arr.map((s,i)=>`<div class="tq-saved-item" data-idx="${i}"><div><div class="tq-saved-item-name">${s.title}</div><div class="tq-saved-item-meta">${s.subtitle}</div></div><button class="tq-saved-item-del" data-idx="${i}">×</button></div>`).join('');
+  items.querySelectorAll('.tq-saved-item').forEach(el=>{
+    el.addEventListener('click',e=>{
+      if(e.target.classList.contains('tq-saved-item-del'))return;
+      loadSaved(getSaved()[parseInt(el.dataset.idx)]);
+    });
+  });
+  items.querySelectorAll('.tq-saved-item-del').forEach(btn=>{
+    btn.addEventListener('click',e=>{
+      e.stopPropagation();
+      const arr=getSaved();arr.splice(parseInt(btn.dataset.idx),1);setSaved(arr);renderSavedList();
+    });
+  });
+}
+function loadSaved(itin){
+  currentItinerary=itin;
+  document.getElementById('itin-title').textContent=itin.title;
+  document.getElementById('itin-sub').textContent=itin.subtitle;
+  renderDays(itin.days);
+  document.getElementById('action-bar').style.display='grid';
+  document.getElementById('form-view').style.display='none';
+  document.getElementById('result-view').style.display='block';
+}
+renderSavedList();
+
+function renderDays(daysArr){
+  const cont=document.getElementById('itin-days');
+  cont.innerHTML='';
+  daysArr.forEach(d=>{
+    const el=document.createElement('div');
+    el.className='tq-day';
+    el.innerHTML=`<div class="tq-day-label">Day ${d.day}</div><div class="tq-day-theme">${d.theme}</div>`+
+      d.activities.map(a=>`<div class="tq-act"><div class="tq-act-time">${a.time}</div><div><div class="tq-act-name">${a.name}</div>${a.note?`<div class="tq-act-note">${a.note}</div>`:''}</div></div>`).join('');
+    cont.appendChild(el);
+  });
+}
+
+function formatPlainText(itin){
+  let text=`${itin.title}\n${itin.subtitle}\n\n`;
+  itin.days.forEach(d=>{
+    text+=`DAY ${d.day} — ${d.theme.toUpperCase()}\n`;
+    d.activities.forEach(a=>{text+=`  ${a.time.padEnd(10)}${a.name}${a.note?' — '+a.note:''}\n`;});
+    text+='\n';
+  });
+  return text;
+}
+
+document.getElementById('back-btn').addEventListener('click',()=>{
+  document.getElementById('form-view').style.display='block';
+  document.getElementById('result-view').style.display='none';
+  document.getElementById('itin-days').innerHTML='';
+  document.getElementById('spinner').classList.remove('show');
+  document.getElementById('action-bar').style.display='none';
+  currentItinerary=null;
+});
+
+document.getElementById('btn-save').addEventListener('click',()=>{
+  if(!currentItinerary)return;
+  const arr=getSaved();
+  const exists=arr.findIndex(s=>s.title===currentItinerary.title&&s.subtitle===currentItinerary.subtitle);
+  if(exists>=0){arr[exists]=currentItinerary;}else{arr.unshift(currentItinerary);}
+  setSaved(arr.slice(0,10));renderSavedList();
+  const btn=document.getElementById('btn-save');
+  btn.classList.add('success');
+  btn.querySelector('svg').innerHTML='<path d="M3 9l4 4 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
+  setTimeout(()=>{btn.classList.remove('success');btn.querySelector('svg').innerHTML='<path d="M3 3h9l3 3v9a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.3"/><path d="M6 3v4h6V3M6 16v-5h6v5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>';},2000);
+});
+
+document.getElementById('btn-pdf').addEventListener('click',()=>window.print());
+
+document.getElementById('btn-email').addEventListener('click',()=>{
+  if(!currentItinerary)return;
+  const subject=encodeURIComponent('Your Tripiq Itinerary — '+currentItinerary.title);
+  const body=encodeURIComponent('Hi there!\n\nYour travel itinerary is ready:\n\n'+formatPlainText(currentItinerary)+'\n\nHave an amazing trip!\nThe Tripiq Team');
+  window.open('mailto:?subject='+subject+'&body='+body);
+  const btn=document.getElementById('btn-email');
+  btn.classList.add('success');
+  btn.querySelector('svg').innerHTML='<path d="M3 9l4 4 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
+  setTimeout(()=>{btn.classList.remove('success');btn.querySelector('svg').innerHTML='<rect x="2" y="4" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2 5l7 5 7-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>';},2000);
+});
+
+document.getElementById('gen-btn').addEventListener('click',async()=>{
+  const dest=selectedDest||destInput.value.trim();
+  const int=document.getElementById('interests').value.trim();
+  const arrDate=document.getElementById('arrival-date').value;
+  const arrTime=document.getElementById('arrival-time').value;
+  const err=document.getElementById('err');
+  err.style.display='none';
+  if(!dest){err.textContent='Please enter a destination.';err.style.display='block';return;}
+  if(!days){err.textContent='Please enter the number of days.';err.style.display='block';return;}
+  const btn=document.getElementById('gen-btn');
+  btn.disabled=true;btn.textContent='Building your trip…';
+  document.getElementById('form-view').style.display='none';
+  document.getElementById('result-view').style.display='block';
+  document.getElementById('itin-title').textContent=dest;
+  document.getElementById('itin-sub').textContent=`${style} trip · ${days} day${days>1?'s':''}${arrDate?' · Arriving '+arrDate:''}`;
+  document.getElementById('itin-days').innerHTML='';
+  document.getElementById('action-bar').style.display='none';
+  document.getElementById('spinner').classList.add('show');
+  const arrivalInfo=arrDate?(`, arriving ${arrDate}${arrTime?' at '+arrTime:''}`):'';
+  const prompt=`Create a ${days}-day travel itinerary for ${dest} for a ${style} trip${arrivalInfo}${int?`, interests: ${int}`:''}.
+Consider arrival time for Day 1 — if arriving late, suggest lighter evening activities.
+IMPORTANT: Respond ONLY with a raw JSON object. No markdown. No backticks. No explanation. Start your response with { and end with }.
+Use this exact structure:
+{"title":"X Days in Destination","subtitle":"Style trip · X days · Arriving date","days":[{"day":1,"theme":"Theme name","activities":[{"time":"9:00 AM","name":"Activity name","note":"Short helpful tip"}]}]}`;
+  try{
+    const res=await fetch('/api/itinerary',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({prompt})
+    });
+    if(!res.ok){const e=await res.json();throw new Error(e.error||'Server error');}
+    const data=await res.json();
+    const raw=data.content.map(b=>b.text||'').join('').trim();
+    const clean=raw.replace(/^```json\s*/i,'').replace(/^```\s*/i,'').replace(/```\s*$/i,'').trim();
+    const p=JSON.parse(clean);
+    currentItinerary=p;
+    document.getElementById('spinner').classList.remove('show');
+    document.getElementById('itin-title').textContent=p.title;
+    document.getElementById('itin-sub').textContent=p.subtitle;
+    document.getElementById('action-bar').style.display='grid';
+    renderDays(p.days);
+  }catch(e){
+    document.getElementById('spinner').classList.remove('show');
+    document.getElementById('form-view').style.display='block';
+    document.getElementById('result-view').style.display='none';
+    err.textContent='Something went wrong: '+(e.message||'Please try again.');
+    err.style.display='block';
+  }finally{
+    btn.disabled=false;btn.textContent='Build my itinerary →';
+  }
+});
+</script>
+</body>
+</html>
