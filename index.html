@@ -489,7 +489,7 @@ Use this exact structure:
     if(!res.ok){const e=await res.json();throw new Error(e.error||'Server error');}
     const data=await res.json();
     const raw=data.content.map(b=>b.text||'').join('').trim();
-    const clean=raw.replace(/^```json\s*/i,'').replace(/^```\s*/i,'').replace(/```\s*$/i,'').trim();
+    const clean=raw.replace(/^```json\s*/i,'').replace(/^```\s*/i,'').replace(/```\s*$/i,'').trim().replace(/[\u2018\u2019]/g,"'").replace(/[\u201C\u201D]/g,'"');
     const p=JSON.parse(clean);
     currentItinerary=p;
     document.getElementById('spinner').classList.remove('show');
