@@ -1,0 +1,5 @@
+api/
+  itinerary.js       ← inside api folder
+index.html           ← root
+vercel.json          ← root
+README.md            ← root (already there)
