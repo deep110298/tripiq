@@ -380,9 +380,9 @@ function renderDays(daysArr){
     const el=document.createElement('div');
     el.className='tq-day';
     // Build maps link from all activity names
-    const places=d.activities.map(a=>a.name).join('|');
-    const firstPlace=encodeURIComponent(d.activities[0]?.name||'');
-    const mapsUrl=`https://www.google.com/maps/search/${firstPlace}`;
+    const destName=currentItinerary.title.split(' in ').slice(1).join(' in ');
+const places=d.activities.map(a=>encodeURIComponent(a.name+' '+destName));
+const mapsUrl=`https://www.google.com/maps/dir/${places.join('/')}`;
     el.innerHTML=`<div class="tq-day-label">Day ${d.day}</div>
       <div class="tq-day-theme">
         <span>${d.theme}</span>
