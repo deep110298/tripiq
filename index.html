@@ -97,6 +97,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .tq-action-btn:hover svg{color:var(--coral)}
 .tq-action-btn.success{border-color:#2ecc71;color:#2ecc71}
 .tq-action-btn.success svg{color:#2ecc71}
+/* Highlight save btn for logged-in users */
+.tq-action-btn.save-highlight{border-color:var(--coral);color:var(--coral)}
+.tq-action-btn.save-highlight svg{color:var(--coral)}
 .tq-saved-list{margin-bottom:1.75rem;display:none}
 .tq-saved-list.show{display:block}
 .tq-saved-label{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
@@ -253,9 +256,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="tq-field">
       <label class="tq-label">What's your budget?</label>
       <div class="tq-budgets">
-        <div class="tq-budget" data-v="budget"><span class="tq-budget-icon">&#x1F392;</span><span class="tq-budget-name">Budget</span><span class="tq-budget-desc">Hostels & street food</span></div>
-        <div class="tq-budget on" data-v="mid-range"><span class="tq-budget-icon">&#x2708;&#xFE0F;</span><span class="tq-budget-name">Mid-range</span><span class="tq-budget-desc">Hotels & restaurants</span></div>
-        <div class="tq-budget" data-v="luxury"><span class="tq-budget-icon">&#x1F48E;</span><span class="tq-budget-name">Luxury</span><span class="tq-budget-desc">5-star & fine dining</span></div>
+        <div class="tq-budget" data-v="budget"><span class="tq-budget-icon">&#x1F392;</span><span class="tq-budget-name">Budget</span><span class="tq-budget-desc">Hostels &amp; street food</span></div>
+        <div class="tq-budget on" data-v="mid-range"><span class="tq-budget-icon">&#x2708;&#xFE0F;</span><span class="tq-budget-name">Mid-range</span><span class="tq-budget-desc">Hotels &amp; restaurants</span></div>
+        <div class="tq-budget" data-v="luxury"><span class="tq-budget-icon">&#x1F48E;</span><span class="tq-budget-name">Luxury</span><span class="tq-budget-desc">5-star &amp; fine dining</span></div>
       </div>
     </div>
     <div class="tq-field">
@@ -265,7 +268,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="tq-err" id="err"></div>
     <button class="tq-surprise" id="surprise-btn">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v2M8 13v2M1 8h2M13 8h2M2.93 2.93l1.41 1.41M11.66 11.66l1.41 1.41M2.93 13.07l1.41-1.41M11.66 4.34l1.41-1.41" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/></svg>
-      Surprise me — pick a random destination
+      Surprise me &#x2014; pick a random destination
     </button>
     <button class="tq-submit" id="gen-btn">Build my itinerary &#x2192;</button>
   </div>
@@ -322,7 +325,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   </div>
 
   <div class="tq-footer">
-    Made with <em>Tripiq</em> · Built by Deep Shah<br>
+    Made with <em>Tripiq</em> &middot; Built by Deep Shah<br>
     <span style="font-size:10px;color:var(--text3);">Itineraries are AI-generated suggestions only. Always verify details before travel. Tripiq is not responsible for any inaccuracies.</span>
   </div>
 </div>
@@ -330,7 +333,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 <!-- Auth Modal -->
 <div class="auth-modal-bg" id="auth-modal">
   <div class="auth-modal">
-    <button class="auth-close" id="auth-modal-close">x</button>
+    <button class="auth-close" id="auth-modal-close">&#x2715;</button>
     <div class="auth-modal-title">Welcome to Tripiq</div>
     <div class="auth-modal-sub">Sign in to save trips across all your devices.</div>
     <div class="auth-tabs">
@@ -353,7 +356,6 @@ const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON);
 
 let days=7,style='Friends',budget='mid-range',selectedDest='',currentItinerary=null,currentUser=null;
 
-// Auth state
 sb.auth.onAuthStateChange((event,session)=>{
   currentUser=session?.user||null;
   updateAuthUI();
@@ -368,45 +370,28 @@ sb.auth.getSession().then(({data:{session}})=>{
 function updateAuthUI(){
   const signinBtn=document.getElementById('signin-btn');
   const userMenu=document.getElementById('user-menu');
+  const saveBtn=document.getElementById('btn-save');
   if(currentUser){
     signinBtn.style.display='none';
     userMenu.style.display='block';
     const initials=(currentUser.user_metadata?.full_name||currentUser.email||'?').charAt(0).toUpperCase();
     document.getElementById('user-avatar-btn').textContent=initials;
     document.getElementById('user-email-display').textContent=currentUser.email;
+    // Highlight save button for logged-in users
+    if(saveBtn) saveBtn.classList.add('save-highlight');
   }else{
     signinBtn.style.display='flex';
     userMenu.style.display='none';
+    if(saveBtn) saveBtn.classList.remove('save-highlight');
   }
 }
 
-// Auth modal
 let authMode='signin';
-document.getElementById('signin-btn').addEventListener('click',()=>{
-  document.getElementById('auth-modal').classList.add('open');
-});
-document.getElementById('auth-modal-close').addEventListener('click',()=>{
-  document.getElementById('auth-modal').classList.remove('open');
-});
-document.getElementById('auth-modal').addEventListener('click',e=>{
-  if(e.target===document.getElementById('auth-modal')) document.getElementById('auth-modal').classList.remove('open');
-});
-document.getElementById('tab-signin').addEventListener('click',()=>{
-  authMode='signin';
-  document.getElementById('tab-signin').classList.add('on');
-  document.getElementById('tab-signup').classList.remove('on');
-  document.getElementById('auth-name').style.display='none';
-  document.getElementById('auth-submit-btn').textContent='Sign in';
-  document.getElementById('auth-err').style.display='none';
-});
-document.getElementById('tab-signup').addEventListener('click',()=>{
-  authMode='signup';
-  document.getElementById('tab-signup').classList.add('on');
-  document.getElementById('tab-signin').classList.remove('on');
-  document.getElementById('auth-name').style.display='block';
-  document.getElementById('auth-submit-btn').textContent='Create account';
-  document.getElementById('auth-err').style.display='none';
-});
+document.getElementById('signin-btn').addEventListener('click',()=>{document.getElementById('auth-modal').classList.add('open');});
+document.getElementById('auth-modal-close').addEventListener('click',()=>{document.getElementById('auth-modal').classList.remove('open');});
+document.getElementById('auth-modal').addEventListener('click',e=>{if(e.target===document.getElementById('auth-modal'))document.getElementById('auth-modal').classList.remove('open');});
+document.getElementById('tab-signin').addEventListener('click',()=>{authMode='signin';document.getElementById('tab-signin').classList.add('on');document.getElementById('tab-signup').classList.remove('on');document.getElementById('auth-name').style.display='none';document.getElementById('auth-submit-btn').textContent='Sign in';document.getElementById('auth-err').style.display='none';});
+document.getElementById('tab-signup').addEventListener('click',()=>{authMode='signup';document.getElementById('tab-signup').classList.add('on');document.getElementById('tab-signin').classList.remove('on');document.getElementById('auth-name').style.display='block';document.getElementById('auth-submit-btn').textContent='Create account';document.getElementById('auth-err').style.display='none';});
 document.getElementById('auth-submit-btn').addEventListener('click',async()=>{
   const email=document.getElementById('auth-email').value.trim();
   const password=document.getElementById('auth-password').value;
@@ -420,42 +405,21 @@ document.getElementById('auth-submit-btn').addEventListener('click',async()=>{
     let result;
     if(authMode==='signup'){
       result=await sb.auth.signUp({email,password,options:{data:{full_name:name}}});
-      if(!result.error) {errEl.textContent='Account created! Please check your email to verify.';errEl.style.display='block';errEl.style.color='#27ae60';}
+      if(!result.error){errEl.textContent='Account created! Please check your email to verify.';errEl.style.display='block';errEl.style.color='#27ae60';}
     }else{
       result=await sb.auth.signInWithPassword({email,password});
-      if(!result.error) document.getElementById('auth-modal').classList.remove('open');
+      if(!result.error)document.getElementById('auth-modal').classList.remove('open');
     }
-    if(result.error) throw result.error;
-  }catch(e){
-    errEl.textContent=e.message||'Something went wrong.';
-    errEl.style.display='block';
-    errEl.style.color='#C0392B';
-  }finally{
-    btn.disabled=false;
-    btn.textContent=authMode==='signup'?'Create account':'Sign in';
-  }
+    if(result.error)throw result.error;
+  }catch(e){errEl.textContent=e.message||'Something went wrong.';errEl.style.display='block';errEl.style.color='#C0392B';}
+  finally{btn.disabled=false;btn.textContent=authMode==='signup'?'Create account':'Sign in';}
 });
 
-// User menu dropdown
-document.getElementById('user-avatar-btn').addEventListener('click',()=>{
-  document.getElementById('user-dropdown').classList.toggle('open');
-});
-document.addEventListener('click',e=>{
-  if(!document.getElementById('user-menu').contains(e.target)){
-    document.getElementById('user-dropdown').classList.remove('open');
-  }
-});
-document.getElementById('signout-btn').addEventListener('click',async()=>{
-  await sb.auth.signOut();
-  document.getElementById('user-dropdown').classList.remove('open');
-  renderSavedList();
-});
-document.getElementById('view-trips-btn').addEventListener('click',()=>{
-  document.getElementById('user-dropdown').classList.remove('open');
-  loadCloudSaved();
-});
+document.getElementById('user-avatar-btn').addEventListener('click',()=>{document.getElementById('user-dropdown').classList.toggle('open');});
+document.addEventListener('click',e=>{if(!document.getElementById('user-menu').contains(e.target))document.getElementById('user-dropdown').classList.remove('open');});
+document.getElementById('signout-btn').addEventListener('click',async()=>{await sb.auth.signOut();document.getElementById('user-dropdown').classList.remove('open');renderSavedList();});
+document.getElementById('view-trips-btn').addEventListener('click',()=>{document.getElementById('user-dropdown').classList.remove('open');loadCloudSaved();});
 
-// Dark mode
 const themeBtn=document.getElementById('theme-btn');
 const savedTheme=localStorage.getItem('tripiq-theme')||'light';
 document.documentElement.setAttribute('data-theme',savedTheme);
@@ -502,7 +466,6 @@ const CITIES=[
   {name:'Doha',country:'Qatar'},{name:'Tbilisi',country:'Georgia'},
 ];
 
-// Surprise me
 document.getElementById('surprise-btn').addEventListener('click',()=>{
   const random=CITIES[Math.floor(Math.random()*CITIES.length)];
   const dest=`${random.name}, ${random.country}`;
@@ -513,8 +476,8 @@ document.getElementById('surprise-btn').addEventListener('click',()=>{
   document.querySelectorAll('.tq-pill').forEach(p=>{p.classList.remove('on');if(p.dataset.v==randomDays)p.classList.add('on');});
   days=randomDays;
   const btn=document.getElementById('surprise-btn');
-  btn.textContent='✨ '+dest+' it is!';
-  setTimeout(()=>{btn.innerHTML='<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v2M8 13v2M1 8h2M13 8h2M2.93 2.93l1.41 1.41M11.66 11.66l1.41 1.41M2.93 13.07l1.41-1.41M11.66 4.34l1.41-1.41" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/></svg> Surprise me — pick a random destination';},2500);
+  btn.textContent='&#x2728; '+dest+' it is!';
+  setTimeout(()=>{btn.innerHTML='<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v2M8 13v2M1 8h2M13 8h2M2.93 2.93l1.41 1.41M11.66 11.66l1.41 1.41M2.93 13.07l1.41-1.41M11.66 4.34l1.41-1.41" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/></svg> Surprise me &#x2014; pick a random destination';},2500);
 });
 
 const destInput=document.getElementById('dest');
@@ -548,14 +511,9 @@ document.querySelectorAll('.tq-pill').forEach(c=>{
   });
 });
 document.getElementById('custom-days').addEventListener('input',e=>{days=parseInt(e.target.value)||null});
-document.querySelectorAll('.tq-sty').forEach(c=>{
-  c.addEventListener('click',()=>{document.querySelectorAll('.tq-sty').forEach(x=>x.classList.remove('on'));c.classList.add('on');style=c.dataset.v;});
-});
-document.querySelectorAll('.tq-budget').forEach(c=>{
-  c.addEventListener('click',()=>{document.querySelectorAll('.tq-budget').forEach(x=>x.classList.remove('on'));c.classList.add('on');budget=c.dataset.v;});
-});
+document.querySelectorAll('.tq-sty').forEach(c=>{c.addEventListener('click',()=>{document.querySelectorAll('.tq-sty').forEach(x=>x.classList.remove('on'));c.classList.add('on');style=c.dataset.v;});});
+document.querySelectorAll('.tq-budget').forEach(c=>{c.addEventListener('click',()=>{document.querySelectorAll('.tq-budget').forEach(x=>x.classList.remove('on'));c.classList.add('on');budget=c.dataset.v;});});
 
-// Saved itineraries — local + cloud
 function getSaved(){try{return JSON.parse(localStorage.getItem('tripiq_saved')||'[]');}catch(e){return[];}}
 function setSaved(arr){localStorage.setItem('tripiq_saved',JSON.stringify(arr));}
 
@@ -573,23 +531,16 @@ function renderSavedList(cloudItems){
   const items=document.getElementById('saved-items');
   if(!arr.length){list.classList.remove('show');return;}
   list.classList.add('show');
-  items.innerHTML=arr.map((s,i)=>`<div class="tq-saved-item" data-idx="${i}"><div><div class="tq-saved-item-name">${s.title}</div><div class="tq-saved-item-meta">${s.subtitle}${s.cloud?' · ☁':''}` +`</div></div><button class="tq-saved-item-del" data-idx="${i}" data-id="${s.id||''}">x</button></div>`).join('');
+  items.innerHTML=arr.map((s,i)=>`<div class="tq-saved-item" data-idx="${i}"><div><div class="tq-saved-item-name">${s.title}</div><div class="tq-saved-item-meta">${s.subtitle}${s.cloud?' &middot; &#x2601;':''}</div></div><button class="tq-saved-item-del" data-idx="${i}" data-id="${s.id||''}">&#x2715;</button></div>`).join('');
   const itemsArr=arr;
   items.querySelectorAll('.tq-saved-item').forEach((el,i)=>{
-    el.addEventListener('click',e=>{
-      if(e.target.classList.contains('tq-saved-item-del'))return;
-      loadSaved(itemsArr[i]);
-    });
+    el.addEventListener('click',e=>{if(e.target.classList.contains('tq-saved-item-del'))return;loadSaved(itemsArr[i]);});
   });
   items.querySelectorAll('.tq-saved-item-del').forEach((btn,i)=>{
     btn.addEventListener('click',async e=>{
       e.stopPropagation();
-      if(itemsArr[i].cloud&&itemsArr[i].id){
-        await sb.from('itineraries').delete().eq('id',itemsArr[i].id);
-        loadCloudSaved();
-      }else{
-        const a=getSaved();a.splice(i,1);setSaved(a);renderSavedList();
-      }
+      if(itemsArr[i].cloud&&itemsArr[i].id){await sb.from('itineraries').delete().eq('id',itemsArr[i].id);loadCloudSaved();}
+      else{const a=getSaved();a.splice(i,1);setSaved(a);renderSavedList();}
     });
   });
 }
@@ -650,6 +601,12 @@ document.getElementById('back-btn').addEventListener('click',()=>{
   currentItinerary=null;
 });
 
+async function autoSaveToCloud(itin){
+  if(!currentUser||!itin)return;
+  await sb.from('itineraries').upsert({user_id:currentUser.id,title:itin.title,subtitle:itin.subtitle,destination:itin.title.split(' in ').slice(1).join(' in '),days:itin.days.length,data:itin});
+  loadCloudSaved();
+}
+
 document.getElementById('btn-save').addEventListener('click',async()=>{
   if(!currentItinerary)return;
   const btn=document.getElementById('btn-save');
@@ -658,7 +615,7 @@ document.getElementById('btn-save').addEventListener('click',async()=>{
     if(!error){
       btn.classList.add('success');
       btn.querySelector('svg').innerHTML='<path d="M3 9l4 4 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
-      setTimeout(()=>{btn.classList.remove('success');btn.querySelector('svg').innerHTML='<path d="M3 3h9l3 3v9a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.3"/><path d="M6 3v4h6V3M6 16v-5h6v5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>';},2000);
+      setTimeout(()=>{btn.classList.remove('success');btn.classList.add('save-highlight');btn.querySelector('svg').innerHTML='<path d="M3 3h9l3 3v9a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.3"/><path d="M6 3v4h6V3M6 16v-5h6v5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>';},2000);
       loadCloudSaved();
     }
   }else{
@@ -669,7 +626,6 @@ document.getElementById('btn-save').addEventListener('click',async()=>{
     btn.classList.add('success');
     btn.querySelector('svg').innerHTML='<path d="M3 9l4 4 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
     setTimeout(()=>{btn.classList.remove('success');btn.querySelector('svg').innerHTML='<path d="M3 3h9l3 3v9a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.3"/><path d="M6 3v4h6V3M6 16v-5h6v5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>';},2000);
-    // Prompt to sign in for cloud save
     setTimeout(()=>document.getElementById('auth-modal').classList.add('open'),2200);
   }
 });
@@ -694,26 +650,26 @@ async function generateItinerary(dest,numDays,travelStyle,travelBudget,interests
   document.getElementById('form-view').style.display='none';
   document.getElementById('result-view').style.display='block';
   document.getElementById('itin-title').textContent=dest;
-  document.getElementById('itin-sub').textContent=`${travelStyle} trip · ${numDays} day${numDays>1?'s':''}${arrDate?' · Arriving '+arrDate:''}`;
+  document.getElementById('itin-sub').textContent=`${travelStyle} trip \u00b7 ${numDays} day${numDays>1?'s':''}${arrDate?' \u00b7 Arriving '+arrDate:''}`;
   document.getElementById('itin-days').innerHTML='';
   document.getElementById('action-bar').style.display='none';
   document.getElementById('booking-section').style.display='none';
   document.getElementById('spinner').classList.add('show');
-  const arrivalInfo=arrDate?(`, arriving ${arrDate}${arrTime?' at '+arrTime:''}`):''
+  const arrivalInfo=arrDate?(`, arriving ${arrDate}${arrTime?' at '+arrTime:''}`):'';
   const prompt=`You are an expert travel planner. Create a detailed ${numDays}-day itinerary for ${dest} for a ${travelStyle} group with a ${travelBudget} budget${arrivalInfo}${interests?`, with interests in: ${interests}`:''}.
 
 IMPORTANT RULES:
 - Include ONLY real, well-known, verified attractions, restaurants and places that actually exist in ${dest}
 - For each day include 4-6 activities with specific real place names
-- Cover the most iconic and must-see spots that ${dest} is famous for — do not miss major landmarks
-- Tailor recommendations to ${travelBudget} budget: ${travelBudget==='budget'?'hostels, street food, free attractions':'travelBudget'==='luxury'?'5-star hotels, fine dining, private tours':'mid-range hotels, local restaurants, popular attractions'}
-- Consider arrival time for Day 1 — if arriving late, only suggest evening activities
+- Cover the most iconic and must-see spots that ${dest} is famous for - do not miss major landmarks
+- Tailor recommendations to ${travelBudget} budget
+- Consider arrival time for Day 1 - if arriving late, only suggest evening activities
 - Mix famous landmarks with local hidden gems
 - Include meal recommendations with specific restaurant names
 - Add practical tips in the note field
 
 Respond ONLY with a raw JSON object. No markdown. No backticks. No explanation. Start with { and end with }:
-{"title":"${numDays} Days in ${dest.split(',')[0]}","subtitle":"${travelStyle} trip · ${numDays} days${arrDate?' · Arriving '+arrDate:''}","days":[{"day":1,"theme":"Theme name","activities":[{"time":"9:00 AM","name":"Real Place Name","note":"Practical tip"}]}]}`;
+{"title":"${numDays} Days in ${dest.split(',')[0]}","subtitle":"${travelStyle} trip \u00b7 ${numDays} days${arrDate?' \u00b7 Arriving '+arrDate:''}","days":[{"day":1,"theme":"Theme name","activities":[{"time":"9:00 AM","name":"Real Place Name","note":"Practical tip"}]}]}`;
   try{
     const res=await fetch('/api/itinerary',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
     if(!res.ok){const e=await res.json();throw new Error(e.error||'Server error');}
@@ -729,6 +685,8 @@ Respond ONLY with a raw JSON object. No markdown. No backticks. No explanation. 
     document.getElementById('booking-section').style.display='block';
     updateBookingLinks(dest,arrDate,numDays);
     renderDays(p.days);
+    // Auto-save to cloud if logged in
+    if(currentUser) autoSaveToCloud(p);
   }catch(e){
     document.getElementById('spinner').classList.remove('show');
     document.getElementById('form-view').style.display='block';
@@ -736,7 +694,7 @@ Respond ONLY with a raw JSON object. No markdown. No backticks. No explanation. 
     err.textContent='Something went wrong: '+(e.message||'Please try again.');
     err.style.display='block';
   }finally{
-    btn.disabled=false;btn.textContent='Build my itinerary →';
+    btn.disabled=false;btn.textContent='Build my itinerary \u2192';
   }
 }
 
@@ -764,7 +722,7 @@ document.getElementById('gen-btn').addEventListener('click',()=>{
       <div style="font-size:13px;font-weight:500;margin-bottom:2px">Add Tripiq to your home screen</div>
       <div style="font-size:11px;opacity:0.6">Tap Share then Add to Home Screen</div>
     </div>
-    <button onclick="document.getElementById('pwa-banner').style.display='none'" style="background:none;border:none;color:#fff;opacity:0.5;cursor:pointer;font-size:18px;padding:0;line-height:1">x</button>
+    <button onclick="document.getElementById('pwa-banner').style.display='none'" style="background:none;border:none;color:#fff;opacity:0.5;cursor:pointer;font-size:18px;padding:0;line-height:1">&#x2715;</button>
   </div>
   <div id="pwa-progress" style="height:2px;background:#E8604C;border-radius:1px;margin-top:6px;width:100%;transition:width 3s linear"></div>
 </div>
