@@ -97,7 +97,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .tq-action-btn:hover svg{color:var(--coral)}
 .tq-action-btn.success{border-color:#2ecc71;color:#2ecc71}
 .tq-action-btn.success svg{color:#2ecc71}
-/* Highlight save btn for logged-in users */
 .tq-action-btn.save-highlight{border-color:var(--coral);color:var(--coral)}
 .tq-action-btn.save-highlight svg{color:var(--coral)}
 .tq-saved-list{margin-bottom:1.75rem;display:none}
@@ -135,7 +134,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .tq-spinner-ring{width:32px;height:32px;border:2px solid var(--border2);border-top-color:var(--coral);border-radius:50%;animation:spin 0.7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .tq-spinner-text{font-size:13px;color:var(--text3);font-weight:300}
-/* Auth modal */
 .auth-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;padding:1rem}
 .auth-modal-bg.open{display:flex}
 .auth-modal{background:var(--bg);border-radius:20px;padding:2rem;width:100%;max-width:380px;border:0.5px solid var(--border2)}
@@ -326,7 +324,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
   <div class="tq-footer">
     Made with <em>Tripiq</em> &middot; Built by Deep Shah<br>
-    <span style="font-size:10px;color:var(--text3);">Itineraries are AI-generated suggestions only. Always verify details before travel. Tripiq is not responsible for any inaccuracies.</span>
+    <span style="font-size:10px;color:var(--text3);">Itineraries are AI-generated suggestions only. Always verify details before travel.</span>
   </div>
 </div>
 
@@ -377,7 +375,6 @@ function updateAuthUI(){
     const initials=(currentUser.user_metadata?.full_name||currentUser.email||'?').charAt(0).toUpperCase();
     document.getElementById('user-avatar-btn').textContent=initials;
     document.getElementById('user-email-display').textContent=currentUser.email;
-    // Highlight save button for logged-in users
     if(saveBtn) saveBtn.classList.add('save-highlight');
   }else{
     signinBtn.style.display='flex';
@@ -476,8 +473,8 @@ document.getElementById('surprise-btn').addEventListener('click',()=>{
   document.querySelectorAll('.tq-pill').forEach(p=>{p.classList.remove('on');if(p.dataset.v==randomDays)p.classList.add('on');});
   days=randomDays;
   const btn=document.getElementById('surprise-btn');
-  btn.textContent='&#x2728; '+dest+' it is!';
-  setTimeout(()=>{btn.innerHTML='<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v2M8 13v2M1 8h2M13 8h2M2.93 2.93l1.41 1.41M11.66 11.66l1.41 1.41M2.93 13.07l1.41-1.41M11.66 4.34l1.41-1.41" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/></svg> Surprise me &#x2014; pick a random destination';},2500);
+  btn.textContent='\u2728 '+dest+' it is!';
+  setTimeout(()=>{btn.innerHTML='<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v2M8 13v2M1 8h2M13 8h2M2.93 2.93l1.41 1.41M11.66 11.66l1.41 1.41M2.93 13.07l1.41-1.41M11.66 4.34l1.41-1.41" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/></svg> Surprise me \u2014 pick a random destination';},2500);
 });
 
 const destInput=document.getElementById('dest');
@@ -520,7 +517,7 @@ function setSaved(arr){localStorage.setItem('tripiq_saved',JSON.stringify(arr));
 async function loadCloudSaved(){
   if(!currentUser)return;
   const{data,error}=await sb.from('itineraries').select('*').eq('user_id',currentUser.id).order('created_at',{ascending:false}).limit(20);
-  if(error||!data)return;
+  if(error||!data||!data.length){renderSavedList();return;}
   const cloudItems=data.map(r=>({...r.data,id:r.id,cloud:true}));
   renderSavedList(cloudItems);
 }
@@ -529,9 +526,9 @@ function renderSavedList(cloudItems){
   const arr=cloudItems||getSaved();
   const list=document.getElementById('saved-list');
   const items=document.getElementById('saved-items');
-  if(!arr.length){list.classList.remove('show');return;}
+  if(!arr||!arr.length){list.classList.remove('show');return;}
   list.classList.add('show');
-  items.innerHTML=arr.map((s,i)=>`<div class="tq-saved-item" data-idx="${i}"><div><div class="tq-saved-item-name">${s.title}</div><div class="tq-saved-item-meta">${s.subtitle}${s.cloud?' &middot; &#x2601;':''}</div></div><button class="tq-saved-item-del" data-idx="${i}" data-id="${s.id||''}">&#x2715;</button></div>`).join('');
+  items.innerHTML=arr.map((s,i)=>`<div class="tq-saved-item" data-idx="${i}"><div><div class="tq-saved-item-name">${s.title||'Untitled'}</div><div class="tq-saved-item-meta">${s.subtitle||''}${s.cloud?' \u00b7 \u2601':''}</div></div><button class="tq-saved-item-del" data-idx="${i}" data-id="${s.id||''}">&#x2715;</button></div>`).join('');
   const itemsArr=arr;
   items.querySelectorAll('.tq-saved-item').forEach((el,i)=>{
     el.addEventListener('click',e=>{if(e.target.classList.contains('tq-saved-item-del'))return;loadSaved(itemsArr[i]);});
@@ -553,6 +550,7 @@ function loadSaved(itin){
   document.getElementById('booking-section').style.display='block';
   document.getElementById('form-view').style.display='none';
   document.getElementById('result-view').style.display='block';
+  updateAuthUI();
 }
 renderSavedList();
 
@@ -601,22 +599,29 @@ document.getElementById('back-btn').addEventListener('click',()=>{
   currentItinerary=null;
 });
 
-async function autoSaveToCloud(itin){
-  if(!currentUser||!itin)return;
-  await sb.from('itineraries').upsert({user_id:currentUser.id,title:itin.title,subtitle:itin.subtitle,destination:itin.title.split(' in ').slice(1).join(' in '),days:itin.days.length,data:itin});
-  loadCloudSaved();
+async function saveToCloud(itin){
+  if(!currentUser||!itin)return false;
+  const{error}=await sb.from('itineraries').insert({
+    user_id:currentUser.id,
+    title:itin.title,
+    subtitle:itin.subtitle,
+    destination:itin.title.split(' in ').slice(1).join(' in '),
+    days:itin.days.length,
+    data:itin
+  });
+  if(!error) loadCloudSaved();
+  return !error;
 }
 
 document.getElementById('btn-save').addEventListener('click',async()=>{
   if(!currentItinerary)return;
   const btn=document.getElementById('btn-save');
   if(currentUser){
-    const{error}=await sb.from('itineraries').upsert({user_id:currentUser.id,title:currentItinerary.title,subtitle:currentItinerary.subtitle,destination:currentItinerary.title.split(' in ').slice(1).join(' in '),days:currentItinerary.days.length,data:currentItinerary});
-    if(!error){
+    const ok=await saveToCloud(currentItinerary);
+    if(ok){
       btn.classList.add('success');
       btn.querySelector('svg').innerHTML='<path d="M3 9l4 4 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
       setTimeout(()=>{btn.classList.remove('success');btn.classList.add('save-highlight');btn.querySelector('svg').innerHTML='<path d="M3 3h9l3 3v9a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.3"/><path d="M6 3v4h6V3M6 16v-5h6v5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>';},2000);
-      loadCloudSaved();
     }
   }else{
     const arr=getSaved();
@@ -658,18 +663,16 @@ async function generateItinerary(dest,numDays,travelStyle,travelBudget,interests
   const arrivalInfo=arrDate?(`, arriving ${arrDate}${arrTime?' at '+arrTime:''}`):'';
   const prompt=`You are an expert travel planner. Create a detailed ${numDays}-day itinerary for ${dest} for a ${travelStyle} group with a ${travelBudget} budget${arrivalInfo}${interests?`, with interests in: ${interests}`:''}.
 
-IMPORTANT RULES:
-- Include ONLY real, well-known, verified attractions, restaurants and places that actually exist in ${dest}
-- For each day include 4-6 activities with specific real place names
-- Cover the most iconic and must-see spots that ${dest} is famous for - do not miss major landmarks
-- Tailor recommendations to ${travelBudget} budget
-- Consider arrival time for Day 1 - if arriving late, only suggest evening activities
-- Mix famous landmarks with local hidden gems
-- Include meal recommendations with specific restaurant names
-- Add practical tips in the note field
+RULES:
+- Only use real, verified place names that exist in ${dest}
+- Include 4-6 activities per day with specific real place names
+- Always include the most iconic must-see landmarks ${dest} is famous for
+- Mix famous landmarks with local gems
+- Include specific restaurant names for meals
+- Keep each activity note to ONE short sentence only — no more
 
-Respond ONLY with a raw JSON object. No markdown. No backticks. No explanation. Start with { and end with }:
-{"title":"${numDays} Days in ${dest.split(',')[0]}","subtitle":"${travelStyle} trip \u00b7 ${numDays} days${arrDate?' \u00b7 Arriving '+arrDate:''}","days":[{"day":1,"theme":"Theme name","activities":[{"time":"9:00 AM","name":"Real Place Name","note":"Practical tip"}]}]}`;
+Respond ONLY with raw JSON, no markdown, no backticks:
+{"title":"${numDays} Days in ${dest.split(',')[0]}","subtitle":"${travelStyle} trip \u00b7 ${numDays} days${arrDate?' \u00b7 Arriving '+arrDate:''}","days":[{"day":1,"theme":"Theme name","activities":[{"time":"9:00 AM","name":"Place Name","note":"One short sentence tip."}]}]}`;
   try{
     const res=await fetch('/api/itinerary',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
     if(!res.ok){const e=await res.json();throw new Error(e.error||'Server error');}
@@ -685,8 +688,9 @@ Respond ONLY with a raw JSON object. No markdown. No backticks. No explanation. 
     document.getElementById('booking-section').style.display='block';
     updateBookingLinks(dest,arrDate,numDays);
     renderDays(p.days);
+    updateAuthUI();
     // Auto-save to cloud if logged in
-    if(currentUser) autoSaveToCloud(p);
+    if(currentUser) saveToCloud(p);
   }catch(e){
     document.getElementById('spinner').classList.remove('show');
     document.getElementById('form-view').style.display='block';
