@@ -16,41 +16,28 @@
 <link rel="apple-touch-icon" href="/icon-192.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-
-/* Dark mode variables */
-:root{
-  --bg:#FAFAF8;--bg2:#fff;--bg3:#F5F2EF;
-  --text:#1a1a1a;--text2:#6b6560;--text3:#aaa;
-  --border:#DDD8D2;--border2:#E8E4DF;
-  --card:#fff;--coral:#E8604C;--coral-light:#FFF5F3;--coral-border:#F5C4BB;
-}
-[data-theme="dark"]{
-  --bg:#1a1a1a;--bg2:#252525;--bg3:#2e2e2e;
-  --text:#f0ede8;--text2:#a09890;--text3:#666;
-  --border:#3a3a3a;--border2:#333;
-  --card:#252525;--coral:#E8604C;--coral-light:#2a1f1c;--coral-border:#5a2a1f;
-}
-
+:root{--bg:#FAFAF8;--bg2:#fff;--bg3:#F5F2EF;--text:#1a1a1a;--text2:#6b6560;--text3:#aaa;--border:#DDD8D2;--border2:#E8E4DF;--card:#fff;--coral:#E8604C;--coral-light:#FFF5F3;--coral-border:#F5C4BB;}
+[data-theme="dark"]{--bg:#1a1a1a;--bg2:#252525;--bg3:#2e2e2e;--text:#f0ede8;--text2:#a09890;--text3:#666;--border:#3a3a3a;--border2:#333;--card:#252525;--coral:#E8604C;--coral-light:#2a1f1c;--coral-border:#5a2a1f;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background 0.2s,color 0.2s}
 .tq{max-width:480px;margin:0 auto;padding:2.5rem 1.5rem 4rem}
-
-/* Header with dark mode toggle */
 .tq-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
 .tq-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
 .tq-logomark{width:40px;height:40px;border-radius:12px;background:var(--coral);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .tq-logomark svg{width:22px;height:22px}
 .tq-brandname{font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);letter-spacing:-0.3px}
 .tq-brandname em{color:var(--coral);font-style:normal}
+.tq-header-right{display:flex;align-items:center;gap:8px}
 .tq-theme-btn{background:none;border:0.5px solid var(--border);border-radius:20px;padding:6px 12px;cursor:pointer;font-size:13px;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.12s;display:flex;align-items:center;gap:6px}
 .tq-theme-btn:hover{border-color:var(--coral);color:var(--coral)}
-
+.tq-auth-btn{background:none;border:0.5px solid var(--border);border-radius:20px;padding:6px 12px;cursor:pointer;font-size:13px;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.12s;display:flex;align-items:center;gap:6px}
+.tq-auth-btn:hover{border-color:var(--coral);color:var(--coral)}
 .tq-hero{border-top:1px solid var(--border2);padding-top:1.25rem;margin-bottom:2rem}
 .tq-hero h1{font-family:'DM Serif Display',serif;font-size:30px;font-weight:400;color:var(--text);line-height:1.2;margin-bottom:8px}
 .tq-hero h1 em{font-style:italic;color:var(--coral)}
 .tq-hero p{font-size:14px;color:var(--text2);font-weight:300;line-height:1.65}
-
 .tq-field{margin-bottom:1.75rem;position:relative}
 .tq-label{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;display:block}
 .tq-label span{font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:var(--text3)}
@@ -92,11 +79,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .tq-custom{display:none;margin-top:8px}
 .tq-custom.show{display:block}
 .tq-err{background:var(--coral-light);border:1px solid var(--coral-border);border-radius:10px;padding:10px 14px;font-size:13px;color:#C0392B;margin-bottom:1.25rem;display:none;font-weight:300}
-
-/* Surprise me button */
 .tq-surprise{width:100%;padding:13px;font-size:14px;font-weight:400;font-family:'DM Sans',sans-serif;border:1px dashed var(--border);border-radius:12px;background:none;color:var(--text2);cursor:pointer;transition:all 0.15s;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px}
 .tq-surprise:hover{border-color:var(--coral);color:var(--coral);background:var(--coral-light)}
-
 .tq-submit{width:100%;padding:15px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;border:none;border-radius:12px;background:var(--coral);color:#fff;cursor:pointer;letter-spacing:0.01em;transition:background 0.15s,transform 0.1s}
 .tq-submit:hover{background:#D4503C}
 .tq-submit:active{transform:scale(0.99)}
@@ -148,7 +132,34 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .tq-spinner-ring{width:32px;height:32px;border:2px solid var(--border2);border-top-color:var(--coral);border-radius:50%;animation:spin 0.7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .tq-spinner-text{font-size:13px;color:var(--text3);font-weight:300}
-@media print{.tq-actions,.tq-back,.tq-footer,.tq-saved-list,.tq-booking,.tq-header .tq-theme-btn{display:none!important}body{background:#fff}.tq{padding:1rem}}
+/* Auth modal */
+.auth-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;padding:1rem}
+.auth-modal-bg.open{display:flex}
+.auth-modal{background:var(--bg);border-radius:20px;padding:2rem;width:100%;max-width:380px;border:0.5px solid var(--border2)}
+.auth-modal-title{font-family:'DM Serif Display',serif;font-size:24px;font-weight:400;color:var(--text);margin-bottom:6px}
+.auth-modal-sub{font-size:13px;color:var(--text2);font-weight:300;margin-bottom:1.5rem}
+.auth-tabs{display:flex;gap:4px;background:var(--bg3);border-radius:10px;padding:4px;margin-bottom:1.5rem}
+.auth-tab{flex:1;padding:8px;text-align:center;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;border:none;background:none;cursor:pointer;border-radius:8px;color:var(--text2);transition:all 0.12s}
+.auth-tab.on{background:var(--bg2);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,0.08)}
+.auth-input{width:100%;padding:12px 14px;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:300;border:1px solid var(--border);border-radius:10px;background:var(--bg2);color:var(--text);outline:none;margin-bottom:10px;transition:border-color 0.15s}
+.auth-input:focus{border-color:var(--coral);box-shadow:0 0 0 3px rgba(232,96,76,0.1)}
+.auth-input::placeholder{color:var(--text3)}
+.auth-submit{width:100%;padding:13px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;border:none;border-radius:10px;background:var(--coral);color:#fff;cursor:pointer;margin-top:6px;transition:background 0.15s}
+.auth-submit:hover{background:#D4503C}
+.auth-submit:disabled{background:var(--coral-border);cursor:not-allowed}
+.auth-err{font-size:12px;color:#C0392B;margin-bottom:8px;display:none;background:var(--coral-light);padding:8px 12px;border-radius:8px}
+.auth-close{background:none;border:none;cursor:pointer;color:var(--text3);float:right;font-size:20px;margin-top:-8px;margin-right:-8px}
+.auth-divider{text-align:center;font-size:12px;color:var(--text3);margin:12px 0}
+.user-menu{position:relative}
+.user-avatar{width:32px;height:32px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:#fff;cursor:pointer;border:none;transition:opacity 0.12s}
+.user-avatar:hover{opacity:0.88}
+.user-dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;padding:8px;min-width:160px;box-shadow:0 4px 16px rgba(0,0,0,0.12);display:none;z-index:200}
+.user-dropdown.open{display:block}
+.user-email{font-size:12px;color:var(--text2);padding:6px 10px;border-bottom:0.5px solid var(--border2);margin-bottom:4px;font-weight:300}
+.user-menu-item{padding:8px 10px;font-size:13px;color:var(--text);cursor:pointer;border-radius:8px;transition:background 0.1s;background:none;border:none;width:100%;text-align:left;font-family:'DM Sans',sans-serif}
+.user-menu-item:hover{background:var(--bg3)}
+.user-menu-item.danger{color:#C0392B}
+@media print{.tq-actions,.tq-back,.tq-footer,.tq-saved-list,.tq-booking,.tq-header-right{display:none!important}body{background:#fff}.tq{padding:1rem}}
 </style>
 </head>
 <body>
@@ -163,10 +174,26 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       </div>
       <div class="tq-brandname">Trip<em>iq</em></div>
     </a>
-    <button class="tq-theme-btn" id="theme-btn">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M7 1v1M7 12v1M1 7h1M12 7h1M2.93 2.93l.7.7M10.37 10.37l.7.7M2.93 11.07l.7-.7M10.37 3.63l.7-.7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-      Light
-    </button>
+    <div class="tq-header-right">
+      <button class="tq-theme-btn" id="theme-btn">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M7 1v1M7 12v1M1 7h1M12 7h1M2.93 2.93l.7.7M10.37 10.37l.7.7M2.93 11.07l.7-.7M10.37 3.63l.7-.7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        Light
+      </button>
+      <div id="auth-area">
+        <button class="tq-auth-btn" id="signin-btn">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="4" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 12c0-3 2.46-5 5.5-5s5.5 2 5.5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Sign in
+        </button>
+        <div class="user-menu" id="user-menu" style="display:none">
+          <button class="user-avatar" id="user-avatar-btn">?</button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email" id="user-email-display"></div>
+            <button class="user-menu-item" id="view-trips-btn">My saved trips</button>
+            <button class="user-menu-item danger" id="signout-btn">Sign out</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="tq-hero">
@@ -216,19 +243,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="tq-field">
       <label class="tq-label">Who's travelling?</label>
       <div class="tq-styles">
-        <div class="tq-sty" data-v="Family"><span class="tq-sty-icon">👨‍👩‍👧</span><span class="tq-sty-name">Family</span></div>
-        <div class="tq-sty" data-v="Couple"><span class="tq-sty-icon">💑</span><span class="tq-sty-name">Couple</span></div>
-        <div class="tq-sty" data-v="Solo"><span class="tq-sty-icon">🎒</span><span class="tq-sty-name">Solo</span></div>
-        <div class="tq-sty" data-v="Business"><span class="tq-sty-icon">💼</span><span class="tq-sty-name">Business</span></div>
-        <div class="tq-sty on" data-v="Friends"><span class="tq-sty-icon">🎉</span><span class="tq-sty-name">Friends</span></div>
+        <div class="tq-sty" data-v="Family"><span class="tq-sty-icon">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;</span><span class="tq-sty-name">Family</span></div>
+        <div class="tq-sty" data-v="Couple"><span class="tq-sty-icon">&#x1F491;</span><span class="tq-sty-name">Couple</span></div>
+        <div class="tq-sty" data-v="Solo"><span class="tq-sty-icon">&#x1F392;</span><span class="tq-sty-name">Solo</span></div>
+        <div class="tq-sty" data-v="Business"><span class="tq-sty-icon">&#x1F4BC;</span><span class="tq-sty-name">Business</span></div>
+        <div class="tq-sty on" data-v="Friends"><span class="tq-sty-icon">&#x1F389;</span><span class="tq-sty-name">Friends</span></div>
       </div>
     </div>
     <div class="tq-field">
       <label class="tq-label">What's your budget?</label>
       <div class="tq-budgets">
-        <div class="tq-budget" data-v="budget"><span class="tq-budget-icon">🎒</span><span class="tq-budget-name">Budget</span><span class="tq-budget-desc">Hostels & street food</span></div>
-        <div class="tq-budget on" data-v="mid-range"><span class="tq-budget-icon">✈️</span><span class="tq-budget-name">Mid-range</span><span class="tq-budget-desc">Hotels & restaurants</span></div>
-        <div class="tq-budget" data-v="luxury"><span class="tq-budget-icon">💎</span><span class="tq-budget-name">Luxury</span><span class="tq-budget-desc">5-star & fine dining</span></div>
+        <div class="tq-budget" data-v="budget"><span class="tq-budget-icon">&#x1F392;</span><span class="tq-budget-name">Budget</span><span class="tq-budget-desc">Hostels & street food</span></div>
+        <div class="tq-budget on" data-v="mid-range"><span class="tq-budget-icon">&#x2708;&#xFE0F;</span><span class="tq-budget-name">Mid-range</span><span class="tq-budget-desc">Hotels & restaurants</span></div>
+        <div class="tq-budget" data-v="luxury"><span class="tq-budget-icon">&#x1F48E;</span><span class="tq-budget-name">Luxury</span><span class="tq-budget-desc">5-star & fine dining</span></div>
       </div>
     </div>
     <div class="tq-field">
@@ -240,7 +267,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v2M8 13v2M1 8h2M13 8h2M2.93 2.93l1.41 1.41M11.66 11.66l1.41 1.41M2.93 13.07l1.41-1.41M11.66 4.34l1.41-1.41" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/></svg>
       Surprise me — pick a random destination
     </button>
-    <button class="tq-submit" id="gen-btn">Build my itinerary →</button>
+    <button class="tq-submit" id="gen-btn">Build my itinerary &#x2192;</button>
   </div>
 
   <div id="result-view" style="display:none">
@@ -274,22 +301,22 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
           <div><span class="tq-booking-label">Booking.com</span><span class="tq-booking-sub">Find hotels</span></div>
         </a>
         <a class="tq-booking-btn" id="link-skyscanner" href="#" target="_blank" rel="noopener">
-          <div class="tq-booking-icon" style="background:#0770E3;color:#fff;font-size:13px;">✈</div>
+          <div class="tq-booking-icon" style="background:#0770E3;color:#fff;font-size:13px;">&#x2708;</div>
           <div><span class="tq-booking-label">Skyscanner</span><span class="tq-booking-sub">Find flights</span></div>
         </a>
         <a class="tq-booking-btn" id="link-airbnb" href="#" target="_blank" rel="noopener">
-          <div class="tq-booking-icon" style="background:#FF5A5F;color:#fff;font-size:14px;">⌂</div>
+          <div class="tq-booking-icon" style="background:#FF5A5F;color:#fff;font-size:14px;">&#x2302;</div>
           <div><span class="tq-booking-label">Airbnb</span><span class="tq-booking-sub">Find stays</span></div>
         </a>
         <a class="tq-booking-btn" id="link-viator" href="#" target="_blank" rel="noopener">
-          <div class="tq-booking-icon" style="background:#28A745;color:#fff;font-size:13px;">🎫</div>
+          <div class="tq-booking-icon" style="background:#28A745;color:#fff;font-size:13px;">&#x1F3AB;</div>
           <div><span class="tq-booking-label">Viator</span><span class="tq-booking-sub">Find activities</span></div>
         </a>
       </div>
     </div>
     <div class="tq-spinner" id="spinner">
       <div class="tq-spinner-ring"></div>
-      <div class="tq-spinner-text">Building your itinerary…</div>
+      <div class="tq-spinner-text">Building your itinerary...</div>
     </div>
     <div id="itin-days"></div>
   </div>
@@ -300,8 +327,133 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   </div>
 </div>
 
+<!-- Auth Modal -->
+<div class="auth-modal-bg" id="auth-modal">
+  <div class="auth-modal">
+    <button class="auth-close" id="auth-modal-close">x</button>
+    <div class="auth-modal-title">Welcome to Tripiq</div>
+    <div class="auth-modal-sub">Sign in to save trips across all your devices.</div>
+    <div class="auth-tabs">
+      <button class="auth-tab on" id="tab-signin">Sign in</button>
+      <button class="auth-tab" id="tab-signup">Create account</button>
+    </div>
+    <div id="auth-err" class="auth-err"></div>
+    <input class="auth-input" id="auth-email" type="email" placeholder="Email address"/>
+    <input class="auth-input" id="auth-password" type="password" placeholder="Password"/>
+    <input class="auth-input" id="auth-name" type="text" placeholder="Full name" style="display:none"/>
+    <button class="auth-submit" id="auth-submit-btn">Sign in</button>
+    <div class="auth-divider">Your trips are private and secure</div>
+  </div>
+</div>
+
 <script>
-let days=7,style='Friends',budget='mid-range',selectedDest='',currentItinerary=null;
+const SUPABASE_URL='https://earklxhdnnhrkqyslhnj.supabase.co';
+const SUPABASE_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVhcmtseGhkbm5ocmtxeXNsaG5qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwOTAxNzEsImV4cCI6MjA4OTY2NjE3MX0.Mg7rsuRYJ-ST-zaPKw2xzaRw72E4RHKdVUu-4GCnsqA';
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON);
+
+let days=7,style='Friends',budget='mid-range',selectedDest='',currentItinerary=null,currentUser=null;
+
+// Auth state
+sb.auth.onAuthStateChange((event,session)=>{
+  currentUser=session?.user||null;
+  updateAuthUI();
+  if(currentUser) loadCloudSaved();
+});
+sb.auth.getSession().then(({data:{session}})=>{
+  currentUser=session?.user||null;
+  updateAuthUI();
+  if(currentUser) loadCloudSaved();
+});
+
+function updateAuthUI(){
+  const signinBtn=document.getElementById('signin-btn');
+  const userMenu=document.getElementById('user-menu');
+  if(currentUser){
+    signinBtn.style.display='none';
+    userMenu.style.display='block';
+    const initials=(currentUser.user_metadata?.full_name||currentUser.email||'?').charAt(0).toUpperCase();
+    document.getElementById('user-avatar-btn').textContent=initials;
+    document.getElementById('user-email-display').textContent=currentUser.email;
+  }else{
+    signinBtn.style.display='flex';
+    userMenu.style.display='none';
+  }
+}
+
+// Auth modal
+let authMode='signin';
+document.getElementById('signin-btn').addEventListener('click',()=>{
+  document.getElementById('auth-modal').classList.add('open');
+});
+document.getElementById('auth-modal-close').addEventListener('click',()=>{
+  document.getElementById('auth-modal').classList.remove('open');
+});
+document.getElementById('auth-modal').addEventListener('click',e=>{
+  if(e.target===document.getElementById('auth-modal')) document.getElementById('auth-modal').classList.remove('open');
+});
+document.getElementById('tab-signin').addEventListener('click',()=>{
+  authMode='signin';
+  document.getElementById('tab-signin').classList.add('on');
+  document.getElementById('tab-signup').classList.remove('on');
+  document.getElementById('auth-name').style.display='none';
+  document.getElementById('auth-submit-btn').textContent='Sign in';
+  document.getElementById('auth-err').style.display='none';
+});
+document.getElementById('tab-signup').addEventListener('click',()=>{
+  authMode='signup';
+  document.getElementById('tab-signup').classList.add('on');
+  document.getElementById('tab-signin').classList.remove('on');
+  document.getElementById('auth-name').style.display='block';
+  document.getElementById('auth-submit-btn').textContent='Create account';
+  document.getElementById('auth-err').style.display='none';
+});
+document.getElementById('auth-submit-btn').addEventListener('click',async()=>{
+  const email=document.getElementById('auth-email').value.trim();
+  const password=document.getElementById('auth-password').value;
+  const name=document.getElementById('auth-name').value.trim();
+  const errEl=document.getElementById('auth-err');
+  errEl.style.display='none';
+  if(!email||!password){errEl.textContent='Please fill in all fields.';errEl.style.display='block';return;}
+  const btn=document.getElementById('auth-submit-btn');
+  btn.disabled=true;btn.textContent='Please wait...';
+  try{
+    let result;
+    if(authMode==='signup'){
+      result=await sb.auth.signUp({email,password,options:{data:{full_name:name}}});
+      if(!result.error) {errEl.textContent='Account created! Please check your email to verify.';errEl.style.display='block';errEl.style.color='#27ae60';}
+    }else{
+      result=await sb.auth.signInWithPassword({email,password});
+      if(!result.error) document.getElementById('auth-modal').classList.remove('open');
+    }
+    if(result.error) throw result.error;
+  }catch(e){
+    errEl.textContent=e.message||'Something went wrong.';
+    errEl.style.display='block';
+    errEl.style.color='#C0392B';
+  }finally{
+    btn.disabled=false;
+    btn.textContent=authMode==='signup'?'Create account':'Sign in';
+  }
+});
+
+// User menu dropdown
+document.getElementById('user-avatar-btn').addEventListener('click',()=>{
+  document.getElementById('user-dropdown').classList.toggle('open');
+});
+document.addEventListener('click',e=>{
+  if(!document.getElementById('user-menu').contains(e.target)){
+    document.getElementById('user-dropdown').classList.remove('open');
+  }
+});
+document.getElementById('signout-btn').addEventListener('click',async()=>{
+  await sb.auth.signOut();
+  document.getElementById('user-dropdown').classList.remove('open');
+  renderSavedList();
+});
+document.getElementById('view-trips-btn').addEventListener('click',()=>{
+  document.getElementById('user-dropdown').classList.remove('open');
+  loadCloudSaved();
+});
 
 // Dark mode
 const themeBtn=document.getElementById('theme-btn');
@@ -322,7 +474,7 @@ themeBtn.addEventListener('click',()=>{
 });
 
 const CITIES=[
-  {name:'Tokyo',country:'Japan'},{name:'Kyoto',country:'Japan'},{name:'Osaka',country:'Japan'},{name:'Sapporo',country:'Japan'},
+  {name:'Tokyo',country:'Japan'},{name:'Kyoto',country:'Japan'},{name:'Osaka',country:'Japan'},{name:'Sapporo',country:'Japan'},{name:'Nara',country:'Japan'},
   {name:'Bangkok',country:'Thailand'},{name:'Phuket',country:'Thailand'},{name:'Chiang Mai',country:'Thailand'},{name:'Koh Samui',country:'Thailand'},
   {name:'Paris',country:'France'},{name:'Nice',country:'France'},{name:'Lyon',country:'France'},{name:'Marseille',country:'France'},
   {name:'London',country:'United Kingdom'},{name:'Edinburgh',country:'United Kingdom'},{name:'Manchester',country:'United Kingdom'},
@@ -337,7 +489,7 @@ const CITIES=[
   {name:'Lisbon',country:'Portugal'},{name:'Porto',country:'Portugal'},
   {name:'Prague',country:'Czech Republic'},{name:'Vienna',country:'Austria'},{name:'Budapest',country:'Hungary'},
   {name:'Copenhagen',country:'Denmark'},{name:'Stockholm',country:'Sweden'},{name:'Oslo',country:'Norway'},
-  {name:'Mexico City',country:'Mexico'},{name:'Cancún',country:'Mexico'},
+  {name:'Mexico City',country:'Mexico'},{name:'Cancun',country:'Mexico'},
   {name:'Buenos Aires',country:'Argentina'},{name:'Rio de Janeiro',country:'Brazil'},
   {name:'Toronto',country:'Canada'},{name:'Vancouver',country:'Canada'},{name:'Montreal',country:'Canada'},
   {name:'Seoul',country:'South Korea'},{name:'Busan',country:'South Korea'},
@@ -356,20 +508,13 @@ document.getElementById('surprise-btn').addEventListener('click',()=>{
   const dest=`${random.name}, ${random.country}`;
   document.getElementById('dest').value=dest;
   selectedDest=dest;
-  // Pick random days
   const dayOptions=[3,5,7,10];
   const randomDays=dayOptions[Math.floor(Math.random()*dayOptions.length)];
-  document.querySelectorAll('.tq-pill').forEach(p=>{
-    p.classList.remove('on');
-    if(p.dataset.v==randomDays)p.classList.add('on');
-  });
+  document.querySelectorAll('.tq-pill').forEach(p=>{p.classList.remove('on');if(p.dataset.v==randomDays)p.classList.add('on');});
   days=randomDays;
-  // Animate the button
   const btn=document.getElementById('surprise-btn');
   btn.textContent='✨ '+dest+' it is!';
-  setTimeout(()=>{
-    btn.innerHTML='<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v2M8 13v2M1 8h2M13 8h2M2.93 2.93l1.41 1.41M11.66 11.66l1.41 1.41M2.93 13.07l1.41-1.41M11.66 4.34l1.41-1.41" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/></svg> Surprise me — pick a random destination';
-  },2500);
+  setTimeout(()=>{btn.innerHTML='<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v2M8 13v2M1 8h2M13 8h2M2.93 2.93l1.41 1.41M11.66 11.66l1.41 1.41M2.93 13.07l1.41-1.41M11.66 4.34l1.41-1.41" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/></svg> Surprise me — pick a random destination';},2500);
 });
 
 const destInput=document.getElementById('dest');
@@ -404,37 +549,47 @@ document.querySelectorAll('.tq-pill').forEach(c=>{
 });
 document.getElementById('custom-days').addEventListener('input',e=>{days=parseInt(e.target.value)||null});
 document.querySelectorAll('.tq-sty').forEach(c=>{
-  c.addEventListener('click',()=>{
-    document.querySelectorAll('.tq-sty').forEach(x=>x.classList.remove('on'));
-    c.classList.add('on');style=c.dataset.v;
-  });
+  c.addEventListener('click',()=>{document.querySelectorAll('.tq-sty').forEach(x=>x.classList.remove('on'));c.classList.add('on');style=c.dataset.v;});
 });
 document.querySelectorAll('.tq-budget').forEach(c=>{
-  c.addEventListener('click',()=>{
-    document.querySelectorAll('.tq-budget').forEach(x=>x.classList.remove('on'));
-    c.classList.add('on');budget=c.dataset.v;
-  });
+  c.addEventListener('click',()=>{document.querySelectorAll('.tq-budget').forEach(x=>x.classList.remove('on'));c.classList.add('on');budget=c.dataset.v;});
 });
 
+// Saved itineraries — local + cloud
 function getSaved(){try{return JSON.parse(localStorage.getItem('tripiq_saved')||'[]');}catch(e){return[];}}
 function setSaved(arr){localStorage.setItem('tripiq_saved',JSON.stringify(arr));}
-function renderSavedList(){
-  const arr=getSaved();
+
+async function loadCloudSaved(){
+  if(!currentUser)return;
+  const{data,error}=await sb.from('itineraries').select('*').eq('user_id',currentUser.id).order('created_at',{ascending:false}).limit(20);
+  if(error||!data)return;
+  const cloudItems=data.map(r=>({...r.data,id:r.id,cloud:true}));
+  renderSavedList(cloudItems);
+}
+
+function renderSavedList(cloudItems){
+  const arr=cloudItems||getSaved();
   const list=document.getElementById('saved-list');
   const items=document.getElementById('saved-items');
   if(!arr.length){list.classList.remove('show');return;}
   list.classList.add('show');
-  items.innerHTML=arr.map((s,i)=>`<div class="tq-saved-item" data-idx="${i}"><div><div class="tq-saved-item-name">${s.title}</div><div class="tq-saved-item-meta">${s.subtitle}</div></div><button class="tq-saved-item-del" data-idx="${i}">×</button></div>`).join('');
-  items.querySelectorAll('.tq-saved-item').forEach(el=>{
+  items.innerHTML=arr.map((s,i)=>`<div class="tq-saved-item" data-idx="${i}"><div><div class="tq-saved-item-name">${s.title}</div><div class="tq-saved-item-meta">${s.subtitle}${s.cloud?' · ☁':''}` +`</div></div><button class="tq-saved-item-del" data-idx="${i}" data-id="${s.id||''}">x</button></div>`).join('');
+  const itemsArr=arr;
+  items.querySelectorAll('.tq-saved-item').forEach((el,i)=>{
     el.addEventListener('click',e=>{
       if(e.target.classList.contains('tq-saved-item-del'))return;
-      loadSaved(getSaved()[parseInt(el.dataset.idx)]);
+      loadSaved(itemsArr[i]);
     });
   });
-  items.querySelectorAll('.tq-saved-item-del').forEach(btn=>{
-    btn.addEventListener('click',e=>{
+  items.querySelectorAll('.tq-saved-item-del').forEach((btn,i)=>{
+    btn.addEventListener('click',async e=>{
       e.stopPropagation();
-      const arr=getSaved();arr.splice(parseInt(btn.dataset.idx),1);setSaved(arr);renderSavedList();
+      if(itemsArr[i].cloud&&itemsArr[i].id){
+        await sb.from('itineraries').delete().eq('id',itemsArr[i].id);
+        loadCloudSaved();
+      }else{
+        const a=getSaved();a.splice(i,1);setSaved(a);renderSavedList();
+      }
     });
   });
 }
@@ -459,14 +614,7 @@ function renderDays(daysArr){
     const destName=currentItinerary.title.split(' in ').slice(1).join(' in ');
     const places=d.activities.map(a=>encodeURIComponent(a.name+' '+destName));
     const mapsUrl=`https://www.google.com/maps/dir/${places.join('/')}`;
-    el.innerHTML=`<div class="tq-day-label">Day ${d.day}</div>
-      <div class="tq-day-theme">
-        <span>${d.theme}</span>
-        <a href="${mapsUrl}" target="_blank" rel="noopener" class="tq-maps-btn">
-          <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1C3.57 1 2 2.57 2 4.5c0 2.63 3.5 5.5 3.5 5.5S9 7.13 9 4.5C9 2.57 7.43 1 5.5 1z" stroke="currentColor" stroke-width="1.1"/><circle cx="5.5" cy="4.5" r="1.2" stroke="currentColor" stroke-width="1.1"/></svg>
-          View on Maps
-        </a>
-      </div>`+
+    el.innerHTML=`<div class="tq-day-label">Day ${d.day}</div><div class="tq-day-theme"><span>${d.theme}</span><a href="${mapsUrl}" target="_blank" rel="noopener" class="tq-maps-btn"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1C3.57 1 2 2.57 2 4.5c0 2.63 3.5 5.5 3.5 5.5S9 7.13 9 4.5C9 2.57 7.43 1 5.5 1z" stroke="currentColor" stroke-width="1.1"/><circle cx="5.5" cy="4.5" r="1.2" stroke="currentColor" stroke-width="1.1"/></svg>View on Maps</a></div>`+
       d.activities.map(a=>`<div class="tq-act"><div class="tq-act-time">${a.time}</div><div><div class="tq-act-name">${a.name}</div>${a.note?`<div class="tq-act-note">${a.note}</div>`:''}</div></div>`).join('');
     cont.appendChild(el);
   });
@@ -485,8 +633,8 @@ function updateBookingLinks(dest,arrDate,numDays){
 function formatPlainText(itin){
   let text=`${itin.title}\n${itin.subtitle}\n\n`;
   itin.days.forEach(d=>{
-    text+=`DAY ${d.day} — ${d.theme.toUpperCase()}\n`;
-    d.activities.forEach(a=>{text+=`  ${a.time.padEnd(10)}${a.name}${a.note?' — '+a.note:''}\n`;});
+    text+=`DAY ${d.day} - ${d.theme.toUpperCase()}\n`;
+    d.activities.forEach(a=>{text+=`  ${a.time.padEnd(10)}${a.name}${a.note?' - '+a.note:''}\n`;});
     text+='\n';
   });
   return text;
@@ -502,23 +650,34 @@ document.getElementById('back-btn').addEventListener('click',()=>{
   currentItinerary=null;
 });
 
-document.getElementById('btn-save').addEventListener('click',()=>{
+document.getElementById('btn-save').addEventListener('click',async()=>{
   if(!currentItinerary)return;
-  const arr=getSaved();
-  const exists=arr.findIndex(s=>s.title===currentItinerary.title&&s.subtitle===currentItinerary.subtitle);
-  if(exists>=0){arr[exists]=currentItinerary;}else{arr.unshift(currentItinerary);}
-  setSaved(arr.slice(0,10));renderSavedList();
   const btn=document.getElementById('btn-save');
-  btn.classList.add('success');
-  btn.querySelector('svg').innerHTML='<path d="M3 9l4 4 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
-  setTimeout(()=>{btn.classList.remove('success');btn.querySelector('svg').innerHTML='<path d="M3 3h9l3 3v9a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.3"/><path d="M6 3v4h6V3M6 16v-5h6v5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>';},2000);
+  if(currentUser){
+    const{error}=await sb.from('itineraries').upsert({user_id:currentUser.id,title:currentItinerary.title,subtitle:currentItinerary.subtitle,destination:currentItinerary.title.split(' in ').slice(1).join(' in '),days:currentItinerary.days.length,data:currentItinerary});
+    if(!error){
+      btn.classList.add('success');
+      btn.querySelector('svg').innerHTML='<path d="M3 9l4 4 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
+      setTimeout(()=>{btn.classList.remove('success');btn.querySelector('svg').innerHTML='<path d="M3 3h9l3 3v9a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.3"/><path d="M6 3v4h6V3M6 16v-5h6v5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>';},2000);
+      loadCloudSaved();
+    }
+  }else{
+    const arr=getSaved();
+    const exists=arr.findIndex(s=>s.title===currentItinerary.title&&s.subtitle===currentItinerary.subtitle);
+    if(exists>=0){arr[exists]=currentItinerary;}else{arr.unshift(currentItinerary);}
+    setSaved(arr.slice(0,10));renderSavedList();
+    btn.classList.add('success');
+    btn.querySelector('svg').innerHTML='<path d="M3 9l4 4 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
+    setTimeout(()=>{btn.classList.remove('success');btn.querySelector('svg').innerHTML='<path d="M3 3h9l3 3v9a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.3"/><path d="M6 3v4h6V3M6 16v-5h6v5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>';},2000);
+    // Prompt to sign in for cloud save
+    setTimeout(()=>document.getElementById('auth-modal').classList.add('open'),2200);
+  }
 });
 
 document.getElementById('btn-pdf').addEventListener('click',()=>window.print());
-
 document.getElementById('btn-email').addEventListener('click',()=>{
   if(!currentItinerary)return;
-  const subject=encodeURIComponent('Your Tripiq Itinerary — '+currentItinerary.title);
+  const subject=encodeURIComponent('Your Tripiq Itinerary - '+currentItinerary.title);
   const body=encodeURIComponent('Hi there!\n\nYour travel itinerary is ready:\n\n'+formatPlainText(currentItinerary)+'\n\nHave an amazing trip!\nThe Tripiq Team');
   window.open('mailto:?subject='+subject+'&body='+body);
   const btn=document.getElementById('btn-email');
@@ -531,7 +690,7 @@ async function generateItinerary(dest,numDays,travelStyle,travelBudget,interests
   const err=document.getElementById('err');
   err.style.display='none';
   const btn=document.getElementById('gen-btn');
-  btn.disabled=true;btn.textContent='Building your trip…';
+  btn.disabled=true;btn.textContent='Building your trip...';
   document.getElementById('form-view').style.display='none';
   document.getElementById('result-view').style.display='block';
   document.getElementById('itin-title').textContent=dest;
@@ -540,13 +699,21 @@ async function generateItinerary(dest,numDays,travelStyle,travelBudget,interests
   document.getElementById('action-bar').style.display='none';
   document.getElementById('booking-section').style.display='none';
   document.getElementById('spinner').classList.add('show');
-  const arrivalInfo=arrDate?(`, arriving ${arrDate}${arrTime?' at '+arrTime:''}`):'';
-  const prompt=`Create a ${numDays}-day travel itinerary for ${dest} for a ${travelStyle} trip with a ${travelBudget} budget${arrivalInfo}${interests?`, interests: ${interests}`:''}.
-Tailor accommodation and dining to the ${travelBudget} budget level.
-Consider arrival time for Day 1 if arriving late suggest lighter evening activities.
-IMPORTANT: Respond ONLY with a raw JSON object. No markdown. No backticks. No explanation. Start your response with { and end with }.
-Use this exact structure:
-{"title":"X Days in Destination","subtitle":"Style trip · X days · Arriving date","days":[{"day":1,"theme":"Theme name","activities":[{"time":"9:00 AM","name":"Activity name","note":"Short helpful tip"}]}]}`;
+  const arrivalInfo=arrDate?(`, arriving ${arrDate}${arrTime?' at '+arrTime:''}`):''
+  const prompt=`You are an expert travel planner. Create a detailed ${numDays}-day itinerary for ${dest} for a ${travelStyle} group with a ${travelBudget} budget${arrivalInfo}${interests?`, with interests in: ${interests}`:''}.
+
+IMPORTANT RULES:
+- Include ONLY real, well-known, verified attractions, restaurants and places that actually exist in ${dest}
+- For each day include 4-6 activities with specific real place names
+- Cover the most iconic and must-see spots that ${dest} is famous for — do not miss major landmarks
+- Tailor recommendations to ${travelBudget} budget: ${travelBudget==='budget'?'hostels, street food, free attractions':'travelBudget'==='luxury'?'5-star hotels, fine dining, private tours':'mid-range hotels, local restaurants, popular attractions'}
+- Consider arrival time for Day 1 — if arriving late, only suggest evening activities
+- Mix famous landmarks with local hidden gems
+- Include meal recommendations with specific restaurant names
+- Add practical tips in the note field
+
+Respond ONLY with a raw JSON object. No markdown. No backticks. No explanation. Start with { and end with }:
+{"title":"${numDays} Days in ${dest.split(',')[0]}","subtitle":"${travelStyle} trip · ${numDays} days${arrDate?' · Arriving '+arrDate:''}","days":[{"day":1,"theme":"Theme name","activities":[{"time":"9:00 AM","name":"Real Place Name","note":"Practical tip"}]}]}`;
   try{
     const res=await fetch('/api/itinerary',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
     if(!res.ok){const e=await res.json();throw new Error(e.error||'Server error');}
@@ -584,6 +751,7 @@ document.getElementById('gen-btn').addEventListener('click',()=>{
   generateItinerary(dest,days,style,budget,interests,arrDate,arrTime);
 });
 </script>
+
 <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js');}</script>
 
 <!-- PWA Install Banner -->
@@ -594,9 +762,9 @@ document.getElementById('gen-btn').addEventListener('click',()=>{
     </div>
     <div style="flex:1;min-width:0">
       <div style="font-size:13px;font-weight:500;margin-bottom:2px">Add Tripiq to your home screen</div>
-      <div style="font-size:11px;opacity:0.6">Tap Share → Add to Home Screen</div>
+      <div style="font-size:11px;opacity:0.6">Tap Share then Add to Home Screen</div>
     </div>
-    <button onclick="document.getElementById('pwa-banner').style.display='none'" style="background:none;border:none;color:#fff;opacity:0.5;cursor:pointer;font-size:18px;padding:0;line-height:1">×</button>
+    <button onclick="document.getElementById('pwa-banner').style.display='none'" style="background:none;border:none;color:#fff;opacity:0.5;cursor:pointer;font-size:18px;padding:0;line-height:1">x</button>
   </div>
   <div id="pwa-progress" style="height:2px;background:#E8604C;border-radius:1px;margin-top:6px;width:100%;transition:width 3s linear"></div>
 </div>
@@ -608,7 +776,6 @@ document.getElementById('gen-btn').addEventListener('click',()=>{
 
 <!-- Chat panel -->
 <div id="chat-panel" style="display:none;position:fixed;bottom:0;right:0;width:100%;max-width:420px;height:75vh;background:var(--bg);border-radius:20px 20px 0 0;box-shadow:0 -8px 40px rgba(0,0,0,0.15);z-index:950;flex-direction:column;border:0.5px solid var(--border2)">
-  <!-- Chat header -->
   <div style="padding:16px 20px;border-bottom:0.5px solid var(--border2);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
     <div style="display:flex;align-items:center;gap:10px">
       <div style="width:32px;height:32px;background:#E8604C;border-radius:10px;display:flex;align-items:center;justify-content:center">
@@ -623,11 +790,7 @@ document.getElementById('gen-btn').addEventListener('click',()=>{
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M15 5L5 15M5 5l10 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
     </button>
   </div>
-
-  <!-- Messages -->
   <div id="chat-messages" style="flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:12px"></div>
-
-  <!-- Typing indicator -->
   <div id="chat-typing" style="display:none;padding:0 20px 8px">
     <div style="display:inline-flex;align-items:center;gap:4px;background:var(--bg3);border-radius:12px;padding:8px 14px">
       <span style="width:6px;height:6px;background:var(--text3);border-radius:50%;animation:bounce 1s infinite 0s"></span>
@@ -635,11 +798,9 @@ document.getElementById('gen-btn').addEventListener('click',()=>{
       <span style="width:6px;height:6px;background:var(--text3);border-radius:50%;animation:bounce 1s infinite 0.4s"></span>
     </div>
   </div>
-
-  <!-- Input -->
   <div style="padding:12px 16px;border-top:0.5px solid var(--border2);display:flex;gap:8px;flex-shrink:0">
-    <input id="chat-input" type="text" placeholder="Tell me about your dream trip…" style="flex:1;padding:11px 14px;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:300;border:1px solid var(--border);border-radius:10px;background:var(--bg2);color:var(--text);outline:none"/>
-    <button id="chat-send" style="width:40px;height:40px;background:#E8604C;border:none;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity 0.15s">
+    <input id="chat-input" type="text" placeholder="Tell me about your dream trip..." style="flex:1;padding:11px 14px;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:300;border:1px solid var(--border);border-radius:10px;background:var(--bg2);color:var(--text);outline:none"/>
+    <button id="chat-send" style="width:40px;height:40px;background:#E8604C;border:none;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M14 8H2M14 8L9 3M14 8L9 13" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
   </div>
@@ -651,25 +812,12 @@ document.getElementById('gen-btn').addEventListener('click',()=>{
 .chat-msg-user{align-self:flex-end;max-width:85%}
 .chat-bubble-ai{background:var(--bg3);border-radius:4px 14px 14px 14px;padding:10px 14px;font-size:14px;color:var(--text);line-height:1.5;font-weight:300}
 .chat-bubble-user{background:#E8604C;border-radius:14px 4px 14px 14px;padding:10px 14px;font-size:14px;color:#fff;line-height:1.5;font-weight:300}
-.chat-gen-btn{margin-top:10px;width:100%;padding:10px;background:#E8604C;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.15s}
-.chat-gen-btn:hover{opacity:0.88}
+.chat-gen-btn{margin-top:10px;width:100%;padding:10px;background:#E8604C;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer}
 </style>
 
 <script>
 const chatHistory=[];
-const systemPrompt=`You are Tripiq, a friendly and knowledgeable AI travel agent. You help users plan amazing trips through natural conversation.
-
-Your goal is to understand what the user wants and eventually generate a travel itinerary for them.
-
-Guidelines:
-- Be warm, enthusiastic and concise — keep responses to 2-3 sentences max
-- Ask ONE follow-up question at a time if you need more info
-- Once you have destination, duration, travel style and budget — offer to generate the itinerary
-- When ready to generate, end your message with exactly this JSON on a new line: GENERATE:{"dest":"City, Country","days":7,"style":"Friends","budget":"mid-range","interests":"food, culture"}
-- Valid styles: Family, Couple, Solo, Business, Friends
-- Valid budgets: budget, mid-range, luxury
-- If user seems ready, go ahead and suggest generating — don't over-ask questions
-- Never mention that you're Claude or made by Anthropic — you are Tripiq AI`;
+const systemPrompt=`You are Tripiq, a friendly and knowledgeable AI travel agent. You help users plan amazing trips through natural conversation. Your goal is to understand what the user wants and eventually generate a travel itinerary for them. Guidelines: Be warm, enthusiastic and concise - keep responses to 2-3 sentences max. Ask ONE follow-up question at a time if you need more info. Once you have destination, duration, travel style and budget - offer to generate the itinerary. When ready to generate, end your message with exactly this JSON on a new line: GENERATE:{"dest":"City, Country","days":7,"style":"Friends","budget":"mid-range","interests":"food, culture"}. Valid styles: Family, Couple, Solo, Business, Friends. Valid budgets: budget, mid-range, luxury. Never mention Claude or Anthropic - you are Tripiq AI.`;
 
 function addMessage(role,text,showGenBtn,genData){
   const wrap=document.createElement('div');
@@ -681,17 +829,13 @@ function addMessage(role,text,showGenBtn,genData){
   if(showGenBtn&&genData){
     const btn=document.createElement('button');
     btn.className='chat-gen-btn';
-    btn.textContent='✈ Generate my itinerary now';
-    btn.addEventListener('click',()=>{
-      closeChatPanel();
-      generateItinerary(genData.dest,genData.days,genData.style,genData.budget,genData.interests||'','','');
-    });
+    btn.textContent='Generate my itinerary now';
+    btn.addEventListener('click',()=>{closeChatPanel();generateItinerary(genData.dest,genData.days,genData.style,genData.budget,genData.interests||'','','');});
     wrap.appendChild(btn);
   }
   document.getElementById('chat-messages').appendChild(wrap);
   document.getElementById('chat-messages').scrollTop=99999;
 }
-
 function showTyping(){document.getElementById('chat-typing').style.display='block';document.getElementById('chat-messages').scrollTop=99999;}
 function hideTyping(){document.getElementById('chat-typing').style.display='none';}
 
@@ -700,19 +844,10 @@ async function sendChat(userMsg){
   addMessage('user',userMsg);
   showTyping();
   try{
-    const res=await fetch('/api/itinerary',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        prompt:userMsg,
-        system:systemPrompt,
-        history:chatHistory.slice(-10)
-      })
-    });
+    const res=await fetch('/api/itinerary',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:userMsg,system:systemPrompt,history:chatHistory.slice(-10)})});
     const data=await res.json();
     const raw=data.content.map(b=>b.text||'').join('').trim();
     hideTyping();
-    // Check if AI wants to generate
     const genMatch=raw.match(/GENERATE:(\{.*\})/);
     if(genMatch){
       try{
@@ -720,60 +855,36 @@ async function sendChat(userMsg){
         const displayText=raw.replace(/GENERATE:\{.*\}/,'').trim();
         chatHistory.push({role:'assistant',content:displayText});
         addMessage('ai',displayText||'I have everything I need! Ready to build your itinerary?',true,genData);
-      }catch(e){
-        chatHistory.push({role:'assistant',content:raw});
-        addMessage('ai',raw);
-      }
-    }else{
-      chatHistory.push({role:'assistant',content:raw});
-      addMessage('ai',raw);
-    }
-  }catch(e){
-    hideTyping();
-    addMessage('ai','Sorry, something went wrong. Please try again!');
-  }
+      }catch(e){chatHistory.push({role:'assistant',content:raw});addMessage('ai',raw);}
+    }else{chatHistory.push({role:'assistant',content:raw});addMessage('ai',raw);}
+  }catch(e){hideTyping();addMessage('ai','Sorry, something went wrong. Please try again!');}
 }
 
 function openChatPanel(){
   const panel=document.getElementById('chat-panel');
   panel.style.display='flex';
   document.getElementById('chat-fab').style.transform='scale(0.9)';
-  if(chatHistory.length===0){
-    setTimeout(()=>{
-      addMessage('ai','Hey! I am your Tripiq travel agent. Tell me about your dream trip — where are you thinking of going?');
-    },300);
-  }
+  if(chatHistory.length===0){setTimeout(()=>{addMessage('ai','Hey! I am your Tripiq travel agent. Tell me about your dream trip - where are you thinking of going?');},300);}
   setTimeout(()=>document.getElementById('chat-input').focus(),400);
 }
-
 function closeChatPanel(){
   document.getElementById('chat-panel').style.display='none';
   document.getElementById('chat-fab').style.transform='scale(1)';
 }
-
 document.getElementById('chat-fab').addEventListener('click',()=>{
   const panel=document.getElementById('chat-panel');
   panel.style.display==='none'||!panel.style.display?openChatPanel():closeChatPanel();
 });
 document.getElementById('chat-close').addEventListener('click',closeChatPanel);
-
 document.getElementById('chat-send').addEventListener('click',()=>{
   const input=document.getElementById('chat-input');
   const msg=input.value.trim();
-  if(!msg)return;
-  input.value='';
-  sendChat(msg);
+  if(!msg)return;input.value='';sendChat(msg);
 });
 document.getElementById('chat-input').addEventListener('keydown',e=>{
-  if(e.key==='Enter'){
-    const msg=e.target.value.trim();
-    if(!msg)return;
-    e.target.value='';
-    sendChat(msg);
-  }
+  if(e.key==='Enter'){const msg=e.target.value.trim();if(!msg)return;e.target.value='';sendChat(msg);}
 });
 
-// PWA banner
 (function(){
   const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
   const isStandalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone;
@@ -784,12 +895,7 @@ document.getElementById('chat-input').addEventListener('keydown',e=>{
     setTimeout(()=>{
       banner.style.display='block';
       setTimeout(()=>{bar.style.width='0%';},50);
-      setTimeout(()=>{
-        banner.style.opacity='0';
-        banner.style.transition='opacity 0.5s';
-        setTimeout(()=>{banner.style.display='none';},500);
-        localStorage.setItem('tripiq-pwa-dismissed','1');
-      },3000);
+      setTimeout(()=>{banner.style.opacity='0';banner.style.transition='opacity 0.5s';setTimeout(()=>{banner.style.display='none';},500);localStorage.setItem('tripiq-pwa-dismissed','1');},3000);
     },2000);
   }
 })();

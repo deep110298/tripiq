@@ -16,7 +16,6 @@ export default async function handler(req, res) {
     const { prompt, system, history } = req.body;
     if (!prompt) return res.status(400).json({ error: 'Missing prompt' });
 
-    // Build messages — support both single prompt and chat history
     let messages;
     if (history && history.length > 0) {
       messages = history;
@@ -30,11 +29,15 @@ export default async function handler(req, res) {
       messages,
     };
 
-    // Add system prompt if provided (for chat mode)
     if (system) {
       body.system = system;
     } else {
-      body.system = "You are a travel itinerary expert. Only recommend real, verified locations that genuinely exist. Never invent place names, restaurants, or attractions. Always respond with valid JSON only. Never use apostrophes, single quotes, or special characters inside JSON string values. Use plain English without contractions.";
+      body.system = `You are an expert travel planner with deep knowledge of destinations worldwide. 
+Only recommend real, verified locations that genuinely exist. 
+Never invent place names, restaurants, or attractions. 
+Always include the most iconic and must-see spots for each destination - never miss major landmarks. 
+Respond ONLY with valid JSON. Never use apostrophes in contractions inside JSON strings (use plain English without contractions). 
+Never use special characters that would break JSON parsing.`;
     }
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
