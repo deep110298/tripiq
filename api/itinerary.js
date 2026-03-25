@@ -1,5 +1,3 @@
-const rateLimit = new Map();
-
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -7,21 +5,38 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  // Rate limit — max 5 requests per IP per minute
+  const rateLimit = global.rateLimit = global.rateLimit || new Map();
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
   const now = Date.now();
-  const windowMs = 60 * 1000;
-  const maxRequests = 5;
-  const requests = rateLimit.get(ip) || [];
-  const recent = requests.filter(t => now - t < windowMs);
-  if (recent.length >= maxRequests) {
-    return res.status(429).json({ error: 'Too many requests. Please wait a minute and try again.' });
-  }
+  const recent = (rateLimit.get(ip) || []).filter(t => now - t < 60000);
+  if (recent.length >= 5) return res.status(429).json({ error: 'Too many requests. Please wait a minute.' });
   rateLimit.set(ip, [...recent, now]);
 
   try {
-    const { prompt } = req.body;
+    const { prompt, system, history } = req.body;
     if (!prompt) return res.status(400).json({ error: 'Missing prompt' });
+
+    // Build messages — support both single prompt and chat history
+    let messages;
+    if (history && history.length > 0) {
+      messages = history;
+    } else {
+      messages = [{ role: 'user', content: prompt }];
+    }
+
+    const body = {
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 4000,
+      messages,
+    };
+
+    // Add system prompt if provided (for chat mode)
+    if (system) {
+      body.system = system;
+    } else {
+      body.system = "You are a travel itinerary expert. Only recommend real, verified locations that genuinely exist. Never invent place names, restaurants, or attractions. Always respond with valid JSON only. Never use apostrophes, single quotes, or special characters inside JSON string values. Use plain English without contractions.";
+    }
+
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -29,13 +44,9 @@ export default async function handler(req, res) {
         'x-api-key': process.env.ANTHROPIC_API_KEY,
         'anthropic-version': '2023-06-01',
       },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 4000,
-        system: "You are a travel itinerary expert. Always respond with valid JSON only. Never use apostrophes, single quotes, or special characters inside JSON string values. Use plain English without contractions.",
-messages: [{ role: 'user', content: prompt }],
-      }),
+      body: JSON.stringify(body),
     });
+
     const data = await response.json();
     if (data.error) return res.status(500).json({ error: data.error.message });
     return res.status(200).json(data);
