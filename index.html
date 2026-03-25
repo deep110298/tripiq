@@ -4,143 +4,171 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Tripiq — AI Travel Itineraries</title>
-  <meta property="og:type" content="website"/>
+<meta property="og:type" content="website"/>
 <meta property="og:url" content="https://tripiq.site"/>
 <meta property="og:title" content="Tripiq — AI Travel Itineraries"/>
 <meta property="og:description" content="Plan your perfect trip in seconds. AI-powered day-by-day itineraries tailored just for you."/>
 <meta property="og:image" content="https://tripiq.site/preview.png"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://tripiq.site/preview.png"/>
-  <link rel="manifest" href="/manifest.json"/>
+<link rel="manifest" href="/manifest.json"/>
 <meta name="theme-color" content="#E8604C"/>
 <link rel="apple-touch-icon" href="/icon-192.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:#FAFAF8;color:#1a1a1a;min-height:100vh}
+
+/* Dark mode variables */
+:root{
+  --bg:#FAFAF8;--bg2:#fff;--bg3:#F5F2EF;
+  --text:#1a1a1a;--text2:#6b6560;--text3:#aaa;
+  --border:#DDD8D2;--border2:#E8E4DF;
+  --card:#fff;--coral:#E8604C;--coral-light:#FFF5F3;--coral-border:#F5C4BB;
+}
+[data-theme="dark"]{
+  --bg:#1a1a1a;--bg2:#252525;--bg3:#2e2e2e;
+  --text:#f0ede8;--text2:#a09890;--text3:#666;
+  --border:#3a3a3a;--border2:#333;
+  --card:#252525;--coral:#E8604C;--coral-light:#2a1f1c;--coral-border:#5a2a1f;
+}
+
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background 0.2s,color 0.2s}
 .tq{max-width:480px;margin:0 auto;padding:2.5rem 1.5rem 4rem}
-.tq-brand{display:flex;align-items:center;gap:12px;margin-bottom:1.5rem}
-.tq-logomark{width:40px;height:40px;border-radius:12px;background:#E8604C;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+/* Header with dark mode toggle */
+.tq-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.tq-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.tq-logomark{width:40px;height:40px;border-radius:12px;background:var(--coral);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .tq-logomark svg{width:22px;height:22px}
-.tq-brandname{font-family:'DM Serif Display',serif;font-size:26px;color:#1a1a1a;letter-spacing:-0.3px}
-.tq-brandname em{color:#E8604C;font-style:normal}
-.tq-hero{border-top:1px solid #E8E4DF;padding-top:1.25rem;margin-bottom:2rem}
-.tq-hero h1{font-family:'DM Serif Display',serif;font-size:30px;font-weight:400;color:#1a1a1a;line-height:1.2;margin-bottom:8px}
-.tq-hero h1 em{font-style:italic;color:#E8604C}
-.tq-hero p{font-size:14px;color:#6b6560;font-weight:300;line-height:1.65}
+.tq-brandname{font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);letter-spacing:-0.3px}
+.tq-brandname em{color:var(--coral);font-style:normal}
+.tq-theme-btn{background:none;border:0.5px solid var(--border);border-radius:20px;padding:6px 12px;cursor:pointer;font-size:13px;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.12s;display:flex;align-items:center;gap:6px}
+.tq-theme-btn:hover{border-color:var(--coral);color:var(--coral)}
+
+.tq-hero{border-top:1px solid var(--border2);padding-top:1.25rem;margin-bottom:2rem}
+.tq-hero h1{font-family:'DM Serif Display',serif;font-size:30px;font-weight:400;color:var(--text);line-height:1.2;margin-bottom:8px}
+.tq-hero h1 em{font-style:italic;color:var(--coral)}
+.tq-hero p{font-size:14px;color:var(--text2);font-weight:300;line-height:1.65}
+
 .tq-field{margin-bottom:1.75rem;position:relative}
-.tq-label{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:#888;margin-bottom:10px;display:block}
-.tq-label span{font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:#aaa}
-.tq-text{width:100%;padding:13px 16px;font-size:15px;font-family:'DM Sans',sans-serif;font-weight:300;border:1px solid #DDD8D2;border-radius:10px;background:#fff;color:#1a1a1a;outline:none;transition:border-color 0.15s,box-shadow 0.15s}
-.tq-text:focus{border-color:#E8604C;box-shadow:0 0 0 3px rgba(232,96,76,0.1)}
-.tq-text::placeholder{color:#bbb}
-.tq-dropdown{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1px solid #DDD8D2;border-radius:10px;overflow:hidden;z-index:100;display:none;box-shadow:0 4px 16px rgba(0,0,0,0.08)}
+.tq-label{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;display:block}
+.tq-label span{font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:var(--text3)}
+.tq-text{width:100%;padding:13px 16px;font-size:15px;font-family:'DM Sans',sans-serif;font-weight:300;border:1px solid var(--border);border-radius:10px;background:var(--bg2);color:var(--text);outline:none;transition:border-color 0.15s,box-shadow 0.15s}
+.tq-text:focus{border-color:var(--coral);box-shadow:0 0 0 3px rgba(232,96,76,0.1)}
+.tq-text::placeholder{color:var(--text3)}
+.tq-dropdown{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;z-index:100;display:none;box-shadow:0 4px 16px rgba(0,0,0,0.12)}
 .tq-dropdown.open{display:block}
-.tq-drop-item{padding:11px 16px;font-size:14px;font-weight:300;color:#1a1a1a;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background 0.1s}
-.tq-drop-item:hover{background:#FAFAF8}
-.tq-drop-item svg{flex-shrink:0;color:#aaa}
-.tq-drop-item span{color:#aaa;font-size:12px;margin-left:auto;padding-left:8px;white-space:nowrap}
+.tq-drop-item{padding:11px 16px;font-size:14px;font-weight:300;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:10px;transition:background 0.1s}
+.tq-drop-item:hover{background:var(--bg3)}
+.tq-drop-item svg{flex-shrink:0;color:var(--text3)}
+.tq-drop-item span{color:var(--text3);font-size:12px;margin-left:auto;padding-left:8px;white-space:nowrap}
 .tq-date-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .tq-date-wrap{position:relative}
-.tq-date-wrap svg{position:absolute;right:13px;top:50%;transform:translateY(-50%);pointer-events:none;color:#bbb}
-.tq-text[type="date"],.tq-text[type="time"]{padding-right:36px;color:#1a1a1a}
+.tq-date-wrap svg{position:absolute;right:13px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--text3)}
+.tq-text[type="date"],.tq-text[type="time"]{padding-right:36px;color:var(--text)}
 .tq-text[type="date"]::-webkit-calendar-picker-indicator,.tq-text[type="time"]::-webkit-calendar-picker-indicator{opacity:0;position:absolute;right:0;top:0;width:100%;height:100%;cursor:pointer}
 .tq-pills{display:flex;flex-wrap:wrap;gap:8px}
-.tq-pill{padding:9px 16px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:400;border:1px solid #DDD8D2;border-radius:100px;cursor:pointer;background:#fff;color:#6b6560;transition:all 0.12s;user-select:none}
-.tq-pill:hover{border-color:#E8604C;color:#E8604C}
-.tq-pill.on{background:#E8604C;border-color:#E8604C;color:#fff;font-weight:500}
+.tq-pill{padding:9px 16px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:400;border:1px solid var(--border);border-radius:100px;cursor:pointer;background:var(--bg2);color:var(--text2);transition:all 0.12s;user-select:none}
+.tq-pill:hover{border-color:var(--coral);color:var(--coral)}
+.tq-pill.on{background:var(--coral);border-color:var(--coral);color:#fff;font-weight:500}
 .tq-styles{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
-.tq-sty{padding:14px 6px 10px;text-align:center;border:1px solid #DDD8D2;border-radius:12px;cursor:pointer;background:#fff;transition:all 0.12s;user-select:none}
+.tq-sty{padding:14px 6px 10px;text-align:center;border:1px solid var(--border);border-radius:12px;cursor:pointer;background:var(--bg2);transition:all 0.12s;user-select:none}
 .tq-sty-icon{font-size:20px;display:block;margin-bottom:6px}
-.tq-sty-name{font-size:11px;font-weight:400;color:#6b6560}
-.tq-sty:hover{border-color:#E8604C}
-.tq-sty:hover .tq-sty-name{color:#E8604C}
-.tq-sty.on{border-color:#E8604C;background:#FFF5F3}
-.tq-sty.on .tq-sty-name{color:#E8604C;font-weight:500}
-
-/* Budget selector */
+.tq-sty-name{font-size:11px;font-weight:400;color:var(--text2)}
+.tq-sty:hover{border-color:var(--coral)}
+.tq-sty:hover .tq-sty-name{color:var(--coral)}
+.tq-sty.on{border-color:var(--coral);background:var(--coral-light)}
+.tq-sty.on .tq-sty-name{color:var(--coral);font-weight:500}
 .tq-budgets{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.tq-budget{padding:12px 8px;text-align:center;border:1px solid #DDD8D2;border-radius:12px;cursor:pointer;background:#fff;transition:all 0.12s;user-select:none}
+.tq-budget{padding:12px 8px;text-align:center;border:1px solid var(--border);border-radius:12px;cursor:pointer;background:var(--bg2);transition:all 0.12s;user-select:none}
 .tq-budget-icon{font-size:18px;display:block;margin-bottom:5px}
-.tq-budget-name{font-size:12px;font-weight:500;color:#1a1a1a;display:block;margin-bottom:2px}
-.tq-budget-desc{font-size:10px;color:#aaa;font-weight:300}
-.tq-budget:hover{border-color:#E8604C}
-.tq-budget:hover .tq-budget-name{color:#E8604C}
-.tq-budget.on{border-color:#E8604C;background:#FFF5F3}
-.tq-budget.on .tq-budget-name{color:#E8604C;font-weight:500}
-
+.tq-budget-name{font-size:12px;font-weight:500;color:var(--text);display:block;margin-bottom:2px}
+.tq-budget-desc{font-size:10px;color:var(--text3);font-weight:300}
+.tq-budget:hover{border-color:var(--coral)}
+.tq-budget:hover .tq-budget-name{color:var(--coral)}
+.tq-budget.on{border-color:var(--coral);background:var(--coral-light)}
+.tq-budget.on .tq-budget-name{color:var(--coral);font-weight:500}
 .tq-custom{display:none;margin-top:8px}
 .tq-custom.show{display:block}
-.tq-err{background:#FFF5F3;border:1px solid #F5C4BB;border-radius:10px;padding:10px 14px;font-size:13px;color:#C0392B;margin-bottom:1.25rem;display:none;font-weight:300}
-.tq-submit{width:100%;padding:15px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;border:none;border-radius:12px;background:#E8604C;color:#fff;cursor:pointer;letter-spacing:0.01em;transition:background 0.15s,transform 0.1s}
+.tq-err{background:var(--coral-light);border:1px solid var(--coral-border);border-radius:10px;padding:10px 14px;font-size:13px;color:#C0392B;margin-bottom:1.25rem;display:none;font-weight:300}
+
+/* Surprise me button */
+.tq-surprise{width:100%;padding:13px;font-size:14px;font-weight:400;font-family:'DM Sans',sans-serif;border:1px dashed var(--border);border-radius:12px;background:none;color:var(--text2);cursor:pointer;transition:all 0.15s;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px}
+.tq-surprise:hover{border-color:var(--coral);color:var(--coral);background:var(--coral-light)}
+
+.tq-submit{width:100%;padding:15px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;border:none;border-radius:12px;background:var(--coral);color:#fff;cursor:pointer;letter-spacing:0.01em;transition:background 0.15s,transform 0.1s}
 .tq-submit:hover{background:#D4503C}
 .tq-submit:active{transform:scale(0.99)}
-.tq-submit:disabled{background:#F5C4BB;cursor:not-allowed}
-.tq-back{display:inline-flex;align-items:center;gap:6px;background:none;border:none;padding:0;font-size:13px;font-family:'DM Sans',sans-serif;color:#888;cursor:pointer;margin-bottom:2rem}
-.tq-back:hover{color:#E8604C}
+.tq-submit:disabled{background:var(--coral-border);cursor:not-allowed}
+.tq-back{display:inline-flex;align-items:center;gap:6px;background:none;border:none;padding:0;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text2);cursor:pointer;margin-bottom:2rem}
+.tq-back:hover{color:var(--coral)}
 .tq-itin-head{margin-bottom:1.5rem}
-.tq-itin-title{font-family:'DM Serif Display',serif;font-size:26px;font-weight:400;color:#1a1a1a;margin-bottom:4px}
-.tq-itin-meta{font-size:13px;color:#888;font-weight:300;margin-bottom:1.25rem}
-.tq-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:1.75rem;padding-bottom:1.75rem;border-bottom:1px solid #E8E4DF}
-.tq-action-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 8px;border:1px solid #DDD8D2;border-radius:12px;background:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:#6b6560;letter-spacing:0.03em;text-transform:uppercase;transition:all 0.12s}
-.tq-action-btn svg{color:#888;transition:color 0.12s}
-.tq-action-btn:hover{border-color:#E8604C;color:#E8604C}
-.tq-action-btn:hover svg{color:#E8604C}
+.tq-itin-title{font-family:'DM Serif Display',serif;font-size:26px;font-weight:400;color:var(--text);margin-bottom:4px}
+.tq-itin-meta{font-size:13px;color:var(--text2);font-weight:300;margin-bottom:1.25rem}
+.tq-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:1.75rem;padding-bottom:1.75rem;border-bottom:1px solid var(--border2)}
+.tq-action-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 8px;border:1px solid var(--border);border-radius:12px;background:var(--bg2);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--text2);letter-spacing:0.03em;text-transform:uppercase;transition:all 0.12s}
+.tq-action-btn svg{color:var(--text3);transition:color 0.12s}
+.tq-action-btn:hover{border-color:var(--coral);color:var(--coral)}
+.tq-action-btn:hover svg{color:var(--coral)}
 .tq-action-btn.success{border-color:#2ecc71;color:#2ecc71}
 .tq-action-btn.success svg{color:#2ecc71}
 .tq-saved-list{margin-bottom:1.75rem;display:none}
 .tq-saved-list.show{display:block}
-.tq-saved-label{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:#888;margin-bottom:8px}
-.tq-saved-item{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#fff;border:1px solid #DDD8D2;border-radius:10px;margin-bottom:6px;cursor:pointer;transition:border-color 0.12s}
-.tq-saved-item:hover{border-color:#E8604C}
-.tq-saved-item-name{font-size:14px;color:#1a1a1a;font-weight:400}
-.tq-saved-item-meta{font-size:11px;color:#aaa;font-weight:300}
-.tq-saved-item-del{background:none;border:none;color:#ddd;cursor:pointer;font-size:18px;padding:0 0 0 8px;line-height:1;transition:color 0.12s}
-.tq-saved-item-del:hover{color:#E8604C}
+.tq-saved-label{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
+.tq-saved-item{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;margin-bottom:6px;cursor:pointer;transition:border-color 0.12s}
+.tq-saved-item:hover{border-color:var(--coral)}
+.tq-saved-item-name{font-size:14px;color:var(--text);font-weight:400}
+.tq-saved-item-meta{font-size:11px;color:var(--text3);font-weight:300}
+.tq-saved-item-del{background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;padding:0 0 0 8px;line-height:1;transition:color 0.12s}
+.tq-saved-item-del:hover{color:var(--coral)}
 .tq-day{margin-bottom:1.75rem;animation:fadeUp 0.3s ease forwards}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.tq-day-label{font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#E8604C;margin-bottom:5px}
-.tq-day-theme{font-family:'DM Serif Display',serif;font-size:19px;font-weight:400;color:#1a1a1a;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #E8E4DF;display:flex;align-items:center;justify-content:space-between}
-.tq-maps-btn{font-size:11px;font-weight:500;color:#E8604C;text-decoration:none;font-family:'DM Sans',sans-serif;display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid #F5C4BB;border-radius:100px;background:#FFF5F3;transition:all 0.12s;white-space:nowrap;flex-shrink:0;margin-left:10px}
-.tq-maps-btn:hover{background:#E8604C;color:#fff;border-color:#E8604C}
-.tq-act{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid #F0EDE9}
+.tq-day-label{font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--coral);margin-bottom:5px}
+.tq-day-theme{font-family:'DM Serif Display',serif;font-size:19px;font-weight:400;color:var(--text);margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--border2);display:flex;align-items:center;justify-content:space-between}
+.tq-maps-btn{font-size:11px;font-weight:500;color:var(--coral);text-decoration:none;font-family:'DM Sans',sans-serif;display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--coral-border);border-radius:100px;background:var(--coral-light);transition:all 0.12s;white-space:nowrap;flex-shrink:0;margin-left:10px}
+.tq-maps-btn:hover{background:var(--coral);color:#fff;border-color:var(--coral)}
+.tq-act{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--border2)}
 .tq-act:last-child{border-bottom:none}
-.tq-act-time{font-size:11px;color:#aaa;min-width:58px;padding-top:3px;flex-shrink:0;font-weight:300}
-.tq-act-name{font-size:14px;color:#1a1a1a;font-weight:500;margin-bottom:2px}
-.tq-act-note{font-size:12px;color:#6b6560;font-weight:300;line-height:1.5}
-
-/* Booking links section */
-.tq-booking{background:#fff;border:1px solid #E8E4DF;border-radius:14px;padding:1.25rem;margin-bottom:1.75rem}
-.tq-booking-title{font-size:12px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:#888;margin-bottom:12px}
+.tq-act-time{font-size:11px;color:var(--text3);min-width:58px;padding-top:3px;flex-shrink:0;font-weight:300}
+.tq-act-name{font-size:14px;color:var(--text);font-weight:500;margin-bottom:2px}
+.tq-act-note{font-size:12px;color:var(--text2);font-weight:300;line-height:1.5}
+.tq-booking{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;padding:1.25rem;margin-bottom:1.75rem}
+.tq-booking-title{font-size:12px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);margin-bottom:12px}
 .tq-booking-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.tq-booking-btn{display:flex;align-items:center;gap:8px;padding:11px 14px;border:1px solid #DDD8D2;border-radius:10px;background:#FAFAF8;text-decoration:none;transition:all 0.12s}
-.tq-booking-btn:hover{border-color:#E8604C;background:#FFF5F3}
+.tq-booking-btn{display:flex;align-items:center;gap:8px;padding:11px 14px;border:1px solid var(--border);border-radius:10px;background:var(--bg3);text-decoration:none;transition:all 0.12s}
+.tq-booking-btn:hover{border-color:var(--coral);background:var(--coral-light)}
 .tq-booking-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
-.tq-booking-label{font-size:12px;font-weight:500;color:#1a1a1a;display:block}
-.tq-booking-sub{font-size:10px;color:#aaa;font-weight:300}
-
-.tq-footer{margin-top:3rem;text-align:center;font-size:12px;color:#bbb;font-weight:300;line-height:1.8}
-.tq-footer em{color:#E8604C;font-style:normal}
+.tq-booking-label{font-size:12px;font-weight:500;color:var(--text);display:block}
+.tq-booking-sub{font-size:10px;color:var(--text3);font-weight:300}
+.tq-footer{margin-top:3rem;text-align:center;font-size:12px;color:var(--text3);font-weight:300;line-height:1.8}
+.tq-footer em{color:var(--coral);font-style:normal}
 .tq-spinner{display:none;flex-direction:column;align-items:center;padding:3rem 0;gap:14px}
 .tq-spinner.show{display:flex}
-.tq-spinner-ring{width:32px;height:32px;border:2px solid #F0EDE9;border-top-color:#E8604C;border-radius:50%;animation:spin 0.7s linear infinite}
+.tq-spinner-ring{width:32px;height:32px;border:2px solid var(--border2);border-top-color:var(--coral);border-radius:50%;animation:spin 0.7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.tq-spinner-text{font-size:13px;color:#aaa;font-weight:300}
-@media print{.tq-actions,.tq-back,.tq-footer,.tq-saved-list,.tq-booking{display:none!important}body{background:#fff}.tq{padding:1rem}}
+.tq-spinner-text{font-size:13px;color:var(--text3);font-weight:300}
+@media print{.tq-actions,.tq-back,.tq-footer,.tq-saved-list,.tq-booking,.tq-header .tq-theme-btn{display:none!important}body{background:#fff}.tq{padding:1rem}}
 </style>
 </head>
 <body>
 <div class="tq">
-  <div class="tq-brand">
-    <div class="tq-logomark">
-      <svg viewBox="0 0 22 22" fill="none">
-        <path d="M11 2C7.13 2 4 5.13 4 9c0 5.25 7 11 7 11s7-5.75 7-11c0-3.87-3.13-7-7-7z" fill="white" opacity="0.9"/>
-        <circle cx="11" cy="9" r="2.5" fill="#E8604C"/>
-      </svg>
-    </div>
-    <div class="tq-brandname">Trip<em>iq</em></div>
+  <div class="tq-header">
+    <a href="/" class="tq-brand">
+      <div class="tq-logomark">
+        <svg viewBox="0 0 22 22" fill="none">
+          <path d="M11 2C7.13 2 4 5.13 4 9c0 5.25 7 11 7 11s7-5.75 7-11c0-3.87-3.13-7-7-7z" fill="white" opacity="0.9"/>
+          <circle cx="11" cy="9" r="2.5" fill="#E8604C"/>
+        </svg>
+      </div>
+      <div class="tq-brandname">Trip<em>iq</em></div>
+    </a>
+    <button class="tq-theme-btn" id="theme-btn">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M7 1v1M7 12v1M1 7h1M12 7h1M2.93 2.93l.7.7M10.37 10.37l.7.7M2.93 11.07l.7-.7M10.37 3.63l.7-.7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      Light
+    </button>
   </div>
+
   <div class="tq-hero">
     <h1>Plan your next<br><em>perfect trip.</em></h1>
     <p>Tell us where you're headed and we'll build a day-by-day itinerary tailored just for you.</p>
@@ -208,6 +236,10 @@ body{font-family:'DM Sans',sans-serif;background:#FAFAF8;color:#1a1a1a;min-heigh
       <input class="tq-text" id="interests" type="text" placeholder="e.g. street food, temples, nightlife, hiking"/>
     </div>
     <div class="tq-err" id="err"></div>
+    <button class="tq-surprise" id="surprise-btn">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v2M8 13v2M1 8h2M13 8h2M2.93 2.93l1.41 1.41M11.66 11.66l1.41 1.41M2.93 13.07l1.41-1.41M11.66 4.34l1.41-1.41" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/></svg>
+      Surprise me — pick a random destination
+    </button>
     <button class="tq-submit" id="gen-btn">Build my itinerary →</button>
   </div>
 
@@ -234,8 +266,6 @@ body{font-family:'DM Sans',sans-serif;background:#FAFAF8;color:#1a1a1a;min-heigh
         Email
       </button>
     </div>
-
-    <!-- Booking links -->
     <div class="tq-booking" id="booking-section" style="display:none">
       <div class="tq-booking-title">Book your trip</div>
       <div class="tq-booking-grid">
@@ -244,7 +274,7 @@ body{font-family:'DM Sans',sans-serif;background:#FAFAF8;color:#1a1a1a;min-heigh
           <div><span class="tq-booking-label">Booking.com</span><span class="tq-booking-sub">Find hotels</span></div>
         </a>
         <a class="tq-booking-btn" id="link-skyscanner" href="#" target="_blank" rel="noopener">
-          <div class="tq-booking-icon" style="background:#0770E3;color:#fff;font-size:11px;font-weight:700;">✈</div>
+          <div class="tq-booking-icon" style="background:#0770E3;color:#fff;font-size:13px;">✈</div>
           <div><span class="tq-booking-label">Skyscanner</span><span class="tq-booking-sub">Find flights</span></div>
         </a>
         <a class="tq-booking-btn" id="link-airbnb" href="#" target="_blank" rel="noopener">
@@ -257,7 +287,6 @@ body{font-family:'DM Sans',sans-serif;background:#FAFAF8;color:#1a1a1a;min-heigh
         </a>
       </div>
     </div>
-
     <div class="tq-spinner" id="spinner">
       <div class="tq-spinner-ring"></div>
       <div class="tq-spinner-text">Building your itinerary…</div>
@@ -267,12 +296,30 @@ body{font-family:'DM Sans',sans-serif;background:#FAFAF8;color:#1a1a1a;min-heigh
 
   <div class="tq-footer">
     Made with <em>Tripiq</em> · Built by Deep Shah<br>
-    <span style="font-size:10px;color:#ccc;">Itineraries are AI-generated suggestions only. Always verify details before travel. Tripiq is not responsible for any inaccuracies.</span>
+    <span style="font-size:10px;color:var(--text3);">Itineraries are AI-generated suggestions only. Always verify details before travel. Tripiq is not responsible for any inaccuracies.</span>
   </div>
 </div>
 
 <script>
-let days=7,style='Friends',budget='mid-range',selectedDest='',currentItinerary=null,currentArrivalDate='',currentDays=7;
+let days=7,style='Friends',budget='mid-range',selectedDest='',currentItinerary=null;
+
+// Dark mode
+const themeBtn=document.getElementById('theme-btn');
+const savedTheme=localStorage.getItem('tripiq-theme')||'light';
+document.documentElement.setAttribute('data-theme',savedTheme);
+updateThemeBtn(savedTheme);
+function updateThemeBtn(theme){
+  themeBtn.innerHTML=theme==='dark'
+    ?'<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12 8.5A5.5 5.5 0 015.5 2a5.5 5.5 0 100 10A5.5 5.5 0 0012 8.5z" stroke="currentColor" stroke-width="1.3"/></svg> Dark'
+    :'<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M7 1v1M7 12v1M1 7h1M12 7h1M2.93 2.93l.7.7M10.37 10.37l.7.7M2.93 11.07l.7-.7M10.37 3.63l.7-.7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> Light';
+}
+themeBtn.addEventListener('click',()=>{
+  const curr=document.documentElement.getAttribute('data-theme');
+  const next=curr==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  localStorage.setItem('tripiq-theme',next);
+  updateThemeBtn(next);
+});
 
 const CITIES=[
   {name:'Tokyo',country:'Japan'},{name:'Kyoto',country:'Japan'},{name:'Osaka',country:'Japan'},{name:'Sapporo',country:'Japan'},
@@ -302,6 +349,28 @@ const CITIES=[
   {name:'Taipei',country:'Taiwan'},{name:'Hong Kong',country:'China'},{name:'Shanghai',country:'China'},{name:'Beijing',country:'China'},
   {name:'Doha',country:'Qatar'},{name:'Tbilisi',country:'Georgia'},
 ];
+
+// Surprise me
+document.getElementById('surprise-btn').addEventListener('click',()=>{
+  const random=CITIES[Math.floor(Math.random()*CITIES.length)];
+  const dest=`${random.name}, ${random.country}`;
+  document.getElementById('dest').value=dest;
+  selectedDest=dest;
+  // Pick random days
+  const dayOptions=[3,5,7,10];
+  const randomDays=dayOptions[Math.floor(Math.random()*dayOptions.length)];
+  document.querySelectorAll('.tq-pill').forEach(p=>{
+    p.classList.remove('on');
+    if(p.dataset.v==randomDays)p.classList.add('on');
+  });
+  days=randomDays;
+  // Animate the button
+  const btn=document.getElementById('surprise-btn');
+  btn.textContent='✨ '+dest+' it is!';
+  setTimeout(()=>{
+    btn.innerHTML='<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v2M8 13v2M1 8h2M13 8h2M2.93 2.93l1.41 1.41M11.66 11.66l1.41 1.41M2.93 13.07l1.41-1.41M11.66 4.34l1.41-1.41" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/></svg> Surprise me — pick a random destination';
+  },2500);
+});
 
 const destInput=document.getElementById('dest');
 const dropdown=document.getElementById('dest-dropdown');
@@ -334,14 +403,12 @@ document.querySelectorAll('.tq-pill').forEach(c=>{
   });
 });
 document.getElementById('custom-days').addEventListener('input',e=>{days=parseInt(e.target.value)||null});
-
 document.querySelectorAll('.tq-sty').forEach(c=>{
   c.addEventListener('click',()=>{
     document.querySelectorAll('.tq-sty').forEach(x=>x.classList.remove('on'));
     c.classList.add('on');style=c.dataset.v;
   });
 });
-
 document.querySelectorAll('.tq-budget').forEach(c=>{
   c.addEventListener('click',()=>{
     document.querySelectorAll('.tq-budget').forEach(x=>x.classList.remove('on'));
@@ -389,10 +456,9 @@ function renderDays(daysArr){
   daysArr.forEach(d=>{
     const el=document.createElement('div');
     el.className='tq-day';
-    // Build maps link from all activity names
     const destName=currentItinerary.title.split(' in ').slice(1).join(' in ');
-const places=d.activities.map(a=>encodeURIComponent(a.name+' '+destName));
-const mapsUrl=`https://www.google.com/maps/dir/${places.join('/')}`;
+    const places=d.activities.map(a=>encodeURIComponent(a.name+' '+destName));
+    const mapsUrl=`https://www.google.com/maps/dir/${places.join('/')}`;
     el.innerHTML=`<div class="tq-day-label">Day ${d.day}</div>
       <div class="tq-day-theme">
         <span>${d.theme}</span>
@@ -461,41 +527,28 @@ document.getElementById('btn-email').addEventListener('click',()=>{
   setTimeout(()=>{btn.classList.remove('success');btn.querySelector('svg').innerHTML='<rect x="2" y="4" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2 5l7 5 7-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>';},2000);
 });
 
-document.getElementById('gen-btn').addEventListener('click',async()=>{
-  const dest=selectedDest||destInput.value.trim();
-  const int=document.getElementById('interests').value.trim();
-  const arrDate=document.getElementById('arrival-date').value;
-  const arrTime=document.getElementById('arrival-time').value;
+async function generateItinerary(dest,numDays,travelStyle,travelBudget,interests,arrDate,arrTime){
   const err=document.getElementById('err');
   err.style.display='none';
-  if(!dest){err.textContent='Please enter a destination.';err.style.display='block';return;}
-  if(!days){err.textContent='Please enter the number of days.';err.style.display='block';return;}
   const btn=document.getElementById('gen-btn');
   btn.disabled=true;btn.textContent='Building your trip…';
   document.getElementById('form-view').style.display='none';
   document.getElementById('result-view').style.display='block';
   document.getElementById('itin-title').textContent=dest;
-  document.getElementById('itin-sub').textContent=`${style} trip · ${days} day${days>1?'s':''}${arrDate?' · Arriving '+arrDate:''}`;
+  document.getElementById('itin-sub').textContent=`${travelStyle} trip · ${numDays} day${numDays>1?'s':''}${arrDate?' · Arriving '+arrDate:''}`;
   document.getElementById('itin-days').innerHTML='';
   document.getElementById('action-bar').style.display='none';
   document.getElementById('booking-section').style.display='none';
   document.getElementById('spinner').classList.add('show');
-  currentArrivalDate=arrDate;currentDays=days;
-
   const arrivalInfo=arrDate?(`, arriving ${arrDate}${arrTime?' at '+arrTime:''}`):'';
-  const prompt=`Create a ${days}-day travel itinerary for ${dest} for a ${style} trip with a ${budget} budget${arrivalInfo}${int?`, interests: ${int}`:''}.
-Tailor accommodation and dining recommendations to the ${budget} budget level.
-Consider arrival time for Day 1 — if arriving late, suggest lighter evening activities.
+  const prompt=`Create a ${numDays}-day travel itinerary for ${dest} for a ${travelStyle} trip with a ${travelBudget} budget${arrivalInfo}${interests?`, interests: ${interests}`:''}.
+Tailor accommodation and dining to the ${travelBudget} budget level.
+Consider arrival time for Day 1 if arriving late suggest lighter evening activities.
 IMPORTANT: Respond ONLY with a raw JSON object. No markdown. No backticks. No explanation. Start your response with { and end with }.
 Use this exact structure:
 {"title":"X Days in Destination","subtitle":"Style trip · X days · Arriving date","days":[{"day":1,"theme":"Theme name","activities":[{"time":"9:00 AM","name":"Activity name","note":"Short helpful tip"}]}]}`;
-
   try{
-    const res=await fetch('/api/itinerary',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({prompt})
-    });
+    const res=await fetch('/api/itinerary',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
     if(!res.ok){const e=await res.json();throw new Error(e.error||'Server error');}
     const data=await res.json();
     const raw=data.content.map(b=>b.text||'').join('').trim();
@@ -507,7 +560,7 @@ Use this exact structure:
     document.getElementById('itin-sub').textContent=p.subtitle;
     document.getElementById('action-bar').style.display='grid';
     document.getElementById('booking-section').style.display='block';
-    updateBookingLinks(dest,arrDate,days);
+    updateBookingLinks(dest,arrDate,numDays);
     renderDays(p.days);
   }catch(e){
     document.getElementById('spinner').classList.remove('show');
@@ -518,13 +571,19 @@ Use this exact structure:
   }finally{
     btn.disabled=false;btn.textContent='Build my itinerary →';
   }
+}
+
+document.getElementById('gen-btn').addEventListener('click',()=>{
+  const dest=selectedDest||destInput.value.trim();
+  const interests=document.getElementById('interests').value.trim();
+  const arrDate=document.getElementById('arrival-date').value;
+  const arrTime=document.getElementById('arrival-time').value;
+  const err=document.getElementById('err');
+  if(!dest){err.textContent='Please enter a destination.';err.style.display='block';return;}
+  if(!days){err.textContent='Please enter the number of days.';err.style.display='block';return;}
+  generateItinerary(dest,days,style,budget,interests,arrDate,arrTime);
 });
 </script>
-<script>
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/sw.js');
-}
-</script>
-</body>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js');}</script>
 </body>
 </html>
