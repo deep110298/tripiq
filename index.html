@@ -148,7 +148,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .auth-submit{width:100%;padding:13px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;border:none;border-radius:10px;background:var(--coral);color:#fff;cursor:pointer;margin-top:6px;transition:background 0.15s}
 .auth-submit:hover{background:#D4503C}
 .auth-submit:disabled{background:var(--coral-border);cursor:not-allowed}
-.auth-err{font-size:12px;color:#C0392B;margin-bottom:8px;display:none;background:var(--coral-light);padding:8px 12px;border-radius:8px}
+.auth-msg{font-size:13px;margin-bottom:10px;display:none;padding:10px 14px;border-radius:10px;font-weight:300}
+.auth-msg.error{background:var(--coral-light);color:#C0392B;border:1px solid var(--coral-border)}
+.auth-msg.success{background:#f0fff4;color:#27ae60;border:1px solid #b7ebc8}
 .auth-close{background:none;border:none;cursor:pointer;color:var(--text3);float:right;font-size:20px;margin-top:-8px;margin-right:-8px}
 .auth-divider{text-align:center;font-size:12px;color:var(--text3);margin:12px 0}
 .user-menu{position:relative}
@@ -338,7 +340,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <button class="auth-tab on" id="tab-signin">Sign in</button>
       <button class="auth-tab" id="tab-signup">Create account</button>
     </div>
-    <div id="auth-err" class="auth-err"></div>
+    <div id="auth-msg" class="auth-msg"></div>
     <input class="auth-input" id="auth-email" type="email" placeholder="Email address"/>
     <input class="auth-input" id="auth-password" type="password" placeholder="Password"/>
     <input class="auth-input" id="auth-name" type="text" placeholder="Full name" style="display:none"/>
@@ -351,6 +353,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 const SUPABASE_URL='https://earklxhdnnhrkqyslhnj.supabase.co';
 const SUPABASE_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVhcmtseGhkbm5ocmtxeXNsaG5qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwOTAxNzEsImV4cCI6MjA4OTY2NjE3MX0.Mg7rsuRYJ-ST-zaPKw2xzaRw72E4RHKdVUu-4GCnsqA';
 const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON);
+const EMAIL_FN=`${SUPABASE_URL}/functions/v1/send-email`;
 
 let days=7,style='Friends',budget='mid-range',selectedDest='',currentItinerary=null,currentUser=null;
 
@@ -375,40 +378,62 @@ function updateAuthUI(){
     const initials=(currentUser.user_metadata?.full_name||currentUser.email||'?').charAt(0).toUpperCase();
     document.getElementById('user-avatar-btn').textContent=initials;
     document.getElementById('user-email-display').textContent=currentUser.email;
-    if(saveBtn) saveBtn.classList.add('save-highlight');
+    if(saveBtn)saveBtn.classList.add('save-highlight');
   }else{
     signinBtn.style.display='flex';
     userMenu.style.display='none';
-    if(saveBtn) saveBtn.classList.remove('save-highlight');
+    if(saveBtn)saveBtn.classList.remove('save-highlight');
   }
+}
+
+async function sendEmail(payload){
+  try{await fetch(EMAIL_FN,{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON},body:JSON.stringify(payload)});}catch(e){}
+}
+
+function truncateNote(note){
+  if(!note)return'';
+  const s=note.split(/(?<=[.!?])\s/)[0];
+  return s.length>100?s.substring(0,97)+'...':s;
 }
 
 let authMode='signin';
 document.getElementById('signin-btn').addEventListener('click',()=>{document.getElementById('auth-modal').classList.add('open');});
 document.getElementById('auth-modal-close').addEventListener('click',()=>{document.getElementById('auth-modal').classList.remove('open');});
 document.getElementById('auth-modal').addEventListener('click',e=>{if(e.target===document.getElementById('auth-modal'))document.getElementById('auth-modal').classList.remove('open');});
-document.getElementById('tab-signin').addEventListener('click',()=>{authMode='signin';document.getElementById('tab-signin').classList.add('on');document.getElementById('tab-signup').classList.remove('on');document.getElementById('auth-name').style.display='none';document.getElementById('auth-submit-btn').textContent='Sign in';document.getElementById('auth-err').style.display='none';});
-document.getElementById('tab-signup').addEventListener('click',()=>{authMode='signup';document.getElementById('tab-signup').classList.add('on');document.getElementById('tab-signin').classList.remove('on');document.getElementById('auth-name').style.display='block';document.getElementById('auth-submit-btn').textContent='Create account';document.getElementById('auth-err').style.display='none';});
+
+function showAuthMsg(text,type){
+  const el=document.getElementById('auth-msg');
+  el.textContent=text;
+  el.className='auth-msg '+(type||'error');
+  el.style.display='block';
+}
+
+document.getElementById('tab-signin').addEventListener('click',()=>{authMode='signin';document.getElementById('tab-signin').classList.add('on');document.getElementById('tab-signup').classList.remove('on');document.getElementById('auth-name').style.display='none';document.getElementById('auth-submit-btn').textContent='Sign in';document.getElementById('auth-msg').style.display='none';});
+document.getElementById('tab-signup').addEventListener('click',()=>{authMode='signup';document.getElementById('tab-signup').classList.add('on');document.getElementById('tab-signin').classList.remove('on');document.getElementById('auth-name').style.display='block';document.getElementById('auth-submit-btn').textContent='Create account';document.getElementById('auth-msg').style.display='none';});
+
 document.getElementById('auth-submit-btn').addEventListener('click',async()=>{
   const email=document.getElementById('auth-email').value.trim();
   const password=document.getElementById('auth-password').value;
   const name=document.getElementById('auth-name').value.trim();
-  const errEl=document.getElementById('auth-err');
-  errEl.style.display='none';
-  if(!email||!password){errEl.textContent='Please fill in all fields.';errEl.style.display='block';return;}
+  document.getElementById('auth-msg').style.display='none';
+  if(!email||!password){showAuthMsg('Please fill in all fields.','error');return;}
   const btn=document.getElementById('auth-submit-btn');
   btn.disabled=true;btn.textContent='Please wait...';
   try{
     let result;
     if(authMode==='signup'){
       result=await sb.auth.signUp({email,password,options:{data:{full_name:name}}});
-      if(!result.error){errEl.textContent='Account created! Please check your email to verify.';errEl.style.display='block';errEl.style.color='#27ae60';}
+      if(!result.error){
+        showAuthMsg('Account created! Check your email to verify, then sign in.','success');
+        // Send welcome email
+        sendEmail({type:'welcome',email,name:name||email.split('@')[0]});
+      }
     }else{
       result=await sb.auth.signInWithPassword({email,password});
       if(!result.error)document.getElementById('auth-modal').classList.remove('open');
     }
     if(result.error)throw result.error;
-  }catch(e){errEl.textContent=e.message||'Something went wrong.';errEl.style.display='block';errEl.style.color='#C0392B';}
+  }catch(e){showAuthMsg(e.message||'Something went wrong.','error');}
   finally{btn.disabled=false;btn.textContent=authMode==='signup'?'Create account':'Sign in';}
 });
 
@@ -466,8 +491,7 @@ const CITIES=[
 document.getElementById('surprise-btn').addEventListener('click',()=>{
   const random=CITIES[Math.floor(Math.random()*CITIES.length)];
   const dest=`${random.name}, ${random.country}`;
-  document.getElementById('dest').value=dest;
-  selectedDest=dest;
+  document.getElementById('dest').value=dest;selectedDest=dest;
   const dayOptions=[3,5,7,10];
   const randomDays=dayOptions[Math.floor(Math.random()*dayOptions.length)];
   document.querySelectorAll('.tq-pill').forEach(p=>{p.classList.remove('on');if(p.dataset.v==randomDays)p.classList.add('on');});
@@ -500,8 +524,7 @@ document.getElementById('arrival-date').value=today;
 
 document.querySelectorAll('.tq-pill').forEach(c=>{
   c.addEventListener('click',()=>{
-    document.querySelectorAll('.tq-pill').forEach(x=>x.classList.remove('on'));
-    c.classList.add('on');
+    document.querySelectorAll('.tq-pill').forEach(x=>x.classList.remove('on'));c.classList.add('on');
     const cd=document.getElementById('custom-days');
     if(c.dataset.v==='custom'){cd.classList.add('show');days=null;}
     else{cd.classList.remove('show');days=parseInt(c.dataset.v);}
@@ -541,6 +564,7 @@ function renderSavedList(cloudItems){
     });
   });
 }
+
 function loadSaved(itin){
   currentItinerary=itin;
   document.getElementById('itin-title').textContent=itin.title;
@@ -564,7 +588,7 @@ function renderDays(daysArr){
     const places=d.activities.map(a=>encodeURIComponent(a.name+' '+destName));
     const mapsUrl=`https://www.google.com/maps/dir/${places.join('/')}`;
     el.innerHTML=`<div class="tq-day-label">Day ${d.day}</div><div class="tq-day-theme"><span>${d.theme}</span><a href="${mapsUrl}" target="_blank" rel="noopener" class="tq-maps-btn"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1C3.57 1 2 2.57 2 4.5c0 2.63 3.5 5.5 3.5 5.5S9 7.13 9 4.5C9 2.57 7.43 1 5.5 1z" stroke="currentColor" stroke-width="1.1"/><circle cx="5.5" cy="4.5" r="1.2" stroke="currentColor" stroke-width="1.1"/></svg>View on Maps</a></div>`+
-      d.activities.map(a=>`<div class="tq-act"><div class="tq-act-time">${a.time}</div><div><div class="tq-act-name">${a.name}</div>${a.note?`<div class="tq-act-note">${a.note}</div>`:''}</div></div>`).join('');
+      d.activities.map(a=>`<div class="tq-act"><div class="tq-act-time">${a.time}</div><div><div class="tq-act-name">${a.name}</div>${a.note?`<div class="tq-act-note">${truncateNote(a.note)}</div>`:''}</div></div>`).join('');
     cont.appendChild(el);
   });
 }
@@ -583,7 +607,7 @@ function formatPlainText(itin){
   let text=`${itin.title}\n${itin.subtitle}\n\n`;
   itin.days.forEach(d=>{
     text+=`DAY ${d.day} - ${d.theme.toUpperCase()}\n`;
-    d.activities.forEach(a=>{text+=`  ${a.time.padEnd(10)}${a.name}${a.note?' - '+a.note:''}\n`;});
+    d.activities.forEach(a=>{text+=`  ${a.time.padEnd(10)}${a.name}${a.note?' - '+truncateNote(a.note):''}\n`;});
     text+='\n';
   });
   return text;
@@ -609,7 +633,12 @@ async function saveToCloud(itin){
     days:itin.days.length,
     data:itin
   });
-  if(!error) loadCloudSaved();
+  if(!error){
+    loadCloudSaved();
+    // Send saved trip email
+    const userName=currentUser.user_metadata?.full_name||currentUser.email?.split('@')[0]||'Traveller';
+    sendEmail({type:'itinerary',email:currentUser.email,name:userName,title:itin.title,subtitle:itin.subtitle,days:itin.days});
+  }
   return !error;
 }
 
@@ -661,18 +690,17 @@ async function generateItinerary(dest,numDays,travelStyle,travelBudget,interests
   document.getElementById('booking-section').style.display='none';
   document.getElementById('spinner').classList.add('show');
   const arrivalInfo=arrDate?(`, arriving ${arrDate}${arrTime?' at '+arrTime:''}`):'';
-  const prompt=`You are an expert travel planner. Create a detailed ${numDays}-day itinerary for ${dest} for a ${travelStyle} group with a ${travelBudget} budget${arrivalInfo}${interests?`, with interests in: ${interests}`:''}.
+  const prompt=`You are an expert travel planner. Create a ${numDays}-day itinerary for ${dest} for a ${travelStyle} group with ${travelBudget} budget${arrivalInfo}${interests?`, interests: ${interests}`:''}.
 
-RULES:
-- Only use real, verified place names that exist in ${dest}
-- Include 4-6 activities per day with specific real place names
-- Always include the most iconic must-see landmarks ${dest} is famous for
-- Mix famous landmarks with local gems
-- Include specific restaurant names for meals
-- Keep each activity note to ONE short sentence only — no more
+STRICT RULES:
+- Only real verified places that exist in ${dest}
+- 4-6 activities per day with specific place names
+- Always include the most iconic must-see landmarks
+- Mix famous landmarks with local gems and restaurant names
+- Each note MUST be ONE sentence only (max 15 words) — absolutely no more
 
-Respond ONLY with raw JSON, no markdown, no backticks:
-{"title":"${numDays} Days in ${dest.split(',')[0]}","subtitle":"${travelStyle} trip \u00b7 ${numDays} days${arrDate?' \u00b7 Arriving '+arrDate:''}","days":[{"day":1,"theme":"Theme name","activities":[{"time":"9:00 AM","name":"Place Name","note":"One short sentence tip."}]}]}`;
+Respond ONLY with raw JSON (no markdown, no backticks, start with {):
+{"title":"${numDays} Days in ${dest.split(',')[0]}","subtitle":"${travelStyle} trip \u00b7 ${numDays} days${arrDate?' \u00b7 Arriving '+arrDate:''}","days":[{"day":1,"theme":"Theme","activities":[{"time":"9:00 AM","name":"Place Name","note":"Short tip."}]}]}`;
   try{
     const res=await fetch('/api/itinerary',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
     if(!res.ok){const e=await res.json();throw new Error(e.error||'Server error');}
@@ -689,8 +717,7 @@ Respond ONLY with raw JSON, no markdown, no backticks:
     updateBookingLinks(dest,arrDate,numDays);
     renderDays(p.days);
     updateAuthUI();
-    // Auto-save to cloud if logged in
-    if(currentUser) saveToCloud(p);
+    if(currentUser)saveToCloud(p);
   }catch(e){
     document.getElementById('spinner').classList.remove('show');
     document.getElementById('form-view').style.display='block';
@@ -779,19 +806,14 @@ document.getElementById('gen-btn').addEventListener('click',()=>{
 
 <script>
 const chatHistory=[];
-const systemPrompt=`You are Tripiq, a friendly and knowledgeable AI travel agent. You help users plan amazing trips through natural conversation. Your goal is to understand what the user wants and eventually generate a travel itinerary for them. Guidelines: Be warm, enthusiastic and concise - keep responses to 2-3 sentences max. Ask ONE follow-up question at a time if you need more info. Once you have destination, duration, travel style and budget - offer to generate the itinerary. When ready to generate, end your message with exactly this JSON on a new line: GENERATE:{"dest":"City, Country","days":7,"style":"Friends","budget":"mid-range","interests":"food, culture"}. Valid styles: Family, Couple, Solo, Business, Friends. Valid budgets: budget, mid-range, luxury. Never mention Claude or Anthropic - you are Tripiq AI.`;
+const systemPrompt=`You are Tripiq, a friendly AI travel agent. Help users plan amazing trips through natural conversation. Be warm and concise - max 2-3 sentences. Ask ONE follow-up question at a time. Once you have destination, duration, style and budget, offer to generate the itinerary. When ready, end with: GENERATE:{"dest":"City, Country","days":7,"style":"Friends","budget":"mid-range","interests":"food"}. Valid styles: Family,Couple,Solo,Business,Friends. Valid budgets: budget,mid-range,luxury. Never mention Claude or Anthropic.`;
 
 function addMessage(role,text,showGenBtn,genData){
-  const wrap=document.createElement('div');
-  wrap.className=role==='ai'?'chat-msg-ai':'chat-msg-user';
-  const bubble=document.createElement('div');
-  bubble.className=role==='ai'?'chat-bubble-ai':'chat-bubble-user';
-  bubble.textContent=text;
-  wrap.appendChild(bubble);
+  const wrap=document.createElement('div');wrap.className=role==='ai'?'chat-msg-ai':'chat-msg-user';
+  const bubble=document.createElement('div');bubble.className=role==='ai'?'chat-bubble-ai':'chat-bubble-user';
+  bubble.textContent=text;wrap.appendChild(bubble);
   if(showGenBtn&&genData){
-    const btn=document.createElement('button');
-    btn.className='chat-gen-btn';
-    btn.textContent='Generate my itinerary now';
+    const btn=document.createElement('button');btn.className='chat-gen-btn';btn.textContent='Generate my itinerary now';
     btn.addEventListener('click',()=>{closeChatPanel();generateItinerary(genData.dest,genData.days,genData.style,genData.budget,genData.interests||'','','');});
     wrap.appendChild(btn);
   }
@@ -802,9 +824,7 @@ function showTyping(){document.getElementById('chat-typing').style.display='bloc
 function hideTyping(){document.getElementById('chat-typing').style.display='none';}
 
 async function sendChat(userMsg){
-  chatHistory.push({role:'user',content:userMsg});
-  addMessage('user',userMsg);
-  showTyping();
+  chatHistory.push({role:'user',content:userMsg});addMessage('user',userMsg);showTyping();
   try{
     const res=await fetch('/api/itinerary',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:userMsg,system:systemPrompt,history:chatHistory.slice(-10)})});
     const data=await res.json();
@@ -816,44 +836,30 @@ async function sendChat(userMsg){
         const genData=JSON.parse(genMatch[1]);
         const displayText=raw.replace(/GENERATE:\{.*\}/,'').trim();
         chatHistory.push({role:'assistant',content:displayText});
-        addMessage('ai',displayText||'I have everything I need! Ready to build your itinerary?',true,genData);
+        addMessage('ai',displayText||'Ready to build your itinerary!',true,genData);
       }catch(e){chatHistory.push({role:'assistant',content:raw});addMessage('ai',raw);}
     }else{chatHistory.push({role:'assistant',content:raw});addMessage('ai',raw);}
   }catch(e){hideTyping();addMessage('ai','Sorry, something went wrong. Please try again!');}
 }
 
 function openChatPanel(){
-  const panel=document.getElementById('chat-panel');
-  panel.style.display='flex';
+  const panel=document.getElementById('chat-panel');panel.style.display='flex';
   document.getElementById('chat-fab').style.transform='scale(0.9)';
   if(chatHistory.length===0){setTimeout(()=>{addMessage('ai','Hey! I am your Tripiq travel agent. Tell me about your dream trip - where are you thinking of going?');},300);}
   setTimeout(()=>document.getElementById('chat-input').focus(),400);
 }
-function closeChatPanel(){
-  document.getElementById('chat-panel').style.display='none';
-  document.getElementById('chat-fab').style.transform='scale(1)';
-}
-document.getElementById('chat-fab').addEventListener('click',()=>{
-  const panel=document.getElementById('chat-panel');
-  panel.style.display==='none'||!panel.style.display?openChatPanel():closeChatPanel();
-});
+function closeChatPanel(){document.getElementById('chat-panel').style.display='none';document.getElementById('chat-fab').style.transform='scale(1)';}
+document.getElementById('chat-fab').addEventListener('click',()=>{const panel=document.getElementById('chat-panel');panel.style.display==='none'||!panel.style.display?openChatPanel():closeChatPanel();});
 document.getElementById('chat-close').addEventListener('click',closeChatPanel);
-document.getElementById('chat-send').addEventListener('click',()=>{
-  const input=document.getElementById('chat-input');
-  const msg=input.value.trim();
-  if(!msg)return;input.value='';sendChat(msg);
-});
-document.getElementById('chat-input').addEventListener('keydown',e=>{
-  if(e.key==='Enter'){const msg=e.target.value.trim();if(!msg)return;e.target.value='';sendChat(msg);}
-});
+document.getElementById('chat-send').addEventListener('click',()=>{const input=document.getElementById('chat-input');const msg=input.value.trim();if(!msg)return;input.value='';sendChat(msg);});
+document.getElementById('chat-input').addEventListener('keydown',e=>{if(e.key==='Enter'){const msg=e.target.value.trim();if(!msg)return;e.target.value='';sendChat(msg);}});
 
 (function(){
   const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
   const isStandalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone;
   const dismissed=localStorage.getItem('tripiq-pwa-dismissed');
   if(isIOS&&!isStandalone&&!dismissed){
-    const banner=document.getElementById('pwa-banner');
-    const bar=document.getElementById('pwa-progress');
+    const banner=document.getElementById('pwa-banner');const bar=document.getElementById('pwa-progress');
     setTimeout(()=>{
       banner.style.display='block';
       setTimeout(()=>{bar.style.width='0%';},50);
