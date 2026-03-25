@@ -11,6 +11,9 @@
 <meta property="og:image" content="https://tripiq.site/preview.png"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://tripiq.site/preview.png"/>
+  <link rel="manifest" href="/manifest.json"/>
+<meta name="theme-color" content="#E8604C"/>
+<link rel="apple-touch-icon" href="/icon-192.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <style>
@@ -517,5 +520,11 @@ Use this exact structure:
   }
 });
 </script>
+<script>
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/sw.js');
+}
+</script>
+</body>
 </body>
 </html>
