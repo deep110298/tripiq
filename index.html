@@ -585,8 +585,9 @@ document.getElementById('gen-btn').addEventListener('click',()=>{
 });
 </script>
 <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js');}</script>
+
 <!-- PWA Install Banner -->
-<div id="pwa-banner" style="display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:999;width:calc(100% - 48px);max-width:400px">
+<div id="pwa-banner" style="display:none;position:fixed;bottom:90px;left:50%;transform:translateX(-50%);z-index:999;width:calc(100% - 48px);max-width:400px">
   <div style="background:#1a1a1a;color:#fff;border-radius:16px;padding:14px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 32px rgba(0,0,0,0.2)">
     <div style="width:36px;height:36px;background:#E8604C;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
       <svg width="18" height="18" viewBox="0 0 22 22" fill="none"><path d="M11 2C7.13 2 4 5.13 4 9c0 5.25 7 11 7 11s7-5.75 7-11c0-3.87-3.13-7-7-7z" fill="white" opacity="0.9"/><circle cx="11" cy="9" r="2.5" fill="#E8604C"/></svg>
@@ -600,7 +601,179 @@ document.getElementById('gen-btn').addEventListener('click',()=>{
   <div id="pwa-progress" style="height:2px;background:#E8604C;border-radius:1px;margin-top:6px;width:100%;transition:width 3s linear"></div>
 </div>
 
+<!-- Floating chat button -->
+<button id="chat-fab" style="position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:#E8604C;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(232,96,76,0.4);display:flex;align-items:center;justify-content:center;z-index:900;transition:transform 0.15s">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<!-- Chat panel -->
+<div id="chat-panel" style="display:none;position:fixed;bottom:0;right:0;width:100%;max-width:420px;height:75vh;background:var(--bg);border-radius:20px 20px 0 0;box-shadow:0 -8px 40px rgba(0,0,0,0.15);z-index:950;flex-direction:column;border:0.5px solid var(--border2)">
+  <!-- Chat header -->
+  <div style="padding:16px 20px;border-bottom:0.5px solid var(--border2);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="width:32px;height:32px;background:#E8604C;border-radius:10px;display:flex;align-items:center;justify-content:center">
+        <svg width="16" height="16" viewBox="0 0 22 22" fill="none"><path d="M11 2C7.13 2 4 5.13 4 9c0 5.25 7 11 7 11s7-5.75 7-11c0-3.87-3.13-7-7-7z" fill="white" opacity="0.9"/><circle cx="11" cy="9" r="2.5" fill="#E8604C"/></svg>
+      </div>
+      <div>
+        <div style="font-size:14px;font-weight:500;color:var(--text)">Tripiq AI</div>
+        <div style="font-size:11px;color:var(--text3)">Your personal travel agent</div>
+      </div>
+    </div>
+    <button id="chat-close" style="background:none;border:none;cursor:pointer;color:var(--text3);padding:4px">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M15 5L5 15M5 5l10 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+
+  <!-- Messages -->
+  <div id="chat-messages" style="flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:12px"></div>
+
+  <!-- Typing indicator -->
+  <div id="chat-typing" style="display:none;padding:0 20px 8px">
+    <div style="display:inline-flex;align-items:center;gap:4px;background:var(--bg3);border-radius:12px;padding:8px 14px">
+      <span style="width:6px;height:6px;background:var(--text3);border-radius:50%;animation:bounce 1s infinite 0s"></span>
+      <span style="width:6px;height:6px;background:var(--text3);border-radius:50%;animation:bounce 1s infinite 0.2s"></span>
+      <span style="width:6px;height:6px;background:var(--text3);border-radius:50%;animation:bounce 1s infinite 0.4s"></span>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div style="padding:12px 16px;border-top:0.5px solid var(--border2);display:flex;gap:8px;flex-shrink:0">
+    <input id="chat-input" type="text" placeholder="Tell me about your dream trip…" style="flex:1;padding:11px 14px;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:300;border:1px solid var(--border);border-radius:10px;background:var(--bg2);color:var(--text);outline:none"/>
+    <button id="chat-send" style="width:40px;height:40px;background:#E8604C;border:none;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity 0.15s">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M14 8H2M14 8L9 3M14 8L9 13" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+
+<style>
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.chat-msg-ai{align-self:flex-start;max-width:85%}
+.chat-msg-user{align-self:flex-end;max-width:85%}
+.chat-bubble-ai{background:var(--bg3);border-radius:4px 14px 14px 14px;padding:10px 14px;font-size:14px;color:var(--text);line-height:1.5;font-weight:300}
+.chat-bubble-user{background:#E8604C;border-radius:14px 4px 14px 14px;padding:10px 14px;font-size:14px;color:#fff;line-height:1.5;font-weight:300}
+.chat-gen-btn{margin-top:10px;width:100%;padding:10px;background:#E8604C;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.15s}
+.chat-gen-btn:hover{opacity:0.88}
+</style>
+
 <script>
+const chatHistory=[];
+const systemPrompt=`You are Tripiq, a friendly and knowledgeable AI travel agent. You help users plan amazing trips through natural conversation.
+
+Your goal is to understand what the user wants and eventually generate a travel itinerary for them.
+
+Guidelines:
+- Be warm, enthusiastic and concise — keep responses to 2-3 sentences max
+- Ask ONE follow-up question at a time if you need more info
+- Once you have destination, duration, travel style and budget — offer to generate the itinerary
+- When ready to generate, end your message with exactly this JSON on a new line: GENERATE:{"dest":"City, Country","days":7,"style":"Friends","budget":"mid-range","interests":"food, culture"}
+- Valid styles: Family, Couple, Solo, Business, Friends
+- Valid budgets: budget, mid-range, luxury
+- If user seems ready, go ahead and suggest generating — don't over-ask questions
+- Never mention that you're Claude or made by Anthropic — you are Tripiq AI`;
+
+function addMessage(role,text,showGenBtn,genData){
+  const wrap=document.createElement('div');
+  wrap.className=role==='ai'?'chat-msg-ai':'chat-msg-user';
+  const bubble=document.createElement('div');
+  bubble.className=role==='ai'?'chat-bubble-ai':'chat-bubble-user';
+  bubble.textContent=text;
+  wrap.appendChild(bubble);
+  if(showGenBtn&&genData){
+    const btn=document.createElement('button');
+    btn.className='chat-gen-btn';
+    btn.textContent='✈ Generate my itinerary now';
+    btn.addEventListener('click',()=>{
+      closeChatPanel();
+      generateItinerary(genData.dest,genData.days,genData.style,genData.budget,genData.interests||'','','');
+    });
+    wrap.appendChild(btn);
+  }
+  document.getElementById('chat-messages').appendChild(wrap);
+  document.getElementById('chat-messages').scrollTop=99999;
+}
+
+function showTyping(){document.getElementById('chat-typing').style.display='block';document.getElementById('chat-messages').scrollTop=99999;}
+function hideTyping(){document.getElementById('chat-typing').style.display='none';}
+
+async function sendChat(userMsg){
+  chatHistory.push({role:'user',content:userMsg});
+  addMessage('user',userMsg);
+  showTyping();
+  try{
+    const res=await fetch('/api/itinerary',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        prompt:userMsg,
+        system:systemPrompt,
+        history:chatHistory.slice(-10)
+      })
+    });
+    const data=await res.json();
+    const raw=data.content.map(b=>b.text||'').join('').trim();
+    hideTyping();
+    // Check if AI wants to generate
+    const genMatch=raw.match(/GENERATE:(\{.*\})/);
+    if(genMatch){
+      try{
+        const genData=JSON.parse(genMatch[1]);
+        const displayText=raw.replace(/GENERATE:\{.*\}/,'').trim();
+        chatHistory.push({role:'assistant',content:displayText});
+        addMessage('ai',displayText||'I have everything I need! Ready to build your itinerary?',true,genData);
+      }catch(e){
+        chatHistory.push({role:'assistant',content:raw});
+        addMessage('ai',raw);
+      }
+    }else{
+      chatHistory.push({role:'assistant',content:raw});
+      addMessage('ai',raw);
+    }
+  }catch(e){
+    hideTyping();
+    addMessage('ai','Sorry, something went wrong. Please try again!');
+  }
+}
+
+function openChatPanel(){
+  const panel=document.getElementById('chat-panel');
+  panel.style.display='flex';
+  document.getElementById('chat-fab').style.transform='scale(0.9)';
+  if(chatHistory.length===0){
+    setTimeout(()=>{
+      addMessage('ai','Hey! I am your Tripiq travel agent. Tell me about your dream trip — where are you thinking of going?');
+    },300);
+  }
+  setTimeout(()=>document.getElementById('chat-input').focus(),400);
+}
+
+function closeChatPanel(){
+  document.getElementById('chat-panel').style.display='none';
+  document.getElementById('chat-fab').style.transform='scale(1)';
+}
+
+document.getElementById('chat-fab').addEventListener('click',()=>{
+  const panel=document.getElementById('chat-panel');
+  panel.style.display==='none'||!panel.style.display?openChatPanel():closeChatPanel();
+});
+document.getElementById('chat-close').addEventListener('click',closeChatPanel);
+
+document.getElementById('chat-send').addEventListener('click',()=>{
+  const input=document.getElementById('chat-input');
+  const msg=input.value.trim();
+  if(!msg)return;
+  input.value='';
+  sendChat(msg);
+});
+document.getElementById('chat-input').addEventListener('keydown',e=>{
+  if(e.key==='Enter'){
+    const msg=e.target.value.trim();
+    if(!msg)return;
+    e.target.value='';
+    sendChat(msg);
+  }
+});
+
+// PWA banner
 (function(){
   const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
   const isStandalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone;
