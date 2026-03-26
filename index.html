@@ -1,1 +1,1204 @@
-PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+CjxtZXRhIGNoYXJzZXQ9IlVURi04Ii8+CjxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgsaW5pdGlhbC1zY2FsZT0xLHZpZXdwb3J0LWZpdD1jb3ZlciIvPgo8dGl0bGU+VHJpcElRIOKAlCBBSSBUcmF2ZWwgUGxhbm5lcjwvdGl0bGU+CjxsaW5rIHJlbD0ibWFuaWZlc3QiIGhyZWY9Ii9tYW5pZmVzdC5qc29uIi8+CjxtZXRhIG5hbWU9InRoZW1lLWNvbG9yIiBjb250ZW50PSIjMDgwODA5Ii8+CjxsaW5rIHJlbD0iYXBwbGUtdG91Y2gtaWNvbiIgaHJlZj0iL2ljb24tMTkyLnBuZyIvPgo8bGluayByZWw9InByZWNvbm5lY3QiIGhyZWY9Imh0dHBzOi8vZm9udHMuZ29vZ2xlYXBpcy5jb20iLz4KPGxpbmsgcmVsPSJwcmVjb25uZWN0IiBocmVmPSJodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tIiBjcm9zc29yaWdpbi8+CjxsaW5rIGhyZWY9Imh0dHBzOi8vZm9udHMuZ29vZ2xlYXBpcy5jb20vY3NzMj9mYW1pbHk9RE0rU2FuczppdGFsLG9wc3osd2dodEAwLDkuLjQwLDMwMDswLDkuLjQwLDQwMDswLDkuLjQwLDUwMDswLDkuLjQwLDYwMDswLDkuLjQwLDcwMDswLDkuLjQwLDgwMDswLDkuLjQwLDkwMDsxLDkuLjQwLDMwMCZkaXNwbGF5PXN3YXAiIHJlbD0ic3R5bGVzaGVldCIvPgo8c2NyaXB0IHNyYz0iaHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L25wbS9Ac3VwYWJhc2Uvc3VwYWJhc2UtanNAMiI+PC9zY3JpcHQ+CjxzdHlsZT4KKiwqOjpiZWZvcmUsKjo6YWZ0ZXJ7Ym94LXNpemluZzpib3JkZXItYm94O21hcmdpbjowO3BhZGRpbmc6MDt9Cjpyb290ewogIC0tYmc6IzA4MDgwOTstLXN1cmZhY2U6IzExMTExNDstLXN1cmZhY2UtdXA6IzE4MTgxZDsKICAtLWJvcmRlcjojMjIyMjJhOy0tYm9yZGVyLXVwOiMyZTJlM2E7CiAgLS1hY2NlbnQ6I2U4MzgwZDstLWFjY2VudC1zb2Z0OnJnYmEoMjMyLDU2LDEzLDAuMDkpOy0tYWNjZW50LWdsb3c6cmdiYSgyMzIsNTYsMTMsMC4yNSk7CiAgLS10ZXh0OiNlZGU5ZTM7LS1tdXRlZDojNmI2YjdlOy0tZmFpbnQ6IzJhMmEzNTsKICAtLWdyZWVuOiMyMmM1NWU7LS1hbWJlcjojZjU5ZTBiOy0tYmx1ZTojMzhiZGY4Oy0tcHVycGxlOiNhNzhiZmE7Cn0KaHRtbHtoZWlnaHQ6MTAwJTtiYWNrZ3JvdW5kOnZhcigtLWJnKTt9CmJvZHl7Zm9udC1mYW1pbHk6J0RNIFNhbnMnLHNhbnMtc2VyaWY7YmFja2dyb3VuZDp2YXIoLS1iZyk7Y29sb3I6dmFyKC0tdGV4dCk7bWluLWhlaWdodDoxMDAlOy13ZWJraXQtZm9udC1zbW9vdGhpbmc6YW50aWFsaWFzZWQ7b3ZlcnNjcm9sbC1iZWhhdmlvcjpub25lO30KCi8qIOKUgOKUgCBTQ1JFRU5TIOKUgOKUgCAqLwouc2NyZWVue2Rpc3BsYXk6bm9uZTttaW4taGVpZ2h0OjEwMHZoO21heC13aWR0aDo0MzBweDttYXJnaW46MCBhdXRvO3Bvc2l0aW9uOnJlbGF0aXZlO2ZsZXgtZGlyZWN0aW9uOmNvbHVtbjt9Ci5zY3JlZW4uYWN0aXZle2Rpc3BsYXk6ZmxleDt9Cgov
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>TripIQ — AI Travel Planner</title>
+<link rel="manifest" href="/manifest.json"/>
+<meta name="theme-color" content="#080809"/>
+<link rel="apple-touch-icon" href="/icon-192.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,300&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#080809;--surface:#111114;--surface-up:#18181d;
+  --border:#22222a;--border-up:#2e2e3a;
+  --accent:#e8380d;--accent-soft:rgba(232,56,13,0.09);--accent-glow:rgba(232,56,13,0.25);
+  --text:#ede9e3;--muted:#6b6b7e;--faint:#2a2a35;
+  --green:#22c55e;--amber:#f59e0b;--blue:#38bdf8;--purple:#a78bfa;
+}
+html{height:100%;background:var(--bg);}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100%;-webkit-font-smoothing:antialiased;overscroll-behavior:none;}
+
+/* ── SCREENS ── */
+.screen{display:none;min-height:100vh;max-width:430px;margin:0 auto;position:relative;flex-direction:column;}
+.screen.active{display:flex;}
+
+/* ════════════════════════════════════════
+   DESKTOP RESPONSIVE (≥800px)
+════════════════════════════════════════ */
+@media(min-width:800px){
+  body{overflow-x:hidden;}
+  .screen{max-width:100%;box-shadow:none;}
+
+  /* ── HOME: 2-column layout ── */
+  #screen-home{
+    max-width:1100px;margin:0 auto;
+    display:grid;
+    grid-template-columns:1fr 400px;
+    align-items:start;
+    min-height:100vh;
+  }
+  #screen-home .hs-header{
+    grid-column:1;grid-row:1;
+    padding:48px 32px 24px 48px;
+  }
+  #screen-home .hs-cta{
+    grid-column:1;grid-row:2;
+    padding:0 32px 48px 48px;
+  }
+  #screen-home .hs-section{
+    grid-column:2;grid-row:1;
+    padding:48px 48px 24px 32px;
+    border-left:1px solid var(--border);
+    min-height:100%;
+  }
+  #screen-home .hs-trending{
+    grid-column:2;grid-row:2;
+    padding:0 48px 48px 32px;
+    border-left:1px solid var(--border);
+  }
+  .hs-tagline{font-size:32px;}
+  .hs-cta-card{max-width:520px;}
+  .hs-cta-title{font-size:22px;}
+  .hs-trending-row{flex-wrap:wrap;overflow-x:visible;}
+  .trending-item{min-width:100px;}
+
+  /* ── WIZARD: centered card ── */
+  #screen-wizard{
+    max-width:640px;margin:0 auto;
+    box-shadow:0 0 0 1px var(--border);
+    min-height:100vh;
+  }
+  #screen-wizard .wz-topbar{padding:40px 48px 20px;}
+  .wz-content{padding:24px 48px 48px;}
+  .wz-heading{font-size:34px;}
+  .wz-traveler-grid{grid-template-columns:repeat(4,1fr);}
+  .wz-budget-list{flex-direction:row;flex-wrap:wrap;}
+  .wz-budget-card{flex:1;min-width:140px;}
+
+  /* ── APP: sidebar nav layout ── */
+  #screen-app{
+    max-width:1200px;margin:0 auto;
+    display:grid;
+    grid-template-columns:220px 1fr;
+    grid-template-rows:auto 1fr;
+    grid-template-areas:"hdr hdr" "nav main";
+    height:100vh;
+    overflow:hidden;
+  }
+  #screen-app .app-header{
+    grid-area:hdr;
+    padding-top:24px;
+    padding-bottom:16px;
+  }
+  #screen-app .app-content{
+    grid-area:main;
+    height:100%;
+    overflow-y:auto;
+    padding-bottom:32px!important;
+  }
+  .app-nav{
+    grid-area:nav;
+    position:relative!important;
+    bottom:auto!important;left:auto!important;
+    transform:none!important;
+    width:100%!important;max-width:220px!important;
+    flex-direction:column!important;
+    border-top:none!important;
+    border-right:1px solid var(--border);
+    padding:12px 0!important;
+    height:100%;overflow-y:auto;
+    align-items:stretch!important;
+    backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+    background:var(--bg)!important;
+  }
+  .nav-btn{
+    flex-direction:row!important;
+    justify-content:flex-start!important;
+    padding:11px 16px!important;
+    gap:12px!important;
+    border-radius:10px;
+    margin:2px 8px;
+    width:calc(100% - 16px);
+    align-items:center!important;
+  }
+  .nav-btn.active{background:var(--accent-soft);}
+  .nav-icon{font-size:18px!important;}
+  .nav-label{font-size:14px!important;color:var(--muted);font-weight:500!important;}
+  .nav-btn.active .nav-label{font-weight:700!important;color:var(--accent)!important;}
+  .nav-dot{display:none!important;}
+  .app-dest{font-size:18px;}
+  .app-dest-meta{font-size:12px;}
+
+  /* App tab panels wider */
+  .tab-panel{padding:24px 32px;}
+  .explore-grid{grid-template-columns:repeat(3,1fr);}
+  .itin-hero{padding:28px;}
+  .itin-hero-title{font-size:26px;}
+}
+
+/* ── BUTTON ── */
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:14px;border:none;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.15s;background:var(--accent);color:#fff;width:100%;}
+.btn:disabled{opacity:0.4;cursor:not-allowed;}
+
+/* ── TAG / CHIP ── */
+.tag{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:24px;background:var(--surface-up);border:1px solid var(--border);color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;transition:all 0.15s;user-select:none;white-space:nowrap;}
+.tag.on{background:var(--accent-soft);border-color:var(--accent);color:var(--text);}
+
+/* ════════════ HOME SCREEN ════════════ */
+#screen-home .hs-header{padding:52px 24px 20px;display:flex;justify-content:space-between;align-items:flex-start;}
+.hs-logo{display:flex;align-items:center;gap:10px;}
+.hs-logomark{width:32px;height:32px;border-radius:10px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:#fff;}
+.hs-brandname{font-weight:800;font-size:18px;letter-spacing:-0.5px;}
+.hs-tagline{font-size:24px;font-weight:800;letter-spacing:-1px;line-height:1.2;margin-top:20px;}
+.hs-tagline span{color:var(--accent);}
+.hs-notif{width:42px;height:42px;border-radius:50%;background:var(--surface-up);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;margin-top:8px;flex-shrink:0;}
+.hs-cta{padding:0 24px 28px;}
+.hs-cta-card{border-radius:20px;background:linear-gradient(135deg,#1a0a06,#0a0a14);border:1px solid var(--border);padding:24px;cursor:pointer;position:relative;overflow:hidden;}
+.hs-cta-glow{position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,var(--accent-glow),transparent 70%);pointer-events:none;}
+.hs-cta-star{font-size:36px;margin-bottom:10px;}
+.hs-cta-title{font-size:20px;font-weight:800;letter-spacing:-0.5px;margin-bottom:6px;}
+.hs-cta-sub{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:16px;}
+.hs-cta-pill{display:inline-flex;align-items:center;gap:8px;background:var(--accent);border-radius:12px;padding:10px 18px;font-size:14px;font-weight:700;color:#fff;}
+.hs-section{padding:0 24px 24px;}
+.hs-section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.hs-section-title{font-weight:700;font-size:16px;letter-spacing:-0.3px;}
+.hs-section-see{font-size:13px;color:var(--muted);cursor:pointer;}
+.trip-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:12px;display:flex;align-items:center;gap:16px;cursor:pointer;transition:border-color 0.15s;}
+.trip-card:hover{border-color:var(--border-up);}
+.trip-card-img{width:56px;height:56px;border-radius:14px;background:var(--surface-up);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;}
+.trip-card-dest{font-weight:700;font-size:15px;margin-bottom:3px;}
+.trip-card-meta{font-size:12px;color:var(--muted);}
+.trip-card-arrow{color:var(--muted);font-size:18px;}
+.hs-empty{text-align:center;padding:32px 0;color:var(--muted);font-size:14px;}
+.hs-trending{padding:0 24px 48px;}
+.hs-trending-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
+.hs-trending-row::-webkit-scrollbar{display:none;}
+.trending-item{min-width:88px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 12px;text-align:center;cursor:pointer;flex-shrink:0;transition:border-color 0.15s;}
+.trending-item:hover{border-color:var(--border-up);}
+.trending-icon{font-size:28px;margin-bottom:6px;}
+.trending-name{font-size:12px;font-weight:600;color:var(--muted);}
+
+/* ════════════ WIZARD SCREEN ════════════ */
+#screen-wizard .wz-topbar{padding:52px 24px 20px;flex-shrink:0;}
+.wz-nav{display:flex;align-items:center;gap:14px;margin-bottom:0;}
+.wz-back{background:var(--surface-up);border:1px solid var(--border);border-radius:10px;width:36px;height:36px;flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text);font-size:16px;}
+.wz-progress-track{flex:1;height:4px;background:var(--faint);border-radius:4px;overflow:hidden;}
+.wz-progress-fill{height:100%;border-radius:4px;background:var(--accent);transition:width 0.4s ease;}
+.wz-step-label{font-size:12px;color:var(--muted);font-weight:600;white-space:nowrap;}
+.wz-content{flex:1;padding:24px 24px 32px;display:flex;flex-direction:column;overflow-y:auto;}
+.wz-step{display:none;flex-direction:column;flex:1;}
+.wz-step.active{display:flex;}
+.wz-heading{font-size:28px;font-weight:800;letter-spacing:-1px;margin-bottom:6px;line-height:1.15;}
+.wz-heading span{color:var(--accent);}
+.wz-sub{font-size:14px;color:var(--muted);margin-bottom:28px;}
+.wz-input-row{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:12px;margin-bottom:24px;}
+.wz-input-row input{background:none;border:none;outline:none;color:var(--text);font-size:16px;flex:1;font-family:inherit;color-scheme:dark;}
+.wz-input-row input::placeholder{color:var(--muted);}
+.wz-input-icon{font-size:20px;}
+.wz-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;}
+.wz-spacer{flex:1;}
+/* Destination dropdown */
+.dest-dropdown-wrap{position:relative;}
+.dest-dropdown{position:absolute;left:0;right:0;top:0;background:var(--surface);border:1px solid var(--border-up);border-radius:14px;overflow:hidden;z-index:50;box-shadow:0 8px 32px rgba(0,0,0,0.5);}
+.dest-item{padding:13px 18px;font-size:14px;cursor:pointer;border-bottom:1px solid var(--faint);transition:background 0.1s;}
+.dest-item:last-child{border-bottom:none;}
+.dest-item:hover{background:var(--surface-up);}
+.dest-item strong{color:var(--text);font-weight:600;}
+.dest-item span{color:var(--muted);}
+/* Duration */
+.wz-big-num{text-align:center;margin-bottom:28px;}
+.wz-big-num .num{font-size:80px;font-weight:900;letter-spacing:-4px;color:var(--text);line-height:1;}
+.wz-big-num .unit{font-size:18px;color:var(--muted);margin-top:4px;}
+.wz-counter-btns{display:flex;justify-content:center;gap:24px;margin-top:20px;}
+.wz-counter-btn{width:48px;height:48px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;}
+.wz-counter-minus{background:var(--surface-up);border:1px solid var(--border)!important;border-style:solid!important;color:var(--text);}
+.wz-counter-plus{background:var(--accent);color:#fff;}
+/* Traveler grid */
+.wz-traveler-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px;}
+.wz-traveler-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 14px;cursor:pointer;text-align:center;transition:all 0.15s;}
+.wz-traveler-card.on{background:var(--accent-soft);border-color:var(--accent);}
+.wz-traveler-icon{font-size:32px;margin-bottom:6px;}
+.wz-traveler-label{font-weight:700;font-size:14px;}
+.wz-count-section{margin-bottom:28px;}
+.wz-count-label{font-size:14px;color:var(--muted);margin-bottom:10px;}
+/* Budget */
+.wz-budget-list{display:flex;flex-direction:column;gap:12px;margin-bottom:28px;}
+.wz-budget-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 20px;cursor:pointer;display:flex;align-items:center;gap:16px;transition:all 0.15s;position:relative;}
+.wz-budget-card.on{background:var(--accent-soft);border-color:var(--accent);}
+.wz-budget-icon{font-size:28px;flex-shrink:0;}
+.wz-budget-name{font-weight:700;font-size:15px;}
+.wz-budget-sub{font-size:12px;color:var(--muted);margin-top:2px;}
+.wz-budget-check{margin-left:auto;width:22px;height:22px;border-radius:50%;background:var(--accent);display:none;align-items:center;justify-content:center;font-size:12px;color:#fff;font-weight:800;flex-shrink:0;}
+.wz-budget-card.on .wz-budget-check{display:flex;}
+/* Interests */
+.wz-interests{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px;}
+.wz-interest{padding:10px 16px;border-radius:24px;background:var(--surface-up);border:1px solid var(--border);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;color:var(--muted);transition:all 0.15s;}
+.wz-interest.on{background:var(--accent-soft);border-color:var(--accent);color:var(--text);}
+/* Surprise */
+.wz-surprise-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:24px;cursor:pointer;margin-bottom:16px;transition:all 0.2s;}
+.wz-surprise-card.on{background:var(--accent-soft);border-color:var(--accent);}
+.wz-surprise-star{font-size:40px;margin-bottom:10px;}
+.wz-surprise-title{font-weight:800;font-size:18px;margin-bottom:6px;}
+.wz-surprise-desc{font-size:13px;color:var(--muted);line-height:1.6;}
+.wz-surprise-footer{display:flex;align-items:center;justify-content:space-between;margin-top:16px;}
+.wz-surprise-status{font-size:13px;font-weight:700;color:var(--muted);}
+.wz-surprise-card.on .wz-surprise-status{color:var(--accent);}
+.wz-toggle{width:44px;height:24px;border-radius:12px;background:var(--faint);position:relative;transition:background 0.2s;flex-shrink:0;}
+.wz-toggle-knob{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left 0.2s;}
+.wz-surprise-card.on .wz-toggle{background:var(--accent);}
+.wz-surprise-card.on .wz-toggle-knob{left:23px;}
+/* Generating */
+.wz-generating{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 0;}
+.wz-gen-star{font-size:56px;margin-bottom:24px;}
+.wz-gen-title{font-size:26px;font-weight:800;letter-spacing:-0.5px;margin-bottom:8px;}
+.wz-gen-dest{font-size:14px;color:var(--muted);margin-bottom:48px;}
+.wz-gen-bar-wrap{width:100%;max-width:280px;margin-bottom:20px;}
+.wz-gen-track{height:6px;border-radius:6px;background:var(--faint);overflow:hidden;margin-bottom:12px;}
+.wz-gen-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--accent),#f97316);width:0%;transition:width 0.3s ease;}
+.wz-gen-msg{font-size:13px;color:var(--muted);text-align:center;}
+.wz-gen-tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:32px;opacity:0.6;}
+.wz-gen-tag{padding:6px 12px;border-radius:20px;background:var(--surface);border:1px solid var(--border);font-size:12px;color:var(--muted);}
+.err-msg{color:#f87171;font-size:13px;padding:10px 0;display:none;text-align:center;}
+
+/* ════════════ APP SCREEN ════════════ */
+.app-header{padding:52px 20px 12px;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:20;background:rgba(8,8,9,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);flex-shrink:0;}
+.app-header-inner{display:flex;align-items:center;justify-content:space-between;}
+.app-header-left{display:flex;align-items:center;gap:10px;}
+.app-back{background:var(--surface-up);border:1px solid var(--border);border-radius:10px;width:32px;height:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text);font-size:14px;}
+.app-dest{font-weight:800;font-size:15px;letter-spacing:-0.3px;}
+.app-dest-meta{font-size:11px;color:var(--muted);}
+.app-live{padding:5px 12px;border-radius:20px;background:var(--accent-soft);border:1px solid var(--accent-glow);font-size:11px;font-weight:700;color:var(--accent);}
+.app-content{flex:1;overflow-y:auto;padding-bottom:88px;scrollbar-width:none;}
+.app-content::-webkit-scrollbar{display:none;}
+.tab-panel{display:none;padding:16px;}
+.tab-panel.active{display:block;}
+
+/* Itinerary */
+.itin-hero{border-radius:20px;background:linear-gradient(135deg,#1a0e08 0%,#080e1a 100%);border:1px solid var(--border);padding:20px;position:relative;overflow:hidden;margin-bottom:12px;}
+.itin-hero-glow{position:absolute;top:-30px;right:-30px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,var(--accent-glow),transparent 70%);pointer-events:none;}
+.itin-hero-label{font-size:11px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
+.itin-hero-title{font-size:22px;font-weight:800;letter-spacing:-0.5px;margin-bottom:2px;}
+.itin-hero-sub{font-size:12px;color:var(--muted);margin-bottom:16px;}
+.itin-hero-badges{display:flex;gap:8px;flex-wrap:wrap;}
+.itin-hero-badge{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:4px 12px;font-size:11px;color:#a0a0b8;}
+.day-card{margin-bottom:12px;}
+.day-card-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--surface);border-radius:14px;border:1px solid var(--border);cursor:pointer;transition:border-color 0.15s;}
+.day-card-header.open{border-radius:14px 14px 0 0;border-color:var(--border-up);border-bottom-color:transparent;}
+.day-card-left{display:flex;align-items:center;gap:12px;}
+.day-num{width:34px;height:34px;border-radius:10px;background:var(--faint);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0;}
+.day-num.today{background:var(--accent);}
+.day-card-name{font-weight:700;font-size:14px;}
+.day-card-meta{font-size:11px;color:var(--muted);}
+.day-chevron{color:var(--muted);font-size:11px;}
+.day-card-body{background:#0e0e12;border:1px solid var(--border-up);border-top:none;border-radius:0 0 14px 14px;}
+.activity-row{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-bottom:1px solid var(--faint);}
+.activity-row:last-of-type{border-bottom:none;}
+.act-icon{width:40px;height:40px;border-radius:12px;background:var(--surface-up);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
+.act-info{flex:1;min-width:0;}
+.act-name{font-weight:700;font-size:13px;margin-bottom:2px;}
+.act-time{font-size:11px;color:var(--muted);margin-bottom:4px;}
+.act-note{font-size:11px;color:var(--muted);font-style:italic;line-height:1.4;}
+.act-type{font-size:10px;padding:3px 9px;background:var(--faint);border-radius:10px;color:var(--muted);border:1px solid var(--border);white-space:nowrap;flex-shrink:0;align-self:flex-start;margin-top:2px;}
+.day-add-stop{padding:10px 16px;color:var(--accent);font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;}
+.day-add-day{border:1px dashed var(--faint);border-radius:14px;padding:14px;text-align:center;color:var(--muted);font-size:13px;cursor:pointer;margin-bottom:16px;}
+
+/* Explore */
+.explore-search{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.explore-search input{background:none;border:none;outline:none;color:var(--text);font-size:14px;flex:1;font-family:inherit;}
+.explore-search input::placeholder{color:var(--muted);}
+.explore-filters{display:flex;gap:8px;margin-bottom:18px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
+.explore-filters::-webkit-scrollbar{display:none;}
+.explore-filter{padding:7px 16px;border-radius:20px;background:var(--surface);border:1px solid var(--border);font-size:12px;white-space:nowrap;cursor:pointer;color:var(--muted);font-weight:600;transition:all 0.15s;flex-shrink:0;}
+.explore-filter.on{background:var(--accent);border-color:var(--accent);color:#fff;}
+.explore-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.explore-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;position:relative;transition:border-color 0.15s;}
+.explore-card:hover{border-color:var(--border-up);}
+.explore-save{position:absolute;top:10px;right:10px;font-size:16px;cursor:pointer;}
+.explore-icon{font-size:30px;margin-bottom:8px;}
+.explore-name{font-weight:700;font-size:13px;margin-bottom:2px;}
+.explore-cat{font-size:11px;color:var(--muted);margin-bottom:8px;}
+.explore-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.explore-rating{font-size:11px;color:var(--amber);}
+.explore-price{font-size:11px;color:var(--muted);}
+.explore-add{padding:6px;background:var(--faint);border-radius:8px;text-align:center;font-size:11px;color:var(--accent);font-weight:700;}
+
+/* Logistics */
+.section-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;margin-top:4px;}
+.logistics-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:10px;display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit;}
+.logistics-icon{width:46px;height:46px;border-radius:12px;background:var(--surface-up);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.logistics-detail{font-weight:700;font-size:13px;margin-bottom:2px;}
+.logistics-sub{font-size:11px;color:var(--muted);}
+.import-btn{border:1px dashed var(--faint);border-radius:14px;padding:14px;text-align:center;color:var(--muted);font-size:13px;cursor:pointer;margin-bottom:24px;}
+.doc-row{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:13px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;}
+.doc-name{flex:1;font-size:13px;}
+.doc-view{font-size:11px;color:var(--accent);font-weight:600;cursor:pointer;}
+
+/* Budget */
+.budget-hero{background:linear-gradient(135deg,#140a0a,#0a0a14);border:1px solid var(--border);border-radius:20px;padding:22px;margin-bottom:16px;text-align:center;}
+.budget-hero-label{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.budget-total{font-size:44px;font-weight:900;letter-spacing:-2px;margin-bottom:4px;}
+.budget-of{font-size:13px;color:var(--muted);margin-bottom:16px;}
+.budget-bar-track{height:8px;border-radius:8px;background:var(--faint);overflow:hidden;}
+.budget-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),#f97316);border-radius:8px;}
+.expense-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:8px;}
+.expense-row{display:flex;justify-content:space-between;margin-bottom:8px;}
+.expense-label{font-weight:700;font-size:13px;}
+.expense-amounts{font-size:13px;color:var(--muted);}
+.expense-amounts strong{color:var(--text);font-weight:700;}
+.expense-bar-track{height:5px;border-radius:5px;background:var(--faint);overflow:hidden;}
+.expense-bar-fill{height:100%;border-radius:5px;}
+.split-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-top:8px;}
+.split-title{font-weight:700;font-size:14px;margin-bottom:12px;}
+
+/* Group */
+.member-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:13px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;}
+.member-avatar{width:42px;height:42px;border-radius:50%;background:var(--surface-up);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.member-name{font-weight:700;font-size:14px;}
+.member-role{font-size:11px;color:var(--muted);}
+.member-online{width:8px;height:8px;border-radius:50%;background:var(--green);}
+.invite-btn{border:1px dashed var(--faint);border-radius:14px;padding:13px;text-align:center;color:var(--muted);font-size:13px;cursor:pointer;margin-bottom:24px;}
+.vote-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:16px;}
+.vote-question{font-weight:700;font-size:14px;margin-bottom:14px;}
+.vote-option{margin-bottom:10px;}
+.vote-option-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;}
+.vote-bar-track{height:5px;border-radius:5px;background:var(--faint);overflow:hidden;}
+.vote-bar-fill{height:100%;border-radius:5px;background:var(--faint);}
+.vote-bar-fill.leader{background:var(--accent);}
+.vote-cast{margin-top:14px;padding:10px;background:var(--faint);border-radius:10px;text-align:center;font-size:12px;color:var(--accent);font-weight:700;cursor:pointer;}
+.notes-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;}
+.notes-input{margin-top:10px;background:none;border:none;outline:none;color:var(--text);font-size:13px;width:100%;resize:none;height:56px;font-family:inherit;}
+
+/* ── BOTTOM NAV ── */
+.app-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:rgba(8,8,9,0.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--border);display:flex;padding:8px 0 env(safe-area-inset-bottom,20px);z-index:30;}
+.nav-btn{flex:1;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 0;}
+.nav-icon{font-size:20px;}
+.nav-label{font-size:10px;font-weight:400;color:var(--muted);letter-spacing:0.2px;font-family:inherit;}
+.nav-btn.active .nav-label{font-weight:800;color:var(--accent);}
+.nav-dot{width:4px;height:4px;border-radius:50%;background:var(--accent);display:none;}
+.nav-btn.active .nav-dot{display:block;}
+
+/* ── PWA BANNER ── */
+.pwa-banner{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:390px;background:var(--surface);border:1px solid var(--border-up);border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:12px;z-index:100;box-shadow:0 8px 32px rgba(0,0,0,0.5);}
+.pwa-banner-icon{font-size:24px;}
+.pwa-banner-text{flex:1;font-size:13px;color:var(--muted);}
+.pwa-banner-text strong{color:var(--text);display:block;margin-bottom:2px;}
+.pwa-banner-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;}
+.pwa-close{background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;padding:0 4px;}
+.hidden{display:none!important;}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════
+     HOME SCREEN
+══════════════════════════════════════════════════════ -->
+<div id="screen-home" class="screen active">
+  <div class="hs-header">
+    <div>
+      <div class="hs-logo">
+        <div class="hs-logomark">T</div>
+        <span class="hs-brandname">TripIQ</span>
+      </div>
+      <div class="hs-tagline">Where to<br><span>next?</span></div>
+    </div>
+    <div class="hs-notif">🔔</div>
+  </div>
+
+  <div class="hs-cta">
+    <div class="hs-cta-card" id="home-new-trip">
+      <div class="hs-cta-glow"></div>
+      <div class="hs-cta-star">✦</div>
+      <div class="hs-cta-title">Plan a new trip</div>
+      <div class="hs-cta-sub">Tell us where you're headed and we'll build a day-by-day itinerary tailored just for you.</div>
+      <div class="hs-cta-pill">Get started →</div>
+    </div>
+  </div>
+
+  <div class="hs-section">
+    <div class="hs-section-header">
+      <span class="hs-section-title">My Trips</span>
+      <span class="hs-section-see">See all</span>
+    </div>
+    <div id="home-trips-list"><div class="hs-empty">No saved trips yet — plan your first!</div></div>
+  </div>
+
+  <div class="hs-trending">
+    <div class="hs-section-title" style="margin-bottom:14px;">Trending</div>
+    <div class="hs-trending-row">
+      <div class="trending-item" data-dest="Paris, France"><div class="trending-icon">🗼</div><div class="trending-name">Paris</div></div>
+      <div class="trending-item" data-dest="Kyoto, Japan"><div class="trending-icon">⛩️</div><div class="trending-name">Kyoto</div></div>
+      <div class="trending-item" data-dest="Santorini, Greece"><div class="trending-icon">🏝️</div><div class="trending-name">Santorini</div></div>
+      <div class="trending-item" data-dest="Bali, Indonesia"><div class="trending-icon">🌴</div><div class="trending-name">Bali</div></div>
+      <div class="trending-item" data-dest="Banff, Canada"><div class="trending-icon">🏔️</div><div class="trending-name">Banff</div></div>
+      <div class="trending-item" data-dest="Tokyo, Japan"><div class="trending-icon">🗾</div><div class="trending-name">Tokyo</div></div>
+      <div class="trending-item" data-dest="Dubai, UAE"><div class="trending-icon">🏙️</div><div class="trending-name">Dubai</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     WIZARD SCREEN
+══════════════════════════════════════════════════════ -->
+<div id="screen-wizard" class="screen">
+  <div class="wz-topbar" id="wz-topbar">
+    <div class="wz-nav">
+      <button class="wz-back" id="wz-back">←</button>
+      <div class="wz-progress-track"><div class="wz-progress-fill" id="wz-progress" style="width:0%"></div></div>
+      <span class="wz-step-label" id="wz-step-label">1/7</span>
+    </div>
+  </div>
+
+  <div class="wz-content">
+
+    <!-- Step 0: Destination -->
+    <div class="wz-step active" id="step-0">
+      <div class="wz-heading">Where are you<br><span>headed?</span></div>
+      <div class="wz-sub">City, country, or region</div>
+      <div class="wz-input-row">
+        <span class="wz-input-icon">📍</span>
+        <input id="dest-input" type="text" placeholder="e.g. Tokyo, Japan" autocomplete="off"/>
+      </div>
+      <div id="dest-dropdown" class="dest-dropdown hidden"></div>
+      <div class="wz-tags" id="popular-tags">
+        <div class="tag" data-dest="Paris, France">🗼 Paris</div>
+        <div class="tag" data-dest="Kyoto, Japan">⛩️ Kyoto</div>
+        <div class="tag" data-dest="Bali, Indonesia">🌴 Bali</div>
+        <div class="tag" data-dest="Dubai, UAE">🏙️ Dubai</div>
+        <div class="tag" data-dest="Banff, Canada">🏔️ Banff</div>
+        <div class="tag" data-dest="Kuala Lumpur, Malaysia">🌆 KL</div>
+      </div>
+      <div class="wz-spacer"></div>
+      <button class="btn" id="step0-next" disabled>Continue →</button>
+    </div>
+
+    <!-- Step 1: Dates -->
+    <div class="wz-step" id="step-1">
+      <div class="wz-heading">When are you<br><span>arriving?</span></div>
+      <div class="wz-sub">Pick your start date</div>
+      <div class="wz-input-row">
+        <span class="wz-input-icon">📅</span>
+        <input id="date-input" type="date" style="color-scheme:dark;"/>
+      </div>
+      <div class="wz-tags">
+        <div class="tag" data-date="weekend">This weekend</div>
+        <div class="tag" data-date="next-week">Next week</div>
+        <div class="tag" data-date="next-month">Next month</div>
+        <div class="tag" data-date="flexible">Flexible</div>
+      </div>
+      <div class="wz-spacer"></div>
+      <button class="btn" id="step1-next" disabled>Continue →</button>
+    </div>
+
+    <!-- Step 2: Duration -->
+    <div class="wz-step" id="step-2">
+      <div class="wz-heading">How many<br><span>days?</span></div>
+      <div class="wz-sub">We'll pack the perfect amount in</div>
+      <div class="wz-big-num">
+        <div class="num" id="days-display">7</div>
+        <div class="unit">days</div>
+        <div class="wz-counter-btns">
+          <button class="wz-counter-btn wz-counter-minus" id="days-minus">−</button>
+          <button class="wz-counter-btn wz-counter-plus" id="days-plus">+</button>
+        </div>
+      </div>
+      <div class="wz-tags" id="duration-tags">
+        <div class="tag" data-days="1">1d</div>
+        <div class="tag" data-days="2">2d</div>
+        <div class="tag" data-days="3">3d</div>
+        <div class="tag" data-days="4">4d</div>
+        <div class="tag" data-days="5">5d</div>
+        <div class="tag on" data-days="7">7d</div>
+        <div class="tag" data-days="10">10d</div>
+        <div class="tag" data-days="14">14d</div>
+      </div>
+      <div class="wz-spacer"></div>
+      <button class="btn" id="step2-next">Continue →</button>
+    </div>
+
+    <!-- Step 3: Travelers -->
+    <div class="wz-step" id="step-3">
+      <div class="wz-heading">Who's<br><span>coming?</span></div>
+      <div class="wz-sub">We'll tailor activities for your group</div>
+      <div class="wz-traveler-grid">
+        <div class="wz-traveler-card" data-type="Solo"><div class="wz-traveler-icon">🎒</div><div class="wz-traveler-label">Solo</div></div>
+        <div class="wz-traveler-card" data-type="Couple"><div class="wz-traveler-icon">💑</div><div class="wz-traveler-label">Couple</div></div>
+        <div class="wz-traveler-card" data-type="Friends"><div class="wz-traveler-icon">🎉</div><div class="wz-traveler-label">Friends</div></div>
+        <div class="wz-traveler-card" data-type="Family"><div class="wz-traveler-icon">👨‍👩‍👧</div><div class="wz-traveler-label">Family</div></div>
+      </div>
+      <div id="count-picker" class="hidden">
+        <div class="wz-count-section">
+          <div class="wz-count-label">How many people?</div>
+          <div class="wz-tags" id="count-tags">
+            <div class="tag" data-count="2">2</div>
+            <div class="tag" data-count="3">3</div>
+            <div class="tag" data-count="4">4</div>
+            <div class="tag" data-count="5">5</div>
+            <div class="tag" data-count="6">6</div>
+            <div class="tag" data-count="7+">7+</div>
+          </div>
+        </div>
+      </div>
+      <div class="wz-spacer"></div>
+      <button class="btn" id="step3-next" disabled>Continue →</button>
+    </div>
+
+    <!-- Step 4: Budget -->
+    <div class="wz-step" id="step-4">
+      <div class="wz-heading">What's your<br><span>budget?</span></div>
+      <div class="wz-sub">Per person, excluding flights</div>
+      <div class="wz-budget-list">
+        <div class="wz-budget-card" data-budget="budget">
+          <span class="wz-budget-icon">🎒</span>
+          <div><div class="wz-budget-name">Budget</div><div class="wz-budget-sub">Hostels, street food</div></div>
+          <div class="wz-budget-check">✓</div>
+        </div>
+        <div class="wz-budget-card" data-budget="mid-range">
+          <span class="wz-budget-icon">✈️</span>
+          <div><div class="wz-budget-name">Mid-range</div><div class="wz-budget-sub">3-star, casual dining</div></div>
+          <div class="wz-budget-check">✓</div>
+        </div>
+        <div class="wz-budget-card" data-budget="luxury">
+          <span class="wz-budget-icon">💎</span>
+          <div><div class="wz-budget-name">Luxury</div><div class="wz-budget-sub">5-star, fine dining</div></div>
+          <div class="wz-budget-check">✓</div>
+        </div>
+      </div>
+      <div class="wz-spacer"></div>
+      <button class="btn" id="step4-next" disabled>Continue →</button>
+    </div>
+
+    <!-- Step 5: Interests -->
+    <div class="wz-step" id="step-5">
+      <div class="wz-heading">What are your<br><span>interests?</span></div>
+      <div class="wz-sub">Pick as many as you like</div>
+      <div class="wz-interests" id="interests-list">
+        <div class="wz-interest" data-id="food">🍜 Food &amp; Drink</div>
+        <div class="wz-interest" data-id="culture">🎭 Culture</div>
+        <div class="wz-interest" data-id="nature">🌿 Nature</div>
+        <div class="wz-interest" data-id="nightlife">🌃 Nightlife</div>
+        <div class="wz-interest" data-id="shopping">🛍️ Shopping</div>
+        <div class="wz-interest" data-id="adventure">🧗 Adventure</div>
+        <div class="wz-interest" data-id="wellness">🧘 Wellness</div>
+        <div class="wz-interest" data-id="history">🏛️ History</div>
+        <div class="wz-interest" data-id="photography">📷 Photography</div>
+        <div class="wz-interest" data-id="local">🏘️ Local Life</div>
+      </div>
+      <div class="wz-spacer"></div>
+      <button class="btn" id="step5-next" disabled>Continue →</button>
+    </div>
+
+    <!-- Step 6: Surprise me -->
+    <div class="wz-step" id="step-6">
+      <div class="wz-heading">One last<br><span>thing…</span></div>
+      <div class="wz-sub">Let AI surprise you with hidden gems</div>
+      <div class="wz-surprise-card" id="surprise-card">
+        <div class="wz-surprise-star">✨</div>
+        <div class="wz-surprise-title">Surprise me!</div>
+        <div class="wz-surprise-desc">Let TripIQ sneak in unexpected gems — hidden restaurants, secret viewpoints, and local experiences you'd never find on your own.</div>
+        <div class="wz-surprise-footer">
+          <span class="wz-surprise-status" id="surprise-status">Off — I'll plan everything myself</span>
+          <div class="wz-toggle"><div class="wz-toggle-knob"></div></div>
+        </div>
+      </div>
+      <button class="btn" id="step6-next">Build my itinerary →</button>
+    </div>
+
+    <!-- Step 7: Generating -->
+    <div class="wz-step" id="step-7">
+      <div class="wz-generating">
+        <div class="wz-gen-star">✦</div>
+        <div class="wz-gen-title">Building your trip</div>
+        <div class="wz-gen-dest" id="gen-dest-label">7 days in Tokyo</div>
+        <div class="wz-gen-bar-wrap">
+          <div class="wz-gen-track"><div class="wz-gen-fill" id="gen-fill"></div></div>
+          <div class="wz-gen-msg" id="gen-msg">Researching your destination...</div>
+        </div>
+        <div class="wz-gen-tags" id="gen-interest-tags"></div>
+        <div class="err-msg" id="gen-err"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     APP SCREEN
+══════════════════════════════════════════════════════ -->
+<div id="screen-app" class="screen">
+  <div class="app-header">
+    <div class="app-header-inner">
+      <div class="app-header-left">
+        <button class="app-back" id="app-back">←</button>
+        <div>
+          <div class="app-dest" id="app-dest-name">Tokyo</div>
+          <div class="app-dest-meta" id="app-dest-meta">7 days · 1 traveler</div>
+        </div>
+      </div>
+      <div class="app-live">Live ●</div>
+    </div>
+  </div>
+
+  <div class="app-content">
+
+    <!-- Itinerary Tab -->
+    <div class="tab-panel active" id="tab-itinerary">
+      <div class="itin-hero">
+        <div class="itin-hero-glow"></div>
+        <div class="itin-hero-label">Active Trip</div>
+        <div class="itin-hero-title" id="hero-title">Tokyo, Japan</div>
+        <div class="itin-hero-sub" id="hero-sub">7 days</div>
+        <div class="itin-hero-badges">
+          <div class="itin-hero-badge" id="hero-day-badge">Day 1</div>
+        </div>
+      </div>
+      <div id="day-cards-container"></div>
+      <div class="day-add-day">+ Add another day</div>
+    </div>
+
+    <!-- Explore Tab -->
+    <div class="tab-panel" id="tab-explore">
+      <div class="explore-search">
+        <span style="color:var(--muted);">🔍</span>
+        <input id="explore-search-input" type="text" placeholder="Search places..." autocomplete="off"/>
+      </div>
+      <div class="explore-filters" id="explore-filters">
+        <div class="explore-filter on" data-cat="All">All</div>
+        <div class="explore-filter" data-cat="Food">🍽 Food</div>
+        <div class="explore-filter" data-cat="Culture">🎭 Culture</div>
+        <div class="explore-filter" data-cat="Nature">🌿 Nature</div>
+        <div class="explore-filter" data-cat="Shopping">🛍 Shopping</div>
+        <div class="explore-filter" data-cat="Nightlife">🌃 Nightlife</div>
+      </div>
+      <div class="explore-grid" id="explore-grid"></div>
+    </div>
+
+    <!-- Logistics Tab -->
+    <div class="tab-panel" id="tab-logistics">
+      <div class="section-label">Bookings</div>
+      <div class="logistics-card">
+        <div class="logistics-icon">✈️</div>
+        <div style="flex:1"><div class="logistics-detail">Add your flight</div><div class="logistics-sub">Track departure, arrival &amp; airline</div></div>
+        <span style="color:var(--accent);font-size:13px;font-weight:700;cursor:pointer;">+ Add</span>
+      </div>
+      <div class="logistics-card">
+        <div class="logistics-icon">🏨</div>
+        <div style="flex:1"><div class="logistics-detail">Add accommodation</div><div class="logistics-sub">Hotel, Airbnb, hostel info</div></div>
+        <span style="color:var(--accent);font-size:13px;font-weight:700;cursor:pointer;">+ Add</span>
+      </div>
+      <div class="import-btn">+ Import confirmation email</div>
+      <div class="section-label">Quick Book</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px;">
+        <a id="link-booking" href="#" target="_blank" rel="noopener" class="logistics-card" style="cursor:pointer;">
+          <div class="logistics-icon" style="background:#003580;color:#fff;font-size:11px;font-weight:700;font-size:13px;">B.</div>
+          <div><div class="logistics-detail">Booking.com</div><div class="logistics-sub">Hotels</div></div>
+        </a>
+        <a id="link-flights" href="#" target="_blank" rel="noopener" class="logistics-card" style="cursor:pointer;">
+          <div class="logistics-icon" style="background:#4285F4;color:#fff;">✈️</div>
+          <div><div class="logistics-detail">Google Flights</div><div class="logistics-sub">Flights</div></div>
+        </a>
+        <a id="link-airbnb" href="#" target="_blank" rel="noopener" class="logistics-card" style="cursor:pointer;">
+          <div class="logistics-icon" style="background:#FF5A5F;color:#fff;">🏠</div>
+          <div><div class="logistics-detail">Airbnb</div><div class="logistics-sub">Stays</div></div>
+        </a>
+        <a id="link-viator" href="#" target="_blank" rel="noopener" class="logistics-card" style="cursor:pointer;">
+          <div class="logistics-icon" style="background:#28A745;color:#fff;">🎫</div>
+          <div><div class="logistics-detail">Viator</div><div class="logistics-sub">Activities</div></div>
+        </a>
+      </div>
+      <div class="section-label">Documents</div>
+      <div class="doc-row"><span class="doc-name">📄 Passport copy</span><span class="doc-view">View</span></div>
+      <div class="doc-row"><span class="doc-name">🛡️ Travel insurance</span><span class="doc-view">View</span></div>
+      <div class="doc-row"><span class="doc-name">🏨 Hotel voucher</span><span class="doc-view">View</span></div>
+    </div>
+
+    <!-- Budget Tab -->
+    <div class="tab-panel" id="tab-budget">
+      <div class="budget-hero">
+        <div class="budget-hero-label">Total Spent</div>
+        <div class="budget-total">$0</div>
+        <div class="budget-of">Track your trip spending</div>
+        <div class="budget-bar-track"><div class="budget-bar-fill" style="width:0%"></div></div>
+        <div style="font-size:12px;color:var(--muted);margin-top:10px;">Add expenses to track your budget</div>
+      </div>
+      <div class="section-label">Breakdown</div>
+      <div class="expense-card"><div class="expense-row"><span class="expense-label">Flights</span><span class="expense-amounts"><strong>$0</strong> / $900</span></div><div class="expense-bar-track"><div class="expense-bar-fill" style="width:0%;background:var(--accent);"></div></div></div>
+      <div class="expense-card"><div class="expense-row"><span class="expense-label">Hotels</span><span class="expense-amounts"><strong>$0</strong> / $600</span></div><div class="expense-bar-track"><div class="expense-bar-fill" style="width:0%;background:var(--blue);"></div></div></div>
+      <div class="expense-card"><div class="expense-row"><span class="expense-label">Food</span><span class="expense-amounts"><strong>$0</strong> / $200</span></div><div class="expense-bar-track"><div class="expense-bar-fill" style="width:0%;background:var(--purple);"></div></div></div>
+      <div class="expense-card"><div class="expense-row"><span class="expense-label">Activities</span><span class="expense-amounts"><strong>$0</strong> / $150</span></div><div class="expense-bar-track"><div class="expense-bar-fill" style="width:0%;background:var(--green);"></div></div></div>
+      <div class="split-card"><div class="split-title">Split</div><div style="font-size:13px;color:var(--muted);padding:8px 0;">Invite group members to split costs</div></div>
+    </div>
+
+    <!-- Group Tab -->
+    <div class="tab-panel" id="tab-group">
+      <div class="section-label">Travelers (1)</div>
+      <div class="member-card">
+        <div class="member-avatar">👤</div>
+        <div style="flex:1"><div class="member-name">You</div><div class="member-role">Organizer</div></div>
+        <div class="member-online"></div>
+      </div>
+      <div class="invite-btn">+ Invite someone</div>
+      <div class="section-label">Vote</div>
+      <div class="vote-card">
+        <div class="vote-question">Day 2 evening plans?</div>
+        <div class="vote-option"><div class="vote-option-row"><span>Sky Bar</span><span style="color:var(--muted);">2 votes</span></div><div class="vote-bar-track"><div class="vote-bar-fill leader" style="width:100%"></div></div></div>
+        <div class="vote-option"><div class="vote-option-row"><span>Night Market</span><span style="color:var(--muted);">1 vote</span></div><div class="vote-bar-track"><div class="vote-bar-fill" style="width:50%"></div></div></div>
+        <div class="vote-option"><div class="vote-option-row"><span>Early night</span><span style="color:var(--muted);">0 votes</span></div><div class="vote-bar-track"><div class="vote-bar-fill" style="width:0%"></div></div></div>
+        <div class="vote-cast">Cast your vote</div>
+      </div>
+      <div class="section-label">Group Notes</div>
+      <div class="notes-card"><textarea class="notes-input" placeholder="Add a note for the group..."></textarea></div>
+    </div>
+
+  </div>
+
+  <!-- Bottom Nav -->
+  <div class="app-nav">
+    <button class="nav-btn active" data-tab="itinerary"><span class="nav-icon">🗓</span><span class="nav-label">Itinerary</span><div class="nav-dot"></div></button>
+    <button class="nav-btn" data-tab="explore"><span class="nav-icon">🔍</span><span class="nav-label">Explore</span><div class="nav-dot"></div></button>
+    <button class="nav-btn" data-tab="logistics"><span class="nav-icon">🧳</span><span class="nav-label">Logistics</span><div class="nav-dot"></div></button>
+    <button class="nav-btn" data-tab="budget"><span class="nav-icon">💰</span><span class="nav-label">Budget</span><div class="nav-dot"></div></button>
+    <button class="nav-btn" data-tab="group"><span class="nav-icon">👥</span><span class="nav-label">Group</span><div class="nav-dot"></div></button>
+  </div>
+</div>
+
+<!-- PWA banner -->
+<div class="pwa-banner hidden" id="pwa-banner">
+  <span class="pwa-banner-icon">📱</span>
+  <div class="pwa-banner-text"><strong>Install TripIQ</strong>Add to home screen for the best experience.</div>
+  <button class="pwa-banner-btn" id="pwa-install">Install</button>
+  <button class="pwa-close" id="pwa-close">×</button>
+</div>
+
+<script>
+// ── STORAGE ───────────────────────────────────────────────────────────────────
+function getSaved(){return JSON.parse(localStorage.getItem('tq-trips')||'[]');}
+function setSaved(a){localStorage.setItem('tq-trips',JSON.stringify(a));}
+
+// ── SCREEN ROUTER ─────────────────────────────────────────────────────────────
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ── EMOJI MAP ─────────────────────────────────────────────────────────────────
+const DEST_EMOJI={paris:'🗼',kyoto:'⛩️',tokyo:'🗾',bali:'🌴',dubai:'🏙️',london:'🎡',
+  rome:'🏛️',barcelona:'🌅',amsterdam:'🌷','new york':'🗽',sydney:'🦘',singapore:'🌆',
+  istanbul:'🕌',bangkok:'🏯','kuala lumpur':'🌆',kl:'🌆',mumbai:'🇮🇳',banff:'🏔️',
+  santorini:'🏝️',default:'✈️'};
+function destEmoji(s){const l=(s||'').toLowerCase();for(const k in DEST_EMOJI){if(k!=='default'&&l.includes(k))return DEST_EMOJI[k];}return DEST_EMOJI.default;}
+
+const TYPE_ICON={Attraction:'🏛️',Food:'🍽️',Restaurant:'🍽️',Nature:'🌿',Nightlife:'🌃',
+  Shopping:'🛍️',Culture:'🎭',Wellness:'🧘',History:'🏰',Museum:'🖼️',Beach:'🏖️',default:'📍'};
+function typeIcon(t){return TYPE_ICON[t]||TYPE_ICON.default;}
+
+// ── HOME SCREEN ───────────────────────────────────────────────────────────────
+function renderHome(){
+  const trips=getSaved();
+  const list=document.getElementById('home-trips-list');
+  if(!trips.length){list.innerHTML='<div class="hs-empty">No saved trips yet — plan your first!</div>';return;}
+  list.innerHTML=trips.slice(0,5).map((t,i)=>`
+    <div class="trip-card" data-idx="${i}">
+      <div class="trip-card-img">${destEmoji(t.title||'')}</div>
+      <div style="flex:1"><div class="trip-card-dest">${t.title||'Unknown'}</div><div class="trip-card-meta">${(t.days||[]).length} days · ${t.subtitle||''}</div></div>
+      <div class="trip-card-arrow">›</div>
+    </div>`).join('');
+  list.querySelectorAll('.trip-card').forEach(c=>{
+    c.addEventListener('click',()=>openTrip(getSaved()[+c.dataset.idx]));
+  });
+}
+
+document.getElementById('home-new-trip').addEventListener('click',()=>startWizard());
+document.querySelectorAll('.trending-item').forEach(item=>item.addEventListener('click',()=>startWizard(item.dataset.dest)));
+
+// ── WIZARD ────────────────────────────────────────────────────────────────────
+const W={step:0,destination:'',date:'',days:7,travelers:'',travelerCount:1,budget:'',interests:[],surprise:false};
+const TOTAL_STEPS=7;
+
+function showStep(n){
+  document.querySelectorAll('.wz-step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step-'+n).classList.add('active');
+  W.step=n;
+  const bar=document.getElementById('wz-topbar');
+  if(n===7){bar.style.visibility='hidden';}
+  else{
+    bar.style.visibility='';
+    document.getElementById('wz-progress').style.width=((n/TOTAL_STEPS)*100)+'%';
+    document.getElementById('wz-step-label').textContent=(n+1)+'/'+TOTAL_STEPS;
+  }
+}
+
+function startWizard(prefill){
+  Object.assign(W,{step:0,destination:'',date:'',days:7,travelers:'',travelerCount:1,budget:'',interests:[],surprise:false});
+  // Reset all UI
+  document.getElementById('dest-input').value=prefill||'';
+  if(prefill){W.destination=prefill;}
+  document.getElementById('step0-next').disabled=!prefill;
+  document.getElementById('days-display').textContent=7;
+  document.querySelectorAll('#duration-tags .tag').forEach(t=>t.classList.toggle('on',t.dataset.days==='7'));
+  document.querySelectorAll('.wz-traveler-card,.wz-budget-card,.wz-interest,[data-date]').forEach(e=>e.classList.remove('on'));
+  document.getElementById('count-picker').classList.add('hidden');
+  document.getElementById('step1-next').disabled=true;
+  document.getElementById('step3-next').disabled=true;
+  document.getElementById('step4-next').disabled=true;
+  document.getElementById('step5-next').disabled=true;
+  document.getElementById('surprise-card').classList.remove('on');
+  document.getElementById('surprise-status').textContent="Off — I'll plan everything myself";
+  document.getElementById('dest-dropdown').classList.add('hidden');
+  showScreen('screen-wizard');
+  showStep(0);
+}
+
+// Destination autocomplete
+const CITIES=[
+  {n:'Tokyo',c:'Japan'},{n:'Kyoto',c:'Japan'},{n:'Osaka',c:'Japan'},{n:'Sapporo',c:'Japan'},
+  {n:'Bangkok',c:'Thailand'},{n:'Phuket',c:'Thailand'},{n:'Chiang Mai',c:'Thailand'},
+  {n:'Paris',c:'France'},{n:'Nice',c:'France'},{n:'Lyon',c:'France'},
+  {n:'London',c:'UK'},{n:'Edinburgh',c:'UK'},{n:'Manchester',c:'UK'},
+  {n:'New York',c:'United States'},{n:'Los Angeles',c:'United States'},{n:'Miami',c:'United States'},
+  {n:'San Francisco',c:'United States'},{n:'Las Vegas',c:'United States'},{n:'Chicago',c:'United States'},
+  {n:'New Orleans',c:'United States'},{n:'Nashville',c:'United States'},
+  {n:'Barcelona',c:'Spain'},{n:'Madrid',c:'Spain'},{n:'Seville',c:'Spain'},
+  {n:'Rome',c:'Italy'},{n:'Florence',c:'Italy'},{n:'Venice',c:'Italy'},{n:'Milan',c:'Italy'},
+  {n:'Amsterdam',c:'Netherlands'},{n:'Berlin',c:'Germany'},{n:'Munich',c:'Germany'},
+  {n:'Dubai',c:'UAE'},{n:'Abu Dhabi',c:'UAE'},{n:'Singapore',c:'Singapore'},
+  {n:'Sydney',c:'Australia'},{n:'Melbourne',c:'Australia'},{n:'Brisbane',c:'Australia'},
+  {n:'Cape Town',c:'South Africa'},{n:'Istanbul',c:'Turkey'},{n:'Cappadocia',c:'Turkey'},
+  {n:'Bali',c:'Indonesia'},{n:'Kuala Lumpur',c:'Malaysia'},
+  {n:'Mumbai',c:'India'},{n:'Delhi',c:'India'},{n:'Goa',c:'India'},{n:'Jaipur',c:'India'},
+  {n:'Santorini',c:'Greece'},{n:'Athens',c:'Greece'},{n:'Mykonos',c:'Greece'},
+  {n:'Lisbon',c:'Portugal'},{n:'Porto',c:'Portugal'},
+  {n:'Prague',c:'Czech Republic'},{n:'Vienna',c:'Austria'},{n:'Budapest',c:'Hungary'},
+  {n:'Zurich',c:'Switzerland'},{n:'Geneva',c:'Switzerland'},
+  {n:'Banff',c:'Canada'},{n:'Vancouver',c:'Canada'},{n:'Toronto',c:'Canada'},{n:'Montreal',c:'Canada'},
+  {n:'Seoul',c:'South Korea'},{n:'Busan',c:'South Korea'},
+  {n:'Hong Kong',c:'China'},{n:'Shanghai',c:'China'},{n:'Beijing',c:'China'},
+  {n:'Marrakech',c:'Morocco'},{n:'Cairo',c:'Egypt'},
+  {n:'Rio de Janeiro',c:'Brazil'},{n:'Buenos Aires',c:'Argentina'},
+  {n:'Mexico City',c:'Mexico'},{n:'Cancún',c:'Mexico'},
+  {n:'Maldives',c:'Maldives'},{n:'Zanzibar',c:'Tanzania'},
+];
+
+const destInput=document.getElementById('dest-input');
+const destDrop=document.getElementById('dest-dropdown');
+destInput.addEventListener('input',()=>{
+  const q=destInput.value.trim();
+  W.destination=q;
+  document.getElementById('step0-next').disabled=!q;
+  if(!q.length){destDrop.classList.add('hidden');return;}
+  const ql=q.toLowerCase();
+  const m=CITIES.filter(c=>c.n.toLowerCase().startsWith(ql)||c.c.toLowerCase().startsWith(ql)).slice(0,6);
+  if(!m.length){destDrop.classList.add('hidden');return;}
+  destDrop.innerHTML=m.map(c=>`<div class="dest-item" data-name="${c.n}, ${c.c}"><strong>${c.n}</strong><span>, ${c.c}</span></div>`).join('');
+  destDrop.classList.remove('hidden');
+  destDrop.querySelectorAll('.dest-item').forEach(item=>{
+    item.addEventListener('click',()=>{destInput.value=item.dataset.name;W.destination=item.dataset.name;destDrop.classList.add('hidden');document.getElementById('step0-next').disabled=false;});
+  });
+});
+document.addEventListener('click',e=>{if(!destInput.contains(e.target)&&!destDrop.contains(e.target))destDrop.classList.add('hidden');});
+
+document.querySelectorAll('#popular-tags .tag').forEach(tag=>{
+  tag.addEventListener('click',()=>{
+    document.querySelectorAll('#popular-tags .tag').forEach(t=>t.classList.remove('on'));
+    tag.classList.add('on');
+    destInput.value=tag.dataset.dest;W.destination=tag.dataset.dest;
+    destDrop.classList.add('hidden');document.getElementById('step0-next').disabled=false;
+  });
+});
+
+document.getElementById('step0-next').addEventListener('click',()=>{if(W.destination)showStep(1);});
+
+// Step 1: Dates
+const dateInput=document.getElementById('date-input');
+const step1Btn=document.getElementById('step1-next');
+dateInput.addEventListener('change',()=>{W.date=dateInput.value;step1Btn.disabled=!W.date;});
+document.querySelectorAll('[data-date]').forEach(tag=>{
+  tag.addEventListener('click',()=>{
+    const t=new Date(),d=new Date();
+    if(tag.dataset.date==='weekend'){const dow=t.getDay();d.setDate(t.getDate()+(6-dow||7));}
+    else if(tag.dataset.date==='next-week'){d.setDate(t.getDate()+7);}
+    else if(tag.dataset.date==='next-month'){d.setDate(t.getDate()+30);}
+    else{d.setDate(t.getDate()+14);}
+    const iso=d.toISOString().split('T')[0];
+    dateInput.value=iso;W.date=iso;step1Btn.disabled=false;
+    document.querySelectorAll('[data-date]').forEach(x=>x.classList.remove('on'));
+    tag.classList.add('on');
+  });
+});
+step1Btn.addEventListener('click',()=>{if(W.date)showStep(2);});
+
+// Step 2: Duration
+document.getElementById('days-minus').addEventListener('click',()=>{
+  W.days=Math.max(1,W.days-1);
+  document.getElementById('days-display').textContent=W.days;
+  document.querySelectorAll('#duration-tags .tag').forEach(t=>t.classList.toggle('on',+t.dataset.days===W.days));
+});
+document.getElementById('days-plus').addEventListener('click',()=>{
+  W.days=Math.min(30,W.days+1);
+  document.getElementById('days-display').textContent=W.days;
+  document.querySelectorAll('#duration-tags .tag').forEach(t=>t.classList.toggle('on',+t.dataset.days===W.days));
+});
+document.querySelectorAll('#duration-tags .tag').forEach(tag=>{
+  tag.addEventListener('click',()=>{
+    W.days=+tag.dataset.days;
+    document.getElementById('days-display').textContent=W.days;
+    document.querySelectorAll('#duration-tags .tag').forEach(t=>t.classList.toggle('on',t===tag));
+  });
+});
+document.getElementById('step2-next').addEventListener('click',()=>showStep(3));
+
+// Step 3: Travelers
+document.querySelectorAll('.wz-traveler-card').forEach(card=>{
+  card.addEventListener('click',()=>{
+    document.querySelectorAll('.wz-traveler-card').forEach(c=>c.classList.remove('on'));
+    card.classList.add('on');W.travelers=card.dataset.type;
+    document.getElementById('step3-next').disabled=false;
+    document.getElementById('count-picker').classList.toggle('hidden',W.travelers==='Solo');
+    if(W.travelers==='Solo')W.travelerCount=1;
+  });
+});
+document.querySelectorAll('#count-tags .tag').forEach(tag=>{
+  tag.addEventListener('click',()=>{
+    document.querySelectorAll('#count-tags .tag').forEach(t=>t.classList.remove('on'));
+    tag.classList.add('on');W.travelerCount=tag.dataset.count;
+  });
+});
+document.getElementById('step3-next').addEventListener('click',()=>{if(W.travelers)showStep(4);});
+
+// Step 4: Budget
+document.querySelectorAll('.wz-budget-card').forEach(card=>{
+  card.addEventListener('click',()=>{
+    document.querySelectorAll('.wz-budget-card').forEach(c=>c.classList.remove('on'));
+    card.classList.add('on');W.budget=card.dataset.budget;
+    document.getElementById('step4-next').disabled=false;
+  });
+});
+document.getElementById('step4-next').addEventListener('click',()=>{if(W.budget)showStep(5);});
+
+// Step 5: Interests
+document.querySelectorAll('.wz-interest').forEach(chip=>{
+  chip.addEventListener('click',()=>{
+    chip.classList.toggle('on');
+    const id=chip.dataset.id;
+    if(chip.classList.contains('on')){if(!W.interests.includes(id))W.interests.push(id);}
+    else{W.interests=W.interests.filter(x=>x!==id);}
+    document.getElementById('step5-next').disabled=W.interests.length===0;
+  });
+});
+document.getElementById('step5-next').addEventListener('click',()=>{if(W.interests.length)showStep(6);});
+
+// Step 6: Surprise
+document.getElementById('surprise-card').addEventListener('click',()=>{
+  W.surprise=!W.surprise;
+  document.getElementById('surprise-card').classList.toggle('on',W.surprise);
+  document.getElementById('surprise-status').textContent=W.surprise?"On — bring on the surprises!":"Off — I'll plan everything myself";
+});
+document.getElementById('step6-next').addEventListener('click',generateItinerary);
+
+// Back button
+document.getElementById('wz-back').addEventListener('click',()=>{
+  if(W.step===0){showScreen('screen-home');renderHome();}
+  else showStep(W.step-1);
+});
+
+// App back
+document.getElementById('app-back').addEventListener('click',()=>{showScreen('screen-home');renderHome();});
+
+// ── GENERATION ─────────────────────────────────────────────────────────────────
+const GEN_MSGS=['Researching your destination...','Curating top experiences...','Optimizing your route...','Adding local secrets...','Finalizing your itinerary...'];
+const INTEREST_LABELS={food:'🍜 Food',culture:'🎭 Culture',nature:'🌿 Nature',nightlife:'🌃 Nightlife',shopping:'🛍️ Shopping',adventure:'🧗 Adventure',wellness:'🧘 Wellness',history:'🏛️ History',photography:'📷 Photography',local:'🏘️ Local Life'};
+
+async function generateItinerary(){
+  showStep(7);
+  const dest=W.destination,days=W.days;
+  document.getElementById('gen-dest-label').textContent=`${days} days in ${dest.split(',')[0]}`;
+  document.getElementById('gen-err').style.display='none';
+  document.getElementById('gen-interest-tags').innerHTML=W.interests.slice(0,4).map(i=>`<div class="wz-gen-tag">${INTEREST_LABELS[i]||i}</div>`).join('');
+
+  let prog=0,mIdx=0;
+  document.getElementById('gen-fill').style.width='0%';
+  document.getElementById('gen-msg').textContent=GEN_MSGS[0];
+  const iv=setInterval(()=>{
+    prog+=Math.random()*12+3;if(prog>90)prog=90;
+    document.getElementById('gen-fill').style.width=prog+'%';
+    const ni=Math.min(Math.floor(prog/20),GEN_MSGS.length-1);
+    if(ni!==mIdx){mIdx=ni;document.getElementById('gen-msg').textContent=GEN_MSGS[mIdx];}
+  },400);
+
+  const interestStr=W.interests.map(i=>INTEREST_LABELS[i]||i).join(', ');
+  const arrInfo=W.date?`, arriving ${W.date}`:'';
+  const surpriseNote=W.surprise?' Include 1-2 hidden gems or unexpected local experiences.':'';
+  const prompt=`You are an expert travel planner. Create a ${days}-day itinerary for ${dest} for a ${W.travelers||'Solo'} traveler${W.travelers!=='Solo'?' ('+W.travelerCount+' people)':''} with ${W.budget||'mid-range'} budget${arrInfo}${interestStr?', interests: '+interestStr:''}.${surpriseNote}
+
+STRICT RULES:
+- Only real verified places in ${dest}
+- 4-6 activities per day with specific place names
+- Always include iconic landmarks
+- Mix famous spots with local gems and restaurants
+- Each activity must have a "type" from: Attraction, Food, Nature, Nightlife, Shopping, Culture, Wellness, History, Museum, Beach
+- Each note ONE sentence only (max 15 words)
+
+Respond ONLY with raw JSON (no markdown, no backticks, start with {):
+{"title":"${days} Days in ${dest.split(',')[0]}","subtitle":"${W.travelers||'Solo'} · ${days} days${W.date?' · Arriving '+W.date:''}","days":[{"day":1,"theme":"Theme","activities":[{"time":"9:00 AM","name":"Place Name","type":"Attraction","note":"Short tip."}]}]}`;
+
+  try{
+    const res=await fetch('/api/itinerary',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
+    if(!res.ok){const e=await res.json();throw new Error(e.error||'Server error');}
+    const data=await res.json();
+    const raw=data.content.map(b=>b.text||'').join('').trim();
+    const clean=raw.replace(/^```json\s*/i,'').replace(/^```\s*/i,'').replace(/```\s*$/i,'').trim().replace(/[\u2018\u2019]/g,"'").replace(/[\u201C\u201D]/g,'"');
+    const trip=JSON.parse(clean);
+    trip.dest=dest;trip.arrivalDate=W.date;trip.travelerType=W.travelers;trip.travelerCount=W.travelerCount;trip.generatedAt=Date.now();
+    clearInterval(iv);
+    document.getElementById('gen-fill').style.width='100%';
+    document.getElementById('gen-msg').textContent='Your itinerary is ready!';
+    const saved=getSaved();const ei=saved.findIndex(s=>s.title===trip.title);
+    if(ei>=0)saved[ei]=trip;else saved.unshift(trip);
+    setSaved(saved.slice(0,20));
+    setTimeout(()=>openTrip(trip),700);
+  }catch(e){
+    clearInterval(iv);
+    document.getElementById('gen-fill').style.width='0%';
+    const errEl=document.getElementById('gen-err');
+    errEl.textContent='Error: '+(e.message||'Please try again.');
+    errEl.style.display='block';
+    setTimeout(()=>showStep(6),2500);
+  }
+}
+
+// ── APP SCREEN ─────────────────────────────────────────────────────────────────
+let currentTrip=null,expandedDay=1;
+let exploreItems=[],exploreFilter='All',exploreSearch='',exploreSaved={};
+
+function openTrip(trip){
+  currentTrip=trip;expandedDay=1;exploreFilter='All';exploreSearch='';
+  showScreen('screen-app');
+  // Header
+  const city=(trip.dest||trip.title||'').split(',')[0];
+  document.getElementById('app-dest-name').textContent=city;
+  const nd=(trip.days||[]).length,tc=trip.travelerCount||1;
+  document.getElementById('app-dest-meta').textContent=`${nd} day${nd!==1?'s':''} · ${tc} traveler${tc!==1?'s':''}`;
+  // Hero card
+  document.getElementById('hero-title').textContent=trip.title||city;
+  document.getElementById('hero-sub').textContent=trip.subtitle||`${nd} days`;
+  const now=new Date(),arr=trip.arrivalDate?new Date(trip.arrivalDate):now;
+  const diff=Math.floor((now-arr)/86400000);
+  document.getElementById('hero-day-badge').textContent=`Day ${Math.max(1,Math.min(diff+1,nd))} of ${nd}`;
+  // Day cards
+  renderDayCards();
+  // Explore
+  buildExploreItems(trip);renderExploreGrid();
+  // Booking links
+  const enc=encodeURIComponent(city);
+  const ci=trip.arrivalDate||now.toISOString().split('T')[0];
+  const co=new Date(new Date(ci).getTime()+nd*86400000).toISOString().split('T')[0];
+  document.getElementById('link-booking').href=`https://www.booking.com/searchresults.html?ss=${enc}&checkin=${ci}&checkout=${co}`;
+  document.getElementById('link-flights').href=`https://www.google.com/travel/flights?q=flights+to+${enc}`;
+  document.getElementById('link-airbnb').href=`https://www.airbnb.com/s/${enc}/homes?checkin=${ci}&checkout=${co}`;
+  document.getElementById('link-viator').href=`https://www.viator.com/searchResults/all?text=${enc}`;
+  // Reset explore filters
+  document.querySelectorAll('.explore-filter').forEach(b=>b.classList.toggle('on',b.dataset.cat==='All'));
+  document.getElementById('explore-search-input').value='';
+  switchTab('itinerary');
+}
+
+function renderDayCards(){
+  const container=document.getElementById('day-cards-container');
+  const days=currentTrip.days||[];
+  container.innerHTML='';
+  days.forEach((day,i)=>{
+    let ds='';
+    if(currentTrip.arrivalDate){const d=new Date(currentTrip.arrivalDate);d.setDate(d.getDate()+i);ds=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
+    const open=expandedDay===day.day;
+    const div=document.createElement('div');div.className='day-card';
+    div.innerHTML=`
+      <div class="day-card-header${open?' open':''}" data-day="${day.day}">
+        <div class="day-card-left">
+          <div class="day-num${i===0?' today':''}">${day.day}</div>
+          <div><div class="day-card-name">${day.theme||'Day '+day.day}</div><div class="day-card-meta">${ds?ds+' · ':''}${(day.activities||[]).length} stops</div></div>
+        </div>
+        <span class="day-chevron">${open?'▲':'▼'}</span>
+      </div>
+      ${open?buildActivities(day.activities||[]):''}`;
+    container.appendChild(div);
+    div.querySelector('.day-card-header').addEventListener('click',()=>{
+      expandedDay=(expandedDay===day.day?null:day.day);renderDayCards();
+    });
+  });
+}
+
+function buildActivities(acts){
+  if(!acts.length)return'<div class="day-card-body" style="padding:14px 16px;color:var(--muted);font-size:13px;">No activities yet</div>';
+  return`<div class="day-card-body">${acts.map(a=>`
+    <div class="activity-row">
+      <div class="act-icon">${typeIcon(a.type)}</div>
+      <div class="act-info">
+        <div class="act-name">${a.name}</div>
+        <div class="act-time">${a.time||''}${a.dur?' · '+a.dur:''}</div>
+        <div class="act-note">${a.note||''}</div>
+      </div>
+      ${a.type?`<div class="act-type">${a.type}</div>`:''}
+    </div>`).join('')}<div class="day-add-stop">+ Add stop</div></div>`;
+}
+
+// Explore
+const CAT_MAP={Attraction:'Culture',Food:'Food',Restaurant:'Food',Nature:'Nature',Nightlife:'Nightlife',Shopping:'Shopping',Culture:'Culture',Wellness:'Wellness',History:'Culture',Museum:'Culture',Beach:'Nature'};
+function buildExploreItems(trip){
+  const seen=new Set();exploreItems=[];
+  (trip.days||[]).forEach(day=>{
+    (day.activities||[]).forEach(a=>{
+      if(!seen.has(a.name)){seen.add(a.name);
+        exploreItems.push({name:a.name,cat:CAT_MAP[a.type]||'Culture',type:a.type||'Attraction',icon:typeIcon(a.type),note:a.note||'',rating:(4.0+Math.random()*0.9).toFixed(1),price:['Free','$','$$','$$$'][Math.floor(Math.random()*4)]});}
+    });
+  });
+}
+
+function renderExploreGrid(){
+  const q=exploreSearch.toLowerCase();
+  const f=exploreItems.filter(x=>(exploreFilter==='All'||x.cat===exploreFilter)&&(!q||x.name.toLowerCase().includes(q)));
+  const g=document.getElementById('explore-grid');
+  if(!f.length){g.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:32px 0;font-size:14px;">No places found</div>';return;}
+  g.innerHTML=f.map(item=>`
+    <div class="explore-card">
+      <div class="explore-save" data-name="${item.name}">${exploreSaved[item.name]?'❤️':'🤍'}</div>
+      <div class="explore-icon">${item.icon}</div>
+      <div class="explore-name">${item.name}</div>
+      <div class="explore-cat">${item.type}</div>
+      <div class="explore-row"><span class="explore-rating">★ ${item.rating}</span><span class="explore-price">${item.price}</span></div>
+      <div class="explore-add">+ Add to trip</div>
+    </div>`).join('');
+  g.querySelectorAll('.explore-save').forEach(btn=>{
+    btn.addEventListener('click',e=>{e.stopPropagation();const n=btn.dataset.name;exploreSaved[n]=!exploreSaved[n];btn.textContent=exploreSaved[n]?'❤️':'🤍';});
+  });
+}
+
+document.querySelectorAll('.explore-filter').forEach(btn=>{
+  btn.addEventListener('click',()=>{document.querySelectorAll('.explore-filter').forEach(b=>b.classList.remove('on'));btn.classList.add('on');exploreFilter=btn.dataset.cat;renderExploreGrid();});
+});
+document.getElementById('explore-search-input').addEventListener('input',e=>{exploreSearch=e.target.value;renderExploreGrid();});
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+function switchTab(tab){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+}
+document.querySelectorAll('.nav-btn').forEach(btn=>btn.addEventListener('click',()=>switchTab(btn.dataset.tab)));
+
+// ── PWA ───────────────────────────────────────────────────────────────────────
+let deferred;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;if(!localStorage.getItem('pwa-d'))document.getElementById('pwa-banner').classList.remove('hidden');});
+document.getElementById('pwa-install').addEventListener('click',()=>{if(deferred){deferred.prompt();deferred=null;}document.getElementById('pwa-banner').classList.add('hidden');});
+document.getElementById('pwa-close').addEventListener('click',()=>{document.getElementById('pwa-banner').classList.add('hidden');localStorage.setItem('pwa-d','1');});
+if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderHome();
+showScreen('screen-home');
+</script>
+</body>
+</html>
