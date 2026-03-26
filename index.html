@@ -90,7 +90,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .tq-itin-head{margin-bottom:1.5rem}
 .tq-itin-title{font-family:'DM Serif Display',serif;font-size:26px;font-weight:400;color:var(--text);margin-bottom:4px}
 .tq-itin-meta{font-size:13px;color:var(--text2);font-weight:300;margin-bottom:1.25rem}
-.tq-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:1.75rem;padding-bottom:1.75rem;border-bottom:1px solid var(--border2)}
+.tq-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1rem;padding-bottom:1rem;border-bottom:0}
 .tq-action-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 8px;border:1px solid var(--border);border-radius:12px;background:var(--bg2);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--text2);letter-spacing:0.03em;text-transform:uppercase;transition:all 0.12s}
 .tq-action-btn svg{color:var(--text3);transition:color 0.12s}
 .tq-action-btn:hover{border-color:var(--coral);color:var(--coral)}
@@ -99,6 +99,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .tq-action-btn.success svg{color:#2ecc71}
 .tq-action-btn.save-highlight{border-color:var(--coral);color:var(--coral)}
 .tq-action-btn.save-highlight svg{color:var(--coral)}
+.tq-modify-btn{width:100%;padding:12px;font-size:13px;font-weight:400;font-family:'DM Sans',sans-serif;border:1px solid var(--border);border-radius:12px;background:none;color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.12s;margin-bottom:1.75rem;margin-top:8px}
+.tq-modify-btn:hover{border-color:var(--coral);color:var(--coral)}
+.tq-modify-btn:hover svg{color:var(--coral)}
 .tq-saved-list{margin-bottom:1.75rem;display:none}
 .tq-saved-list.show{display:block}
 .tq-saved-label{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
@@ -295,7 +298,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="4" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2 5l7 5 7-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
         Email
       </button>
+      <button class="tq-action-btn" id="btn-share">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="14" cy="4" r="2" stroke="currentColor" stroke-width="1.3"/><circle cx="4" cy="9" r="2" stroke="currentColor" stroke-width="1.3"/><circle cx="14" cy="14" r="2" stroke="currentColor" stroke-width="1.3"/><path d="M6 8l6-3M6 10l6 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        Share
+      </button>
     </div>
+    <button class="tq-modify-btn" id="btn-modify" style="display:none">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" style="color:var(--text3)"><path d="M13 9a2 2 0 01-2 2H5l-3 3V3a2 2 0 012-2h8a2 2 0 012 2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+      Modify this trip with AI
+    </button>
     <div class="tq-booking" id="booking-section" style="display:none">
       <div class="tq-booking-title">Book your trip</div>
       <div class="tq-booking-grid">
@@ -571,6 +582,7 @@ function loadSaved(itin){
   document.getElementById('itin-sub').textContent=itin.subtitle;
   renderDays(itin.days);
   document.getElementById('action-bar').style.display='grid';
+  document.getElementById('btn-modify').style.display='flex';
   document.getElementById('booking-section').style.display='block';
   document.getElementById('form-view').style.display='none';
   document.getElementById('result-view').style.display='block';
@@ -588,7 +600,7 @@ function renderDays(daysArr){
     const places=d.activities.map(a=>encodeURIComponent(a.name+' '+destName));
     const mapsUrl=`https://www.google.com/maps/dir/${places.join('/')}`;
     el.innerHTML=`<div class="tq-day-label">Day ${d.day}</div><div class="tq-day-theme"><span>${d.theme}</span><a href="${mapsUrl}" target="_blank" rel="noopener" class="tq-maps-btn"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1C3.57 1 2 2.57 2 4.5c0 2.63 3.5 5.5 3.5 5.5S9 7.13 9 4.5C9 2.57 7.43 1 5.5 1z" stroke="currentColor" stroke-width="1.1"/><circle cx="5.5" cy="4.5" r="1.2" stroke="currentColor" stroke-width="1.1"/></svg>View on Maps</a></div>`+
-      d.activities.map(a=>`<div class="tq-act"><div class="tq-act-time">${a.time}</div><div><div class="tq-act-name">${a.name}</div>${a.note?`<div class="tq-act-note">${truncateNote(a.note)}</div>`:''}</div></div>`).join('');
+      d.activities.map(a=>`<div class="tq-act"><div class="tq-act-time">${a.time}</div><div><div class="tq-act-name">${a.name}</div>${a.note?`<div class="tq-act-note">${a.note}</div>`:''}</div></div>`).join('');
     cont.appendChild(el);
   });
 }
@@ -607,7 +619,7 @@ function formatPlainText(itin){
   let text=`${itin.title}\n${itin.subtitle}\n\n`;
   itin.days.forEach(d=>{
     text+=`DAY ${d.day} - ${d.theme.toUpperCase()}\n`;
-    d.activities.forEach(a=>{text+=`  ${a.time.padEnd(10)}${a.name}${a.note?' - '+truncateNote(a.note):''}\n`;});
+    d.activities.forEach(a=>{text+=`  ${a.time.padEnd(10)}${a.name}${a.note?' - '+a.note:''}\n`;});
     text+='\n';
   });
   return text;
@@ -619,6 +631,7 @@ document.getElementById('back-btn').addEventListener('click',()=>{
   document.getElementById('itin-days').innerHTML='';
   document.getElementById('spinner').classList.remove('show');
   document.getElementById('action-bar').style.display='none';
+  document.getElementById('btn-modify').style.display='none';
   document.getElementById('booking-section').style.display='none';
   currentItinerary=null;
 });
@@ -676,6 +689,35 @@ document.getElementById('btn-email').addEventListener('click',()=>{
   setTimeout(()=>{btn.classList.remove('success');btn.querySelector('svg').innerHTML='<rect x="2" y="4" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2 5l7 5 7-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>';},2000);
 });
 
+document.getElementById('btn-share').addEventListener('click',()=>{
+  if(!currentItinerary)return;
+  try{
+    const encoded=btoa(unescape(encodeURIComponent(JSON.stringify(currentItinerary))));
+    const url=`${location.origin}${location.pathname}?trip=${encoded}`;
+    const btn=document.getElementById('btn-share');
+    const copyDone=()=>{
+      btn.classList.add('success');
+      btn.innerHTML='<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9l4 4 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Copied!';
+      setTimeout(()=>{btn.classList.remove('success');btn.innerHTML='<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="14" cy="4" r="2" stroke="currentColor" stroke-width="1.3"/><circle cx="4" cy="9" r="2" stroke="currentColor" stroke-width="1.3"/><circle cx="14" cy="14" r="2" stroke="currentColor" stroke-width="1.3"/><path d="M6 8l6-3M6 10l6 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Share';},2000);
+    };
+    if(navigator.clipboard){navigator.clipboard.writeText(url).then(copyDone).catch(()=>{prompt('Copy this link:',url);});}
+    else{prompt('Copy this link:',url);}
+  }catch(e){}
+});
+
+document.getElementById('btn-modify').addEventListener('click',()=>{
+  if(!currentItinerary)return;
+  chatHistory.length=0;
+  document.getElementById('chat-messages').innerHTML='';
+  const dest=currentItinerary.title.split(' in ').slice(1).join(' in ')||currentItinerary.title;
+  const summary=currentItinerary.days.map(d=>`Day ${d.day} (${d.theme}): ${d.activities.map(a=>a.name).join(', ')}`).join(' | ');
+  chatHistory.push({role:'user',content:`My itinerary: ${currentItinerary.title}. Days: ${summary}`});
+  const greeting=`I can see your ${currentItinerary.title}! What would you like to change? I can swap activities, suggest alternatives for specific days, or rethink the whole pace.`;
+  chatHistory.push({role:'assistant',content:greeting});
+  addMessage('ai',greeting);
+  openChatPanel();
+});
+
 async function generateItinerary(dest,numDays,travelStyle,travelBudget,interests,arrDate,arrTime){
   const err=document.getElementById('err');
   err.style.display='none';
@@ -687,6 +729,7 @@ async function generateItinerary(dest,numDays,travelStyle,travelBudget,interests
   document.getElementById('itin-sub').textContent=`${travelStyle} trip \u00b7 ${numDays} day${numDays>1?'s':''}${arrDate?' \u00b7 Arriving '+arrDate:''}`;
   document.getElementById('itin-days').innerHTML='';
   document.getElementById('action-bar').style.display='none';
+  document.getElementById('btn-modify').style.display='none';
   document.getElementById('booking-section').style.display='none';
   document.getElementById('spinner').classList.add('show');
   const arrivalInfo=arrDate?(`, arriving ${arrDate}${arrTime?' at '+arrTime:''}`):'';
@@ -713,6 +756,7 @@ Respond ONLY with raw JSON (no markdown, no backticks, start with {):
     document.getElementById('itin-title').textContent=p.title;
     document.getElementById('itin-sub').textContent=p.subtitle;
     document.getElementById('action-bar').style.display='grid';
+    document.getElementById('btn-modify').style.display='flex';
     document.getElementById('booking-section').style.display='block';
     updateBookingLinks(dest,arrDate,numDays);
     renderDays(p.days);
@@ -739,6 +783,16 @@ document.getElementById('gen-btn').addEventListener('click',()=>{
   if(!days){err.textContent='Please enter the number of days.';err.style.display='block';return;}
   generateItinerary(dest,days,style,budget,interests,arrDate,arrTime);
 });
+
+// Load shared itinerary from URL param
+(function(){
+  try{
+    const tripParam=new URLSearchParams(location.search).get('trip');
+    if(!tripParam)return;
+    const itin=JSON.parse(decodeURIComponent(escape(atob(tripParam))));
+    if(itin&&itin.days&&itin.title)setTimeout(()=>loadSaved(itin),100);
+  }catch(e){}
+})();
 </script>
 
 <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js');}</script>
