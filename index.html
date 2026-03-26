@@ -266,7 +266,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     </div>
     <div class="tq-field">
       <label class="tq-label">Interests <span>(optional)</span></label>
-      <input class="tq-text" id="interests" type="text" placeholder="e.g. street food, temples, nightlife, hiking"/>
+      <input class="tq-text" id="interests" type="text" placeholder="e.g. street food, temples, nightlife, hiking" autocomplete="off"/>
     </div>
     <div class="tq-err" id="err"></div>
     <button class="tq-surprise" id="surprise-btn">
@@ -732,7 +732,7 @@ async function generateItinerary(dest,numDays,travelStyle,travelBudget,interests
   document.getElementById('btn-modify').style.display='none';
   document.getElementById('booking-section').style.display='none';
   document.getElementById('spinner').classList.add('show');
-  const arrivalInfo=arrDate?(`, arriving ${arrDate}${arrTime?' at '+arrTime:''}`):'';
+  const arrivalInfo=arrDate?(`, arriving ${arrDate}${arrTime?' at '+arrTime:''}`):''
   const prompt=`You are an expert travel planner. Create a ${numDays}-day itinerary for ${dest} for a ${travelStyle} group with ${travelBudget} budget${arrivalInfo}${interests?`, interests: ${interests}`:''}.
 
 STRICT RULES:
