@@ -323,8 +323,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
           <div><span class="tq-booking-label">Booking.com</span><span class="tq-booking-sub">Find hotels</span></div>
         </a>
         <a class="tq-booking-btn" id="link-skyscanner" href="#" target="_blank" rel="noopener">
-          <div class="tq-booking-icon" style="background:#0770E3;color:#fff;font-size:13px;">&#x2708;</div>
-          <div><span class="tq-booking-label">Skyscanner</span><span class="tq-booking-sub">Find flights</span></div>
+          <div class="tq-booking-icon" style="background:#4285F4;color:#fff;font-size:13px;">&#x2708;</div>
+          <div><span class="tq-booking-label">Google Flights</span><span class="tq-booking-sub">Find flights</span></div>
         </a>
         <a class="tq-booking-btn" id="link-airbnb" href="#" target="_blank" rel="noopener">
           <div class="tq-booking-icon" style="background:#FF5A5F;color:#fff;font-size:14px;">&#x2302;</div>
@@ -542,7 +542,7 @@ function updateBookingLinks(dest,arrDate,numDays){
   const checkIn=arrDate||today;
   const checkOut=new Date(new Date(checkIn).getTime()+numDays*86400000).toISOString().split('T')[0];
   document.getElementById('link-booking').href=`https://www.booking.com/searchresults.html?ss=${destEnc}&checkin=${checkIn}&checkout=${checkOut}`;
-  document.getElementById('link-skyscanner').href=`https://www.skyscanner.com/flights-to/${destEnc}`;
+  document.getElementById('link-skyscanner').href=`https://www.google.com/travel/flights?q=flights+to+${destEnc}`;
   document.getElementById('link-airbnb').href=`https://www.airbnb.com/s/${destEnc}/homes?checkin=${checkIn}&checkout=${checkOut}`;
   document.getElementById('link-viator').href=`https://www.viator.com/searchResults/all?text=${destEnc}`;
 }
