@@ -318,6 +318,20 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .day-regen-overlay{padding:28px 16px;text-align:center;background:#0e0e12;border:1px solid var(--border-up);border-top:none;border-radius:0 0 14px 14px;}
 .day-regen-spinner{font-size:13px;color:var(--muted);animation:pulse 1.2s infinite;}
 @keyframes pulse{0%,100%{opacity:0.4;}50%{opacity:1;}}
+/* ── DAY LOGISTICS ── */
+.day-logistics{background:#0a0a0e;border:1px solid var(--border-up);border-top:none;padding:14px 16px;display:flex;flex-direction:column;gap:10px;}
+.day-log-flow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.day-log-step{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:7px 12px;flex-shrink:0;}
+.day-log-step-icon{font-size:16px;line-height:1;}
+.day-log-step-info{display:flex;flex-direction:column;gap:1px;}
+.day-log-step-label{font-size:11px;font-weight:700;color:var(--text);}
+.day-log-step-detail{font-size:10px;color:var(--muted);}
+.day-log-arrow{color:var(--muted);font-size:12px;flex-shrink:0;}
+.day-log-stay{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.day-log-stay-label{font-size:11px;font-weight:700;color:var(--muted);white-space:nowrap;}
+.day-log-links{display:flex;gap:6px;flex-wrap:wrap;}
+.day-log-link{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:8px;border:1px solid var(--border);background:var(--surface-up);font-size:11px;font-weight:700;color:var(--text);text-decoration:none;transition:all 0.15s;white-space:nowrap;}
+.day-log-link:hover{border-color:var(--border-up);background:var(--faint);}
 
 /* Explore */
 .explore-search{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:10px;margin-bottom:14px;}
@@ -1414,7 +1428,7 @@ function renderDayCards(){
     </div>`;
     const bodyContent=day._regenerating
       ?`<div class="day-regen-overlay"><div class="day-regen-spinner">✨ Regenerating your day…</div></div>`
-      :buildActivities(day.activities||[]);
+      :buildDayLogistics(i,days.length)+buildActivities(day.activities||[]);
     div.innerHTML=`
       <div class="day-card-header${open?' open':''}" data-day="${day.day}">
         <div class="day-card-left">
@@ -1434,6 +1448,60 @@ function renderDayCards(){
       });
     }
   });
+}
+
+function buildDayLogistics(dayIdx,totalDays){
+  const trip=currentTrip;
+  const dest=trip.dest||(trip.title||'').replace(/^\d+ Days in /,'');
+  const city=dest.split(',')[0].trim();
+  const adults=trip.travelerCount||1;
+  let checkin='',checkout='';
+  if(trip.arrivalDate){
+    const ci=new Date(trip.arrivalDate+'T00:00:00');
+    const co=new Date(trip.arrivalDate+'T00:00:00');
+    co.setDate(co.getDate()+(totalDays-1));
+    checkin=ci.toISOString().split('T')[0];
+    checkout=co.toISOString().split('T')[0];
+  }
+  const destEnc=encodeURIComponent(dest);
+  const airbnb=`https://www.airbnb.com/s/${encodeURIComponent(city)}/homes${checkin?`?checkin=${checkin}&checkout=${checkout}&adults=${adults}`:''}`;
+  const booking=`https://www.booking.com/searchresults.html?ss=${destEnc}${checkin?`&checkin=${checkin}&checkout=${checkout}&group_adults=${adults}`:''}`;
+  const hotels=`https://www.hotels.com/search.do?destination=${destEnc}${checkin?`&startDate=${checkin}&endDate=${checkout}&adults=${adults}`:''}`;
+  const vrbo=`https://www.vrbo.com/search?destination=${destEnc}${checkin?`&startDate=${checkin}&endDate=${checkout}&adults=${adults}`:''}`;
+  const hostel=`https://www.hostelworld.com/search?search_keywords=${destEnc}${checkin?`&dateFrom=${checkin}&dateTo=${checkout}`:''}`;
+  const links=`<div class="day-log-stay">
+    <span class="day-log-stay-label">🏠 Book your stay:</span>
+    <div class="day-log-links">
+      <a class="day-log-link" href="${airbnb}" target="_blank" rel="noopener">🏡 Airbnb</a>
+      <a class="day-log-link" href="${booking}" target="_blank" rel="noopener">🏨 Booking.com</a>
+      <a class="day-log-link" href="${hotels}" target="_blank" rel="noopener">🛎️ Hotels.com</a>
+      <a class="day-log-link" href="${vrbo}" target="_blank" rel="noopener">🏘️ VRBO</a>
+      <a class="day-log-link" href="${hostel}" target="_blank" rel="noopener">🎒 Hostelworld</a>
+    </div>
+  </div>`;
+  let flow='';
+  if(dayIdx===0){
+    flow=`<div class="day-log-flow">
+      <div class="day-log-step"><span class="day-log-step-icon">🛬</span><div class="day-log-step-info"><span class="day-log-step-label">Arrive</span><span class="day-log-step-detail">${city} Airport</span></div></div>
+      <span class="day-log-arrow">→</span>
+      <div class="day-log-step"><span class="day-log-step-icon">🚕</span><div class="day-log-step-info"><span class="day-log-step-label">Transfer</span><span class="day-log-step-detail">Airport → accommodation</span></div></div>
+      <span class="day-log-arrow">→</span>
+      <div class="day-log-step"><span class="day-log-step-icon">🏨</span><div class="day-log-step-info"><span class="day-log-step-label">Check in</span><span class="day-log-step-detail">${checkin||'Arrival day'}</span></div></div>
+    </div>`;
+  } else if(dayIdx===totalDays-1){
+    flow=`<div class="day-log-flow">
+      <div class="day-log-step"><span class="day-log-step-icon">🧳</span><div class="day-log-step-info"><span class="day-log-step-label">Check out</span><span class="day-log-step-detail">${checkout||'Departure day'}</span></div></div>
+      <span class="day-log-arrow">→</span>
+      <div class="day-log-step"><span class="day-log-step-icon">🚕</span><div class="day-log-step-info"><span class="day-log-step-label">Transfer</span><span class="day-log-step-detail">Accommodation → airport</span></div></div>
+      <span class="day-log-arrow">→</span>
+      <div class="day-log-step"><span class="day-log-step-icon">🛫</span><div class="day-log-step-info"><span class="day-log-step-label">Depart</span><span class="day-log-step-detail">${city} Airport</span></div></div>
+    </div>`;
+  } else {
+    flow=`<div class="day-log-flow">
+      <div class="day-log-step"><span class="day-log-step-icon">🏨</span><div class="day-log-step-info"><span class="day-log-step-label">Staying in ${city}</span><span class="day-log-step-detail">Your accommodation</span></div></div>
+    </div>`;
+  }
+  return`<div class="day-logistics">${flow}${links}</div>`;
 }
 
 function buildActivities(acts){
