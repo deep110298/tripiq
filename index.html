@@ -1096,50 +1096,48 @@ function startWizard(prefill){
 }
 
 // Destination autocomplete
-const CITIES=[
-  {n:'Tokyo',c:'Japan'},{n:'Kyoto',c:'Japan'},{n:'Osaka',c:'Japan'},{n:'Sapporo',c:'Japan'},
-  {n:'Bangkok',c:'Thailand'},{n:'Phuket',c:'Thailand'},{n:'Chiang Mai',c:'Thailand'},
-  {n:'Paris',c:'France'},{n:'Nice',c:'France'},{n:'Lyon',c:'France'},
-  {n:'London',c:'UK'},{n:'Edinburgh',c:'UK'},{n:'Manchester',c:'UK'},
-  {n:'New York',c:'United States'},{n:'Los Angeles',c:'United States'},{n:'Miami',c:'United States'},
-  {n:'San Francisco',c:'United States'},{n:'Las Vegas',c:'United States'},{n:'Chicago',c:'United States'},
-  {n:'New Orleans',c:'United States'},{n:'Nashville',c:'United States'},
-  {n:'Barcelona',c:'Spain'},{n:'Madrid',c:'Spain'},{n:'Seville',c:'Spain'},
-  {n:'Rome',c:'Italy'},{n:'Florence',c:'Italy'},{n:'Venice',c:'Italy'},{n:'Milan',c:'Italy'},
-  {n:'Amsterdam',c:'Netherlands'},{n:'Berlin',c:'Germany'},{n:'Munich',c:'Germany'},
-  {n:'Dubai',c:'UAE'},{n:'Abu Dhabi',c:'UAE'},{n:'Singapore',c:'Singapore'},
-  {n:'Sydney',c:'Australia'},{n:'Melbourne',c:'Australia'},{n:'Brisbane',c:'Australia'},
-  {n:'Cape Town',c:'South Africa'},{n:'Istanbul',c:'Turkey'},{n:'Cappadocia',c:'Turkey'},
-  {n:'Bali',c:'Indonesia'},{n:'Kuala Lumpur',c:'Malaysia'},
-  {n:'Mumbai',c:'India'},{n:'Delhi',c:'India'},{n:'Goa',c:'India'},{n:'Jaipur',c:'India'},
-  {n:'Santorini',c:'Greece'},{n:'Athens',c:'Greece'},{n:'Mykonos',c:'Greece'},
-  {n:'Lisbon',c:'Portugal'},{n:'Porto',c:'Portugal'},
-  {n:'Prague',c:'Czech Republic'},{n:'Vienna',c:'Austria'},{n:'Budapest',c:'Hungary'},
-  {n:'Zurich',c:'Switzerland'},{n:'Geneva',c:'Switzerland'},
-  {n:'Banff',c:'Canada'},{n:'Vancouver',c:'Canada'},{n:'Toronto',c:'Canada'},{n:'Montreal',c:'Canada'},
-  {n:'Seoul',c:'South Korea'},{n:'Busan',c:'South Korea'},
-  {n:'Hong Kong',c:'China'},{n:'Shanghai',c:'China'},{n:'Beijing',c:'China'},
-  {n:'Marrakech',c:'Morocco'},{n:'Cairo',c:'Egypt'},
-  {n:'Rio de Janeiro',c:'Brazil'},{n:'Buenos Aires',c:'Argentina'},
-  {n:'Mexico City',c:'Mexico'},{n:'Cancún',c:'Mexico'},
-  {n:'Maldives',c:'Maldives'},{n:'Zanzibar',c:'Tanzania'},
-];
-
 const destInput=document.getElementById('dest-input');
 const destDrop=document.getElementById('dest-dropdown');
+let destDebounce=null;
+
+function formatDestResult(r){
+  const a=r.address||{};
+  const city=a.city||a.town||a.village||a.municipality||a.county||r.name||'';
+  const country=a.country||'';
+  if(!city&&!country)return null;
+  const display=city&&country?`${city}, ${country}`:(city||country);
+  return {label:display,city,country};
+}
+
 destInput.addEventListener('input',()=>{
   const q=destInput.value.trim();
   W.destination=q;
   document.getElementById('step0-next').disabled=!q;
-  if(!q.length){destDrop.classList.add('hidden');return;}
-  const ql=q.toLowerCase();
-  const m=CITIES.filter(c=>c.n.toLowerCase().startsWith(ql)||c.c.toLowerCase().startsWith(ql)).slice(0,6);
-  if(!m.length){destDrop.classList.add('hidden');return;}
-  destDrop.innerHTML=m.map(c=>`<div class="dest-item" data-name="${c.n}, ${c.c}"><strong>${c.n}</strong><span>, ${c.c}</span></div>`).join('');
+  clearTimeout(destDebounce);
+  if(q.length<2){destDrop.classList.add('hidden');return;}
+  destDrop.innerHTML='<div class="dest-item" style="color:var(--muted);cursor:default;">Searching…</div>';
   destDrop.classList.remove('hidden');
-  destDrop.querySelectorAll('.dest-item').forEach(item=>{
-    item.addEventListener('click',()=>{destInput.value=item.dataset.name;W.destination=item.dataset.name;destDrop.classList.add('hidden');document.getElementById('step0-next').disabled=false;});
-  });
+  destDebounce=setTimeout(async()=>{
+    try{
+      const res=await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&addressdetails=1&limit=8&featuretype=city,town,village,country&accept-language=en`,{headers:{'Accept-Language':'en'}});
+      const data=await res.json();
+      const seen=new Set();
+      const items=[];
+      for(const r of data){
+        const f=formatDestResult(r);
+        if(!f||seen.has(f.label))continue;
+        seen.add(f.label);
+        items.push(f);
+        if(items.length>=6)break;
+      }
+      if(!items.length){destDrop.classList.add('hidden');return;}
+      destDrop.innerHTML=items.map(i=>`<div class="dest-item" data-name="${i.label}"><strong>${i.city||i.label}</strong>${i.country?`<span>, ${i.country}</span>`:''}</div>`).join('');
+      destDrop.classList.remove('hidden');
+      destDrop.querySelectorAll('.dest-item').forEach(item=>{
+        item.addEventListener('click',()=>{destInput.value=item.dataset.name;W.destination=item.dataset.name;destDrop.classList.add('hidden');document.getElementById('step0-next').disabled=false;});
+      });
+    }catch(e){destDrop.classList.add('hidden');}
+  },300);
 });
 document.addEventListener('click',e=>{if(!destInput.contains(e.target)&&!destDrop.contains(e.target))destDrop.classList.add('hidden');});
 
