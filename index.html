@@ -41,33 +41,50 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
   /* ── HOME: full-width desktop layout ── */
   #screen-home.active{
-    max-width:100%;
+    max-width:1280px;
+    margin:0 auto;
     display:flex!important;
     flex-direction:column;
     min-height:100vh;
   }
   .hs-navbar{padding:0 56px;}
-  .hs-hero-section{padding:80px 56px 64px;}
-  .hs-headline{font-size:72px;letter-spacing:-1.5px;}
-  .hs-search-bar{max-width:680px;}
-  .hs-content-row{
+  /* Hero: 2-col layout — content left, trending right */
+  .hs-hero-section{
+    display:flex;
     flex-direction:row;
+    align-items:stretch;
+    padding:56px 56px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .hs-hero-inner{
     flex:1;
-    border-top:none;
+    max-width:none;
+    padding-right:48px;
+    padding-bottom:52px;
+  }
+  .hs-headline{font-size:72px;letter-spacing:-1.5px;}
+  .hs-search-bar{max-width:none;}
+  .hs-discover-col{
+    width:300px;
+    flex-shrink:0;
+    border-top:none!important;
+    border-left:1px solid var(--border);
+    padding:0 0 40px 40px;
+    margin-top:0;
+  }
+  /* Trips: full-width below hero */
+  .hs-content-row{
+    display:block;
+    flex:1;
   }
   .hs-trips-col{
-    flex:1;
-    padding:36px 48px 48px 56px;
-    border-right:1px solid var(--border);
-  }
-  .hs-discover-col{
-    width:380px;
-    flex-shrink:0;
-    padding:36px 56px 48px 40px;
+    padding:32px 56px 48px;
+    flex:unset;
+    border-right:none;
   }
   #home-trips-list{
     display:grid;
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:repeat(3,1fr);
     gap:12px;
   }
   #home-trips-list .hs-empty{grid-column:1/-1;}
@@ -168,7 +185,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .hs-logomark{width:28px;height:28px;border-radius:7px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff;}
 .hs-brandname{font-weight:800;font-size:16px;letter-spacing:-0.3px;color:var(--text);}
 /* Hero */
-.hs-hero-section{padding:72px 28px 56px;border-bottom:1px solid var(--border);}
+.hs-hero-section{padding:48px 24px 24px;border-bottom:1px solid var(--border);}
 .hs-hero-inner{max-width:640px;}
 .hs-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);margin-bottom:20px;background:var(--accent-soft);border:1px solid var(--accent-glow);padding:5px 12px;border-radius:100px;}
 .hs-headline{font-family:'Fraunces',Georgia,serif;font-size:52px;font-weight:900;letter-spacing:-1px;line-height:1.08;margin-bottom:16px;color:var(--text);font-style:italic;}
@@ -186,7 +203,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 /* Content row */
 .hs-content-row{display:flex;flex-direction:column;}
 .hs-trips-col{padding:28px 28px 20px;}
-.hs-discover-col{padding:0 28px 40px;}
+.hs-discover-col{padding:20px 0 0;border-top:1px solid var(--border);margin-top:8px;}
 .hs-col-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
 .hs-col-title{font-size:17px;font-weight:800;letter-spacing:-0.5px;color:var(--text);}
 .hs-section-see{font-size:13px;color:var(--accent);cursor:pointer;font-weight:600;}
@@ -560,7 +577,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     </div>
   </div>
 
-  <!-- Hero -->
+  <!-- Hero: left = content, right = trending destinations -->
   <div class="hs-hero-section">
     <div class="hs-hero-inner">
       <div class="hs-eyebrow">✦ AI-powered travel planning</div>
@@ -581,17 +598,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         <div class="tag" data-dest="Dubai, UAE">🏙️ Dubai</div>
       </div>
     </div>
-  </div>
-
-  <!-- Content row -->
-  <div class="hs-content-row">
-    <div class="hs-trips-col">
-      <div class="hs-col-hdr">
-        <span class="hs-col-title">My Trips</span>
-        <span class="hs-section-see">See all</span>
-      </div>
-      <div id="home-trips-list"><div class="hs-empty">No saved trips yet — plan your first!</div></div>
-    </div>
     <div class="hs-discover-col">
       <div class="hs-col-hdr">
         <span class="hs-col-title">Trending</span>
@@ -606,6 +612,17 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         <div class="trending-item" data-dest="Dubai, UAE"><div class="trending-icon">🏙️</div><div class="trending-name">Dubai</div></div>
         <div class="trending-item" data-dest="New York, United States"><div class="trending-icon">🗽</div><div class="trending-name">New York</div></div>
       </div>
+    </div>
+  </div>
+
+  <!-- My Trips — full width below hero -->
+  <div class="hs-content-row">
+    <div class="hs-trips-col">
+      <div class="hs-col-hdr">
+        <span class="hs-col-title">My Trips</span>
+        <span class="hs-section-see">See all</span>
+      </div>
+      <div id="home-trips-list"><div class="hs-empty">No saved trips yet — plan your first!</div></div>
     </div>
   </div>
 
