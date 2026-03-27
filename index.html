@@ -309,6 +309,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .act-type{font-size:10px;padding:3px 9px;background:var(--faint);border-radius:10px;color:var(--muted);border:1px solid var(--border);white-space:nowrap;flex-shrink:0;align-self:flex-start;margin-top:2px;}
 .day-add-stop{padding:10px 16px;color:var(--accent);font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;}
 .day-add-day{border:1px dashed var(--faint);border-radius:14px;padding:14px;text-align:center;color:var(--muted);font-size:13px;cursor:pointer;margin-bottom:16px;}
+.day-vibe-bar{display:flex;align-items:center;gap:8px;padding:12px 16px 10px;background:#0e0e12;border:1px solid var(--border-up);border-top:none;border-bottom:1px solid var(--faint);}
+.day-vibe-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:0.3px;white-space:nowrap;}
+.day-vibe-btns{display:flex;gap:4px;flex:1;}
+.day-vibe-btn{flex:1;padding:5px 8px;border-radius:8px;border:1px solid var(--border);background:none;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;font-family:inherit;transition:all 0.15s;white-space:nowrap;text-align:center;}
+.day-vibe-btn:hover{border-color:var(--border-up);color:var(--text);}
+.day-vibe-btn.on{background:var(--accent-soft);border-color:var(--accent);color:var(--text);}
+.day-regen-overlay{padding:28px 16px;text-align:center;background:#0e0e12;border:1px solid var(--border-up);border-top:none;border-radius:0 0 14px 14px;}
+.day-regen-spinner{font-size:13px;color:var(--muted);animation:pulse 1.2s infinite;}
+@keyframes pulse{0%,100%{opacity:0.4;}50%{opacity:1;}}
 
 /* Explore */
 .explore-search{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:10px;margin-bottom:14px;}
@@ -1394,6 +1403,18 @@ function renderDayCards(){
     if(currentTrip.arrivalDate){const d=new Date(currentTrip.arrivalDate);d.setDate(d.getDate()+i);ds=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
     const open=expandedDay===day.day;
     const div=document.createElement('div');div.className='day-card';
+    const vibe=day.vibe||'balanced';
+    const vibeBar=`<div class="day-vibe-bar">
+      <span class="day-vibe-label">Vibe:</span>
+      <div class="day-vibe-btns">
+        <button class="day-vibe-btn${vibe==='chill'?' on':''}" data-vibe="chill">😌 Make it chill</button>
+        <button class="day-vibe-btn${vibe==='balanced'?' on':''}" data-vibe="balanced">⚖️ Balanced</button>
+        <button class="day-vibe-btn${vibe==='packed'?' on':''}" data-vibe="packed">⚡ See everything</button>
+      </div>
+    </div>`;
+    const bodyContent=day._regenerating
+      ?`<div class="day-regen-overlay"><div class="day-regen-spinner">✨ Regenerating your day…</div></div>`
+      :buildActivities(day.activities||[]);
     div.innerHTML=`
       <div class="day-card-header${open?' open':''}" data-day="${day.day}">
         <div class="day-card-left">
@@ -1402,11 +1423,16 @@ function renderDayCards(){
         </div>
         <span class="day-chevron">${open?'▲':'▼'}</span>
       </div>
-      ${open?buildActivities(day.activities||[]):''}`;
+      ${open?vibeBar+bodyContent:''}`;
     container.appendChild(div);
     div.querySelector('.day-card-header').addEventListener('click',()=>{
       expandedDay=(expandedDay===day.day?null:day.day);renderDayCards();
     });
+    if(open){
+      div.querySelectorAll('.day-vibe-btn').forEach(btn=>{
+        btn.addEventListener('click',e=>{e.stopPropagation();regenerateDay(day.day,btn.dataset.vibe);});
+      });
+    }
   });
 }
 
@@ -1422,6 +1448,44 @@ function buildActivities(acts){
       </div>
       ${a.type?`<div class="act-type">${a.type}</div>`:''}
     </div>`).join('')}<div class="day-add-stop">+ Add stop</div></div>`;
+}
+
+async function regenerateDay(dayNum,vibe){
+  const dayIdx=currentTrip.days.findIndex(d=>d.day===dayNum);
+  if(dayIdx<0)return;
+  const day=currentTrip.days[dayIdx];
+  if(day.vibe===vibe&&!day._regenerating)return;
+  day.vibe=vibe;
+  day._regenerating=true;
+  renderDayCards();
+  const dest=currentTrip.dest||currentTrip.title||'the destination';
+  const vibeInstruction=vibe==='chill'
+    ?'Make this a relaxed, chill day with only 3-4 activities, a leisurely pace, plenty of café time, and rest built in. No rushing.'
+    :vibe==='packed'
+    ?'Pack in as many activities as possible — 7-8 activities with efficient routing to maximize sightseeing and experiences.'
+    :'4-6 activities with a balanced mix of sightseeing, food, and downtime.';
+  const prompt=`You are an expert travel planner. Regenerate Day ${dayNum} of an itinerary for ${dest}. Original theme: "${day.theme||'Day '+dayNum}".
+${vibeInstruction}
+STRICT RULES:
+- Only real verified places in ${dest}
+- Include iconic landmarks and local restaurants
+- Each activity must have a "type" from: Attraction, Food, Nature, Nightlife, Shopping, Culture, Wellness, History, Museum, Beach
+- Each note ONE sentence only (max 15 words)
+Respond ONLY with raw JSON (no markdown, no backticks, start with {):
+{"theme":"Day Theme","activities":[{"time":"9:00 AM","name":"Place Name","type":"Attraction","dur":"1.5 hrs","note":"Short tip."}]}`;
+  try{
+    const res=await fetch('/api/itinerary',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
+    if(!res.ok)throw new Error('Server error');
+    const data=await res.json();
+    const raw=data.content.map(b=>b.text||'').join('').trim();
+    const clean=raw.replace(/^```json\s*/i,'').replace(/^```\s*/i,'').replace(/```\s*$/i,'').trim().replace(/[\u2018\u2019]/g,"'").replace(/[\u201C\u201D]/g,'"');
+    const result=JSON.parse(clean);
+    day.theme=result.theme||day.theme;
+    day.activities=result.activities||day.activities;
+  }catch(e){/* keep existing activities */}
+  day._regenerating=false;
+  saveTripBookings();
+  renderDayCards();
 }
 
 // Explore
