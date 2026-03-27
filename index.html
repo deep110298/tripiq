@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<title>TripIQ — AI Travel Planner</title>
+<title>Zeptour — AI Travel Planner</title>
 <link rel="manifest" href="/manifest.json"/>
 <meta name="theme-color" content="#080809"/>
 <link rel="apple-touch-icon" href="/icon-192.png"/>
@@ -11,6 +11,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,300&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const _supa=supabase.createClient('https://earklxhdnnhrkqyslhnj.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVhcmtseGhkbm5ocmtxeXNsaG5qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwOTAxNzEsImV4cCI6MjA4OTY2NjE3MX0.Mg7rsuRYJ-ST-zaPKw2xzaRw72E4RHKdVUu-4GCnsqA');
+</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -37,7 +40,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   /* ── HOME: 2-column layout ── */
   #screen-home{
     max-width:1100px;margin:0 auto;
-    display:grid;
+    display:grid!important;
     grid-template-columns:1fr 400px;
     align-items:start;
     min-height:100vh;
@@ -83,7 +86,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   /* ── APP: sidebar nav layout ── */
   #screen-app{
     max-width:1200px;margin:0 auto;
-    display:grid;
+    display:grid!important;
     grid-template-columns:220px 1fr;
     grid-template-rows:auto 1fr;
     grid-template-areas:"hdr hdr" "nav main";
@@ -390,6 +393,43 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .pwa-banner-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;}
 .pwa-close{background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;padding:0 4px;}
 .hidden{display:none!important;}
+
+/* ── AUTH MODAL ── */
+.auth-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;}
+.auth-modal{background:var(--surface);border:1px solid var(--border-up);border-radius:24px;padding:32px 28px;width:100%;max-width:400px;position:relative;}
+.auth-close{position:absolute;top:16px;right:16px;background:var(--surface-up);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);font-size:16px;}
+.auth-logo{display:flex;align-items:center;gap:10px;margin-bottom:24px;}
+.auth-logomark{width:36px;height:36px;border-radius:10px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#fff;}
+.auth-title{font-size:22px;font-weight:800;letter-spacing:-0.5px;margin-bottom:6px;}
+.auth-sub{font-size:13px;color:var(--muted);margin-bottom:24px;}
+.auth-tabs{display:flex;background:var(--surface-up);border-radius:12px;padding:3px;margin-bottom:24px;gap:3px;}
+.auth-tab{flex:1;padding:8px;border-radius:9px;border:none;background:none;font-family:inherit;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.15s;}
+.auth-tab.on{background:var(--bg);color:var(--text);}
+.auth-field{margin-bottom:14px;}
+.auth-field label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px;letter-spacing:0.3px;}
+.auth-field input{width:100%;background:var(--surface-up);border:1px solid var(--border);border-radius:12px;padding:12px 14px;color:var(--text);font-size:14px;font-family:inherit;outline:none;transition:border-color 0.15s;}
+.auth-field input:focus{border-color:var(--accent);}
+.auth-err{color:#f87171;font-size:12px;margin-bottom:12px;display:none;}
+.auth-msg{color:var(--green);font-size:12px;margin-bottom:12px;display:none;}
+.auth-divider{display:flex;align-items:center;gap:10px;margin:18px 0;color:var(--muted);font-size:12px;}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.auth-magic-btn{width:100%;padding:12px;border-radius:12px;border:1px solid var(--border);background:var(--surface-up);color:var(--text);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.15s;}
+.auth-magic-btn:hover{border-color:var(--border-up);}
+
+/* ── HOME AUTH BUTTON ── */
+.hs-auth-btn{padding:8px 16px;border-radius:20px;background:var(--surface-up);border:1px solid var(--border);font-size:13px;font-weight:700;color:var(--text);cursor:pointer;transition:all 0.15s;white-space:nowrap;}
+.hs-auth-btn:hover{border-color:var(--border-up);}
+.hs-user-pill{display:flex;align-items:center;gap:8px;padding:6px 12px;border-radius:20px;background:var(--surface-up);border:1px solid var(--border);cursor:pointer;}
+.hs-user-avatar{width:26px;height:26px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;}
+
+/* ── NEAR ME ── */
+.near-me-btn{display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:14px;background:var(--accent-soft);border:1px solid var(--accent-glow);color:var(--accent);font-size:13px;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;justify-content:center;transition:all 0.15s;}
+.near-me-btn:hover{background:rgba(232,56,13,0.15);}
+.near-me-loading{opacity:0.6;cursor:not-allowed;}
+
+/* ── DATE RANGE HINT ── */
+#date-range-hint{text-align:center;font-size:14px;color:var(--muted);margin-top:-16px;margin-bottom:20px;min-height:20px;}
+#date-range-hint span{color:var(--text);font-weight:700;}
 </style>
 </head>
 <body>
@@ -401,12 +441,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <div class="hs-header">
     <div>
       <div class="hs-logo">
-        <div class="hs-logomark">T</div>
-        <span class="hs-brandname">TripIQ</span>
+        <div class="hs-logomark">Z</div>
+        <span class="hs-brandname">Zeptour</span>
       </div>
       <div class="hs-tagline">Where to<br><span>next?</span></div>
     </div>
-    <div class="hs-notif">🔔</div>
+    <div id="hs-auth-area">
+      <button class="hs-auth-btn" id="hs-login-btn">Sign in</button>
+    </div>
   </div>
 
   <div class="hs-cta">
@@ -459,11 +501,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="wz-step active" id="step-0">
       <div class="wz-heading">Where are you<br><span>headed?</span></div>
       <div class="wz-sub">City, country, or region</div>
-      <div class="wz-input-row">
-        <span class="wz-input-icon">📍</span>
-        <input id="dest-input" type="text" placeholder="e.g. Tokyo, Japan" autocomplete="off"/>
+      <div style="position:relative;margin-bottom:24px;">
+        <div class="wz-input-row" style="margin-bottom:0;">
+          <span class="wz-input-icon">📍</span>
+          <input id="dest-input" type="text" placeholder="e.g. Tokyo, Japan" autocomplete="off"/>
+        </div>
+        <div id="dest-dropdown" class="dest-dropdown hidden" style="top:calc(100% + 4px);"></div>
       </div>
-      <div id="dest-dropdown" class="dest-dropdown hidden"></div>
       <div class="wz-tags" id="popular-tags">
         <div class="tag" data-dest="Paris, France">🗼 Paris</div>
         <div class="tag" data-dest="Kyoto, Japan">⛩️ Kyoto</div>
@@ -506,6 +550,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
           <button class="wz-counter-btn wz-counter-plus" id="days-plus">+</button>
         </div>
       </div>
+      <div id="date-range-hint"></div>
       <div class="wz-tags" id="duration-tags">
         <div class="tag" data-days="1">1d</div>
         <div class="tag" data-days="2">2d</div>
@@ -592,24 +637,43 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <button class="btn" id="step5-next" disabled>Continue →</button>
     </div>
 
-    <!-- Step 6: Surprise me -->
+    <!-- Step 6: Dietary preferences -->
     <div class="wz-step" id="step-6">
+      <div class="wz-heading">Any dietary<br><span>preferences?</span></div>
+      <div class="wz-sub">We'll tailor restaurant and food recommendations</div>
+      <div class="wz-interests" id="dietary-list">
+        <div class="wz-interest on" data-did="none">🍽️ No Restrictions</div>
+        <div class="wz-interest" data-did="vegetarian">🌱 Vegetarian</div>
+        <div class="wz-interest" data-did="vegan">🌿 Vegan</div>
+        <div class="wz-interest" data-did="halal">☪️ Halal</div>
+        <div class="wz-interest" data-did="kosher">✡️ Kosher</div>
+        <div class="wz-interest" data-did="gluten-free">🌾 Gluten-Free</div>
+        <div class="wz-interest" data-did="dairy-free">🥛 Dairy-Free</div>
+        <div class="wz-interest" data-did="no-nuts">🥜 No Nuts</div>
+        <div class="wz-interest" data-did="no-shellfish">🦞 No Shellfish</div>
+      </div>
+      <div class="wz-spacer"></div>
+      <button class="btn" id="step6-next">Continue →</button>
+    </div>
+
+    <!-- Step 7: Surprise me -->
+    <div class="wz-step" id="step-7">
       <div class="wz-heading">One last<br><span>thing…</span></div>
       <div class="wz-sub">Let AI surprise you with hidden gems</div>
       <div class="wz-surprise-card" id="surprise-card">
         <div class="wz-surprise-star">✨</div>
         <div class="wz-surprise-title">Surprise me!</div>
-        <div class="wz-surprise-desc">Let TripIQ sneak in unexpected gems — hidden restaurants, secret viewpoints, and local experiences you'd never find on your own.</div>
+        <div class="wz-surprise-desc">Let Zeptour sneak in unexpected gems — hidden restaurants, secret viewpoints, and local experiences you'd never find on your own.</div>
         <div class="wz-surprise-footer">
           <span class="wz-surprise-status" id="surprise-status">Off — I'll plan everything myself</span>
           <div class="wz-toggle"><div class="wz-toggle-knob"></div></div>
         </div>
       </div>
-      <button class="btn" id="step6-next">Build my itinerary →</button>
+      <button class="btn" id="step7-next">Build my itinerary →</button>
     </div>
 
-    <!-- Step 7: Generating -->
-    <div class="wz-step" id="step-7">
+    <!-- Step 8: Generating -->
+    <div class="wz-step" id="step-8">
       <div class="wz-generating">
         <div class="wz-gen-star">✦</div>
         <div class="wz-gen-title">Building your trip</div>
@@ -639,7 +703,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
           <div class="app-dest-meta" id="app-dest-meta">7 days · 1 traveler</div>
         </div>
       </div>
-      <div class="app-live">Live ●</div>
     </div>
   </div>
 
@@ -662,6 +725,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
     <!-- Explore Tab -->
     <div class="tab-panel" id="tab-explore">
+      <button class="near-me-btn" id="near-me-btn">📍 Explore Near Me</button>
       <div class="explore-search">
         <span style="color:var(--muted);">🔍</span>
         <input id="explore-search-input" type="text" placeholder="Search places..." autocomplete="off"/>
@@ -769,9 +833,39 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 <!-- PWA banner -->
 <div class="pwa-banner hidden" id="pwa-banner">
   <span class="pwa-banner-icon">📱</span>
-  <div class="pwa-banner-text"><strong>Install TripIQ</strong>Add to home screen for the best experience.</div>
+  <div class="pwa-banner-text"><strong>Install Zeptour</strong>Add to home screen for the best experience.</div>
   <button class="pwa-banner-btn" id="pwa-install">Install</button>
   <button class="pwa-close" id="pwa-close">×</button>
+</div>
+
+<!-- AUTH MODAL -->
+<div class="auth-overlay hidden" id="auth-overlay">
+  <div class="auth-modal">
+    <button class="auth-close" id="auth-close">×</button>
+    <div class="auth-logo">
+      <div class="auth-logomark">Z</div>
+      <span style="font-weight:800;font-size:16px;">Zeptour</span>
+    </div>
+    <div class="auth-title" id="auth-modal-title">Welcome back</div>
+    <div class="auth-sub" id="auth-modal-sub">Sign in to sync your trips across devices</div>
+    <div class="auth-tabs">
+      <button class="auth-tab on" id="tab-signin" onclick="switchAuthTab('signin')">Sign In</button>
+      <button class="auth-tab" id="tab-signup" onclick="switchAuthTab('signup')">Create Account</button>
+    </div>
+    <div id="auth-err" class="auth-err"></div>
+    <div id="auth-msg" class="auth-msg"></div>
+    <div class="auth-field">
+      <label>EMAIL</label>
+      <input type="email" id="auth-email" placeholder="you@example.com" autocomplete="email"/>
+    </div>
+    <div class="auth-field" id="auth-pw-field">
+      <label>PASSWORD</label>
+      <input type="password" id="auth-password" placeholder="••••••••" autocomplete="current-password"/>
+    </div>
+    <button class="btn" id="auth-submit-btn" style="margin-top:4px;">Sign In</button>
+    <div class="auth-divider">or</div>
+    <button class="auth-magic-btn" id="auth-magic-btn">✉️ Send magic link</button>
+  </div>
 </div>
 
 <script>
@@ -816,24 +910,25 @@ document.getElementById('home-new-trip').addEventListener('click',()=>startWizar
 document.querySelectorAll('.trending-item').forEach(item=>item.addEventListener('click',()=>startWizard(item.dataset.dest)));
 
 // ── WIZARD ────────────────────────────────────────────────────────────────────
-const W={step:0,destination:'',date:'',days:7,travelers:'',travelerCount:1,budget:'',interests:[],surprise:false};
-const TOTAL_STEPS=7;
+const W={step:0,destination:'',date:'',days:7,travelers:'',travelerCount:1,budget:'',interests:[],dietary:['none'],surprise:false};
+const TOTAL_STEPS=8;
 
 function showStep(n){
   document.querySelectorAll('.wz-step').forEach(s=>s.classList.remove('active'));
   document.getElementById('step-'+n).classList.add('active');
   W.step=n;
   const bar=document.getElementById('wz-topbar');
-  if(n===7){bar.style.visibility='hidden';}
+  if(n===8){bar.style.visibility='hidden';}
   else{
     bar.style.visibility='';
     document.getElementById('wz-progress').style.width=((n/TOTAL_STEPS)*100)+'%';
-    document.getElementById('wz-step-label').textContent=(n+1)+'/'+TOTAL_STEPS;
+    document.getElementById('wz-step-label').textContent=(n+1)+'/'+(TOTAL_STEPS-1);
   }
+  if(n===2)updateDateRangeHint();
 }
 
 function startWizard(prefill){
-  Object.assign(W,{step:0,destination:'',date:'',days:7,travelers:'',travelerCount:1,budget:'',interests:[],surprise:false});
+  Object.assign(W,{step:0,destination:'',date:'',days:7,travelers:'',travelerCount:1,budget:'',interests:[],dietary:['none'],surprise:false});
   // Reset all UI
   document.getElementById('dest-input').value=prefill||'';
   if(prefill){W.destination=prefill;}
@@ -931,22 +1026,35 @@ document.querySelectorAll('[data-date]').forEach(tag=>{
 });
 step1Btn.addEventListener('click',()=>{if(W.date)showStep(2);});
 
+// Date range hint
+function updateDateRangeHint(){
+  const el=document.getElementById('date-range-hint');
+  if(!W.date){el.innerHTML='<span style="color:var(--muted);font-size:13px;">Set arrival date to see end date</span>';return;}
+  const start=new Date(W.date+'T00:00:00');
+  const end=new Date(start);end.setDate(end.getDate()+W.days-1);
+  const fmt=d=>d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  el.innerHTML=`<span>${fmt(start)}</span> → <span>${fmt(end)}</span>`;
+}
+
 // Step 2: Duration
 document.getElementById('days-minus').addEventListener('click',()=>{
   W.days=Math.max(1,W.days-1);
   document.getElementById('days-display').textContent=W.days;
   document.querySelectorAll('#duration-tags .tag').forEach(t=>t.classList.toggle('on',+t.dataset.days===W.days));
+  updateDateRangeHint();
 });
 document.getElementById('days-plus').addEventListener('click',()=>{
   W.days=Math.min(30,W.days+1);
   document.getElementById('days-display').textContent=W.days;
   document.querySelectorAll('#duration-tags .tag').forEach(t=>t.classList.toggle('on',+t.dataset.days===W.days));
+  updateDateRangeHint();
 });
 document.querySelectorAll('#duration-tags .tag').forEach(tag=>{
   tag.addEventListener('click',()=>{
     W.days=+tag.dataset.days;
     document.getElementById('days-display').textContent=W.days;
     document.querySelectorAll('#duration-tags .tag').forEach(t=>t.classList.toggle('on',t===tag));
+    updateDateRangeHint();
   });
 });
 document.getElementById('step2-next').addEventListener('click',()=>showStep(3));
@@ -991,17 +1099,38 @@ document.querySelectorAll('.wz-interest').forEach(chip=>{
 });
 document.getElementById('step5-next').addEventListener('click',()=>{if(W.interests.length)showStep(6);});
 
-// Step 6: Surprise
+// Step 6: Dietary
+document.querySelectorAll('#dietary-list .wz-interest').forEach(chip=>{
+  chip.addEventListener('click',()=>{
+    const did=chip.dataset.did;
+    if(did==='none'){
+      W.dietary=['none'];
+      document.querySelectorAll('#dietary-list .wz-interest').forEach(c=>c.classList.toggle('on',c.dataset.did==='none'));
+    } else {
+      const noneChip=document.querySelector('#dietary-list [data-did="none"]');
+      noneChip.classList.remove('on');
+      W.dietary=W.dietary.filter(x=>x!=='none');
+      chip.classList.toggle('on');
+      if(chip.classList.contains('on')){if(!W.dietary.includes(did))W.dietary.push(did);}
+      else{W.dietary=W.dietary.filter(x=>x!==did);}
+      if(!W.dietary.length){W.dietary=['none'];noneChip.classList.add('on');}
+    }
+  });
+});
+document.getElementById('step6-next').addEventListener('click',()=>showStep(7));
+
+// Step 7: Surprise
 document.getElementById('surprise-card').addEventListener('click',()=>{
   W.surprise=!W.surprise;
   document.getElementById('surprise-card').classList.toggle('on',W.surprise);
   document.getElementById('surprise-status').textContent=W.surprise?"On — bring on the surprises!":"Off — I'll plan everything myself";
 });
-document.getElementById('step6-next').addEventListener('click',generateItinerary);
+document.getElementById('step7-next').addEventListener('click',generateItinerary);
 
 // Back button
 document.getElementById('wz-back').addEventListener('click',()=>{
   if(W.step===0){showScreen('screen-home');renderHome();}
+  else if(W.step===8){showStep(7);}
   else showStep(W.step-1);
 });
 
@@ -1013,7 +1142,7 @@ const GEN_MSGS=['Researching your destination...','Curating top experiences...',
 const INTEREST_LABELS={food:'🍜 Food',culture:'🎭 Culture',nature:'🌿 Nature',nightlife:'🌃 Nightlife',shopping:'🛍️ Shopping',adventure:'🧗 Adventure',wellness:'🧘 Wellness',history:'🏛️ History',photography:'📷 Photography',local:'🏘️ Local Life'};
 
 async function generateItinerary(){
-  showStep(7);
+  showStep(8);
   const dest=W.destination,days=W.days;
   document.getElementById('gen-dest-label').textContent=`${days} days in ${dest.split(',')[0]}`;
   document.getElementById('gen-err').style.display='none';
@@ -1032,7 +1161,8 @@ async function generateItinerary(){
   const interestStr=W.interests.map(i=>INTEREST_LABELS[i]||i).join(', ');
   const arrInfo=W.date?`, arriving ${W.date}`:'';
   const surpriseNote=W.surprise?' Include 1-2 hidden gems or unexpected local experiences.':'';
-  const prompt=`You are an expert travel planner. Create a ${days}-day itinerary for ${dest} for a ${W.travelers||'Solo'} traveler${W.travelers!=='Solo'?' ('+W.travelerCount+' people)':''} with ${W.budget||'mid-range'} budget${arrInfo}${interestStr?', interests: '+interestStr:''}.${surpriseNote}
+  const dietaryNote=(!W.dietary.includes('none')&&W.dietary.length)?` Dietary requirements: ${W.dietary.join(', ')}. Only recommend food/restaurants that meet these requirements.`:'';
+  const prompt=`You are an expert travel planner. Create a ${days}-day itinerary for ${dest} for a ${W.travelers||'Solo'} traveler${W.travelers!=='Solo'?' ('+W.travelerCount+' people)':''} with ${W.budget||'mid-range'} budget${arrInfo}${interestStr?', interests: '+interestStr:''}.${surpriseNote}${dietaryNote}
 
 STRICT RULES:
 - Only real verified places in ${dest}
@@ -1066,7 +1196,7 @@ Respond ONLY with raw JSON (no markdown, no backticks, start with {):
     const errEl=document.getElementById('gen-err');
     errEl.textContent='Error: '+(e.message||'Please try again.');
     errEl.style.display='block';
-    setTimeout(()=>showStep(6),2500);
+    setTimeout(()=>showStep(7),2500);
   }
 }
 
@@ -1195,6 +1325,105 @@ window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;
 document.getElementById('pwa-install').addEventListener('click',()=>{if(deferred){deferred.prompt();deferred=null;}document.getElementById('pwa-banner').classList.add('hidden');});
 document.getElementById('pwa-close').addEventListener('click',()=>{document.getElementById('pwa-banner').classList.add('hidden');localStorage.setItem('pwa-d','1');});
 if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
+
+// ── NEAR ME ───────────────────────────────────────────────────────────────────
+document.getElementById('near-me-btn').addEventListener('click',async function(){
+  const btn=this;
+  if(!navigator.geolocation){alert('Geolocation not supported by your browser.');return;}
+  btn.classList.add('near-me-loading');btn.textContent='📍 Getting location...';
+  navigator.geolocation.getCurrentPosition(async pos=>{
+    const {latitude:lat,longitude:lon}=pos.coords;
+    btn.textContent='📍 Loading nearby places...';
+    try{
+      const q=`[out:json][timeout:15];(node["amenity"~"restaurant|cafe|bar|museum|theatre"](around:1500,${lat},${lon});node["tourism"~"attraction|museum|viewpoint|artwork"](around:1500,${lat},${lon}););out body 24;`;
+      const res=await fetch('https://overpass-api.de/api/interpreter',{method:'POST',body:'data='+encodeURIComponent(q)});
+      const data=await res.json();
+      if(data.elements&&data.elements.length){
+        const nearItems=data.elements.filter(e=>e.tags&&(e.tags.name)).slice(0,24).map(e=>{
+          const t=e.tags;const isFood=t.amenity&&['restaurant','cafe','bar'].includes(t.amenity);
+          return{name:t.name||'Unknown',cat:isFood?'Food':'Culture',type:isFood?(t.amenity==='bar'?'Nightlife':'Food'):'Attraction',icon:isFood?'🍽️':'🏛️',note:t['addr:street']?'On '+t['addr:street']:'Nearby place',rating:(4.0+Math.random()*0.9).toFixed(1),price:['Free','$','$$','$$$'][Math.floor(Math.random()*4)]};
+        });
+        exploreItems=[...nearItems,...exploreItems.filter(x=>!nearItems.find(n=>n.name===x.name))];
+        exploreFilter='All';
+        document.querySelectorAll('.explore-filter').forEach(b=>b.classList.toggle('on',b.dataset.cat==='All'));
+        renderExploreGrid();
+        btn.textContent=`📍 ${nearItems.length} places found nearby`;
+      } else {btn.textContent='📍 No places found nearby';}
+    }catch(e){btn.textContent='📍 Could not load nearby places';}
+    btn.classList.remove('near-me-loading');
+    setTimeout(()=>{btn.textContent='📍 Explore Near Me';},3000);
+  },err=>{btn.classList.remove('near-me-loading');btn.textContent='📍 Explore Near Me';alert('Location access denied. Please allow location access and try again.');});
+});
+
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+let currentUser=null;
+let authMode='signin';
+
+function showAuthModal(){document.getElementById('auth-overlay').classList.remove('hidden');}
+function hideAuthModal(){document.getElementById('auth-overlay').classList.add('hidden');document.getElementById('auth-err').style.display='none';document.getElementById('auth-msg').style.display='none';}
+
+function switchAuthTab(mode){
+  authMode=mode;
+  document.getElementById('tab-signin').classList.toggle('on',mode==='signin');
+  document.getElementById('tab-signup').classList.toggle('on',mode==='signup');
+  document.getElementById('auth-modal-title').textContent=mode==='signin'?'Welcome back':'Create account';
+  document.getElementById('auth-modal-sub').textContent=mode==='signin'?'Sign in to sync your trips across devices':'Start planning trips with Zeptour';
+  document.getElementById('auth-submit-btn').textContent=mode==='signin'?'Sign In':'Create Account';
+  document.getElementById('auth-err').style.display='none';
+  document.getElementById('auth-msg').style.display='none';
+}
+
+function updateAuthUI(user){
+  currentUser=user;
+  const area=document.getElementById('hs-auth-area');
+  if(user){
+    const initial=(user.email||'U')[0].toUpperCase();
+    area.innerHTML=`<div class="hs-user-pill" id="hs-user-pill"><div class="hs-user-avatar">${initial}</div><span style="font-size:13px;font-weight:600;">${user.email.split('@')[0]}</span></div>`;
+    document.getElementById('hs-user-pill').addEventListener('click',()=>{
+      if(confirm('Sign out of Zeptour?')){_supa.auth.signOut().then(()=>updateAuthUI(null));}
+    });
+  } else {
+    area.innerHTML=`<button class="hs-auth-btn" id="hs-login-btn">Sign in</button>`;
+    document.getElementById('hs-login-btn').addEventListener('click',showAuthModal);
+  }
+}
+
+document.getElementById('auth-close').addEventListener('click',hideAuthModal);
+document.getElementById('auth-overlay').addEventListener('click',e=>{if(e.target===document.getElementById('auth-overlay'))hideAuthModal();});
+
+document.getElementById('auth-submit-btn').addEventListener('click',async()=>{
+  const email=document.getElementById('auth-email').value.trim();
+  const pw=document.getElementById('auth-password').value;
+  const errEl=document.getElementById('auth-err');
+  errEl.style.display='none';
+  if(!email){errEl.textContent='Please enter your email.';errEl.style.display='block';return;}
+  if(!pw){errEl.textContent='Please enter your password.';errEl.style.display='block';return;}
+  document.getElementById('auth-submit-btn').textContent='...';
+  let res;
+  if(authMode==='signin'){res=await _supa.auth.signInWithPassword({email,password:pw});}
+  else{res=await _supa.auth.signUp({email,password:pw});}
+  document.getElementById('auth-submit-btn').textContent=authMode==='signin'?'Sign In':'Create Account';
+  if(res.error){errEl.textContent=res.error.message;errEl.style.display='block';}
+  else{hideAuthModal();updateAuthUI(res.data.user);}
+});
+
+document.getElementById('auth-magic-btn').addEventListener('click',async()=>{
+  const email=document.getElementById('auth-email').value.trim();
+  const errEl=document.getElementById('auth-err');const msgEl=document.getElementById('auth-msg');
+  if(!email){errEl.textContent='Enter your email first.';errEl.style.display='block';return;}
+  errEl.style.display='none';
+  document.getElementById('auth-magic-btn').textContent='Sending...';
+  const{error}=await _supa.auth.signInWithOtp({email});
+  document.getElementById('auth-magic-btn').textContent='✉️ Send magic link';
+  if(error){errEl.textContent=error.message;errEl.style.display='block';}
+  else{msgEl.textContent='✅ Check your email for the magic link!';msgEl.style.display='block';}
+});
+
+document.getElementById('hs-login-btn').addEventListener('click',showAuthModal);
+
+// Check session on load
+_supa.auth.getSession().then(({data:{session}})=>{if(session)updateAuthUI(session.user);});
+_supa.auth.onAuthStateChange((_,session)=>{updateAuthUI(session?.user||null);});
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 renderHome();
