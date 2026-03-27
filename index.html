@@ -39,41 +39,39 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   body{overflow-x:hidden;}
   .screen{max-width:100%;box-shadow:none;}
 
-  /* ── HOME: 2-column layout ── */
+  /* ── HOME: full-width desktop layout ── */
   #screen-home.active{
-    max-width:1200px;margin:0 auto;
-    display:grid!important;
-    grid-template-columns:1fr 380px;
-    grid-template-rows:auto auto 1fr;
-    align-items:start;
+    max-width:100%;
+    display:flex!important;
+    flex-direction:column;
     min-height:100vh;
   }
-  #screen-home .hs-header{
-    grid-column:1;grid-row:1;
-    padding:48px 40px 0 56px;
+  .hs-navbar{padding:0 56px;}
+  .hs-hero-section{padding:80px 56px 64px;}
+  .hs-headline{font-size:68px;letter-spacing:-3px;}
+  .hs-search-bar{max-width:580px;}
+  .hs-content-row{
+    flex-direction:row;
+    flex:1;
+    border-top:none;
   }
-  #screen-home .hs-hero{
-    grid-column:1;grid-row:2;
-    padding:24px 40px 32px 56px;
+  .hs-trips-col{
+    flex:1;
+    padding:36px 48px 48px 56px;
+    border-right:1px solid var(--border);
   }
-  #screen-home .hs-cta{
-    grid-column:1;grid-row:3;
-    padding:0 40px 56px 56px;
+  .hs-discover-col{
+    width:380px;
+    flex-shrink:0;
+    padding:36px 56px 48px 40px;
   }
-  #screen-home .hs-section{
-    grid-column:2;grid-row:1/4;
-    padding:48px 48px 24px 32px;
-    border-left:1px solid var(--border);
-    overflow-y:auto;
-    max-height:100vh;
+  #home-trips-list{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
   }
-  #screen-home .hs-trending{display:none;}
-  .hs-tagline{font-size:48px;letter-spacing:-2px;}
-  .hs-tagline-sub{font-size:16px;}
-  .hs-cta-card{max-width:480px;}
-  .hs-cta-title{font-size:24px;}
-  .hs-trending-row{flex-wrap:wrap;overflow-x:visible;}
-  .trending-item{min-width:100px;}
+  #home-trips-list .hs-empty{grid-column:1/-1;}
+  .hs-trending-grid{grid-template-columns:1fr 1fr;}
 
   /* ── WIZARD: centered card ── */
   #screen-wizard{
@@ -117,29 +115,31 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     position:relative!important;
     bottom:auto!important;left:auto!important;
     transform:none!important;
-    width:100%!important;max-width:220px!important;
+    width:100%!important;max-width:200px!important;
     flex-direction:column!important;
     border-bottom:none!important;
     border-right:1px solid var(--border);
-    padding:12px 0!important;
+    padding:16px 12px!important;
     height:100%;overflow-y:auto;overflow-x:hidden!important;
     align-items:stretch!important;
     backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
     background:var(--surface)!important;
+    gap:2px!important;
   }
   .nav-btn{
     flex-direction:row!important;
     justify-content:flex-start!important;
-    padding:10px 16px!important;
+    padding:9px 14px!important;
     gap:10px!important;
-    border-radius:10px;
+    border-radius:10px!important;
     border-bottom:none!important;
-    margin:1px 8px;
-    width:calc(100% - 16px);
+    margin:0!important;
+    width:100%!important;
     align-items:center!important;
   }
-  .nav-btn.active{background:var(--accent-soft);border-bottom:none!important;}
-  .nav-icon{font-size:17px!important;}
+  .nav-btn:hover{background:var(--faint);}
+  .nav-btn.active{background:var(--accent-soft)!important;border-bottom:none!important;}
+  .nav-icon{font-size:16px!important;}
   .nav-label{font-size:13px!important;color:var(--muted);font-weight:500!important;}
   .nav-btn.active .nav-label{font-weight:700!important;color:var(--accent)!important;}
   .nav-dot{display:none!important;}
@@ -162,44 +162,52 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .tag.on{background:var(--accent-soft);border-color:var(--accent);color:var(--text);}
 
 /* ════════════ HOME SCREEN ════════════ */
-#screen-home .hs-header{padding:52px 24px 16px;display:flex;justify-content:space-between;align-items:center;}
+/* Navbar */
+.hs-navbar{display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:60px;background:rgba(247,245,240,0.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;flex-shrink:0;}
 .hs-logo{display:flex;align-items:center;gap:8px;}
-.hs-logomark{width:30px;height:30px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#fff;}
-.hs-brandname{font-weight:800;font-size:17px;letter-spacing:-0.3px;color:var(--text);}
-.hs-notif{width:36px;height:36px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;flex-shrink:0;box-shadow:var(--shadow);}
-/* Hero section */
-.hs-hero{padding:28px 24px 24px;}
-.hs-tagline{font-size:36px;font-weight:900;letter-spacing:-2px;line-height:1.1;margin-bottom:10px;color:var(--text);}
-.hs-tagline span{color:var(--accent);}
-.hs-tagline-sub{font-size:15px;color:var(--muted);font-weight:400;line-height:1.5;}
-/* CTA Card */
-.hs-cta{padding:0 24px 24px;}
-.hs-cta-card{border-radius:20px;background:linear-gradient(135deg,#1c0b06 0%,#0d0d1e 100%);padding:28px 24px;cursor:pointer;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(232,56,13,0.15);}
-.hs-cta-glow{position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(232,56,13,0.35),transparent 70%);pointer-events:none;}
-.hs-cta-star{font-size:40px;margin-bottom:12px;}
-.hs-cta-title{font-size:22px;font-weight:900;letter-spacing:-0.5px;margin-bottom:6px;color:#fff;}
-.hs-cta-sub{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;margin-bottom:20px;}
-.hs-cta-pill{display:inline-flex;align-items:center;gap:8px;background:var(--accent);border-radius:12px;padding:11px 20px;font-size:14px;font-weight:800;color:#fff;letter-spacing:-0.2px;}
-/* My trips */
-.hs-section{padding:0 24px 24px;}
-.hs-section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
-.hs-section-title{font-weight:800;font-size:17px;letter-spacing:-0.5px;color:var(--text);}
+.hs-logomark{width:28px;height:28px;border-radius:7px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff;}
+.hs-brandname{font-weight:800;font-size:16px;letter-spacing:-0.3px;color:var(--text);}
+/* Hero */
+.hs-hero-section{padding:72px 28px 56px;border-bottom:1px solid var(--border);}
+.hs-hero-inner{max-width:640px;}
+.hs-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);margin-bottom:20px;background:var(--accent-soft);border:1px solid var(--accent-glow);padding:5px 12px;border-radius:100px;}
+.hs-headline{font-size:52px;font-weight:900;letter-spacing:-2.5px;line-height:1.08;margin-bottom:16px;color:var(--text);}
+.hs-headline span{color:var(--accent);}
+.hs-subhead{font-size:16px;color:var(--muted);line-height:1.6;margin-bottom:36px;font-weight:400;max-width:480px;}
+/* Search bar */
+.hs-search-bar{display:flex;align-items:center;gap:0;background:var(--surface);border:1.5px solid var(--border);border-radius:100px;padding:6px 6px 6px 22px;cursor:pointer;max-width:540px;box-shadow:0 2px 12px rgba(0,0,0,0.07),0 8px 32px rgba(0,0,0,0.05);transition:all 0.2s;margin-bottom:20px;}
+.hs-search-bar:hover{border-color:var(--accent);box-shadow:0 4px 24px rgba(232,56,13,0.12);}
+.hs-search-icon{font-size:18px;margin-right:12px;flex-shrink:0;}
+.hs-search-placeholder{flex:1;font-size:15px;color:var(--muted);font-weight:500;}
+.hs-search-cta{background:var(--accent);color:#fff;border-radius:100px;padding:11px 22px;font-size:14px;font-weight:700;flex-shrink:0;white-space:nowrap;letter-spacing:-0.2px;}
+/* Quick tags */
+.hs-quick-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.hs-quick-label{font-size:13px;color:var(--muted);font-weight:500;flex-shrink:0;}
+/* Content row */
+.hs-content-row{display:flex;flex-direction:column;}
+.hs-trips-col{padding:28px 28px 20px;}
+.hs-discover-col{padding:0 28px 40px;}
+.hs-col-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.hs-col-title{font-size:17px;font-weight:800;letter-spacing:-0.5px;color:var(--text);}
 .hs-section-see{font-size:13px;color:var(--accent);cursor:pointer;font-weight:600;}
-.trip-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:10px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all 0.15s;box-shadow:var(--shadow);}
+/* Trip cards */
+.trip-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all 0.15s;box-shadow:var(--shadow);}
 .trip-card:hover{box-shadow:var(--shadow-md);border-color:var(--border-up);transform:translateY(-1px);}
-.trip-card-img{width:52px;height:52px;border-radius:12px;background:var(--surface-up);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.trip-card-img{width:48px;height:48px;border-radius:11px;background:var(--faint);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
 .trip-card-dest{font-weight:700;font-size:14px;margin-bottom:2px;color:var(--text);}
 .trip-card-meta{font-size:12px;color:var(--muted);}
-.trip-card-arrow{color:var(--border-up);font-size:16px;margin-left:auto;}
-.hs-empty{text-align:center;padding:28px 0;color:var(--muted);font-size:14px;}
-/* Trending */
-.hs-trending{padding:0 24px 48px;}
-.hs-trending-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
-.hs-trending-row::-webkit-scrollbar{display:none;}
-.trending-item{min-width:86px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px 10px;text-align:center;cursor:pointer;flex-shrink:0;transition:all 0.15s;box-shadow:var(--shadow);}
+.trip-card-arrow{color:var(--border-up);font-size:14px;margin-left:auto;flex-shrink:0;}
+.hs-empty{text-align:center;padding:32px 0;color:var(--muted);font-size:14px;}
+/* Trending grid */
+.hs-trending-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.trending-item{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;transition:all 0.15s;box-shadow:var(--shadow);}
 .trending-item:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow-md);}
-.trending-icon{font-size:26px;margin-bottom:6px;}
+.trending-icon{font-size:28px;margin-bottom:7px;}
 .trending-name{font-size:11px;font-weight:700;color:var(--text);}
+/* Legacy compat */
+.hs-section-title{font-weight:800;font-size:17px;letter-spacing:-0.5px;color:var(--text);}
+.hs-trending-row{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;}
+.hs-trending-row::-webkit-scrollbar{display:none;}
 
 /* ════════════ WIZARD SCREEN ════════════ */
 #screen-wizard .wz-topbar{padding:52px 24px 20px;flex-shrink:0;}
@@ -540,7 +548,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
      HOME SCREEN
 ══════════════════════════════════════════════════════ -->
 <div id="screen-home" class="screen active">
-  <div class="hs-header">
+
+  <!-- Top navbar -->
+  <div class="hs-navbar">
     <div class="hs-logo">
       <div class="hs-logomark">Z</div>
       <span class="hs-brandname">Zeptour</span>
@@ -549,41 +559,56 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <button class="hs-auth-btn" id="hs-login-btn">Sign in</button>
     </div>
   </div>
-  <div class="hs-hero">
-    <div class="hs-tagline">Where to <span>next?</span></div>
-    <div class="hs-tagline-sub">AI-crafted itineraries, built around you.</div>
-  </div>
 
-  <div class="hs-cta">
-    <div class="hs-cta-card" id="home-new-trip">
-      <div class="hs-cta-glow"></div>
-      <div class="hs-cta-star">✦</div>
-      <div class="hs-cta-title">Plan a new trip</div>
-      <div class="hs-cta-sub">Tell us where you're headed and we'll build a day-by-day itinerary tailored just for you.</div>
-      <div class="hs-cta-pill">Get started →</div>
+  <!-- Hero -->
+  <div class="hs-hero-section">
+    <div class="hs-hero-inner">
+      <div class="hs-eyebrow">✦ AI-powered travel planning</div>
+      <h1 class="hs-headline">Your next trip,<br>planned in <span>seconds.</span></h1>
+      <p class="hs-subhead">Tell us where you're headed. We'll build a day-by-day itinerary tailored just for you.</p>
+      <div class="hs-search-bar" id="home-new-trip">
+        <span class="hs-search-icon">📍</span>
+        <span class="hs-search-placeholder">Where do you want to go?</span>
+        <span class="hs-search-cta">Plan trip →</span>
+      </div>
+      <div class="hs-quick-row" id="popular-tags">
+        <span class="hs-quick-label">Popular:</span>
+        <div class="tag" data-dest="Paris, France">🗼 Paris</div>
+        <div class="tag" data-dest="Kyoto, Japan">⛩️ Kyoto</div>
+        <div class="tag" data-dest="Santorini, Greece">🏝️ Santorini</div>
+        <div class="tag" data-dest="Bali, Indonesia">🌴 Bali</div>
+        <div class="tag" data-dest="Tokyo, Japan">🗾 Tokyo</div>
+        <div class="tag" data-dest="Dubai, UAE">🏙️ Dubai</div>
+      </div>
     </div>
   </div>
 
-  <div class="hs-section">
-    <div class="hs-section-header">
-      <span class="hs-section-title">My Trips</span>
-      <span class="hs-section-see">See all</span>
+  <!-- Content row -->
+  <div class="hs-content-row">
+    <div class="hs-trips-col">
+      <div class="hs-col-hdr">
+        <span class="hs-col-title">My Trips</span>
+        <span class="hs-section-see">See all</span>
+      </div>
+      <div id="home-trips-list"><div class="hs-empty">No saved trips yet — plan your first!</div></div>
     </div>
-    <div id="home-trips-list"><div class="hs-empty">No saved trips yet — plan your first!</div></div>
+    <div class="hs-discover-col">
+      <div class="hs-col-hdr">
+        <span class="hs-col-title">Trending</span>
+      </div>
+      <div class="hs-trending-grid">
+        <div class="trending-item" data-dest="Paris, France"><div class="trending-icon">🗼</div><div class="trending-name">Paris</div></div>
+        <div class="trending-item" data-dest="Kyoto, Japan"><div class="trending-icon">⛩️</div><div class="trending-name">Kyoto</div></div>
+        <div class="trending-item" data-dest="Santorini, Greece"><div class="trending-icon">🏝️</div><div class="trending-name">Santorini</div></div>
+        <div class="trending-item" data-dest="Bali, Indonesia"><div class="trending-icon">🌴</div><div class="trending-name">Bali</div></div>
+        <div class="trending-item" data-dest="Banff, Canada"><div class="trending-icon">🏔️</div><div class="trending-name">Banff</div></div>
+        <div class="trending-item" data-dest="Tokyo, Japan"><div class="trending-icon">🗾</div><div class="trending-name">Tokyo</div></div>
+        <div class="trending-item" data-dest="Dubai, UAE"><div class="trending-icon">🏙️</div><div class="trending-name">Dubai</div></div>
+        <div class="trending-item" data-dest="New York, United States"><div class="trending-icon">🗽</div><div class="trending-name">New York</div></div>
+      </div>
+    </div>
   </div>
 
-  <div class="hs-trending">
-    <div class="hs-section-title" style="margin-bottom:14px;">Trending</div>
-    <div class="hs-trending-row">
-      <div class="trending-item" data-dest="Paris, France"><div class="trending-icon">🗼</div><div class="trending-name">Paris</div></div>
-      <div class="trending-item" data-dest="Kyoto, Japan"><div class="trending-icon">⛩️</div><div class="trending-name">Kyoto</div></div>
-      <div class="trending-item" data-dest="Santorini, Greece"><div class="trending-icon">🏝️</div><div class="trending-name">Santorini</div></div>
-      <div class="trending-item" data-dest="Bali, Indonesia"><div class="trending-icon">🌴</div><div class="trending-name">Bali</div></div>
-      <div class="trending-item" data-dest="Banff, Canada"><div class="trending-icon">🏔️</div><div class="trending-name">Banff</div></div>
-      <div class="trending-item" data-dest="Tokyo, Japan"><div class="trending-icon">🗾</div><div class="trending-name">Tokyo</div></div>
-      <div class="trending-item" data-dest="Dubai, UAE"><div class="trending-icon">🏙️</div><div class="trending-name">Dubai</div></div>
-    </div>
-  </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════
