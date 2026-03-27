@@ -336,10 +336,53 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .logistics-icon{width:46px;height:46px;border-radius:12px;background:var(--surface-up);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
 .logistics-detail{font-weight:700;font-size:13px;margin-bottom:2px;}
 .logistics-sub{font-size:11px;color:var(--muted);}
-.import-btn{border:1px dashed var(--faint);border-radius:14px;padding:14px;text-align:center;color:var(--muted);font-size:13px;cursor:pointer;margin-bottom:24px;}
 .doc-row{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:13px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;}
 .doc-name{flex:1;font-size:13px;}
 .doc-view{font-size:11px;color:var(--accent);font-weight:600;cursor:pointer;}
+
+/* Logistics sub-tabs */
+.log-tabs{display:flex;background:var(--surface-up);border-radius:14px;padding:4px;margin-bottom:20px;gap:4px;}
+.log-tab{flex:1;padding:10px;border-radius:10px;border:none;background:none;font-family:inherit;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.15s;}
+.log-tab.on{background:var(--bg);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,0.3);}
+.log-panel{display:none;}
+.log-panel.active{display:block;}
+
+/* Booking cards */
+.booking-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px;position:relative;}
+.booking-card-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.booking-card-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.booking-card-icon.flight{background:linear-gradient(135deg,#1e3a8a,#3b82f6);}
+.booking-card-icon.hotel{background:linear-gradient(135deg,#7c3aed,#a78bfa);}
+.booking-card-title{font-weight:700;font-size:14px;}
+.booking-card-conf{font-size:11px;color:var(--muted);margin-top:2px;}
+.booking-card-delete{position:absolute;top:12px;right:12px;background:none;border:none;color:var(--muted);font-size:16px;cursor:pointer;padding:4px;line-height:1;}
+.booking-detail-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.booking-detail-row:last-child{margin-bottom:0;}
+.booking-detail-label{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;}
+.booking-detail-val{font-size:13px;font-weight:600;text-align:right;max-width:60%;}
+.booking-route{display:flex;align-items:center;gap:8px;padding:12px;background:var(--surface-up);border-radius:10px;margin-bottom:10px;}
+.booking-route-city{text-align:center;flex:1;}
+.booking-route-city .city-code{font-size:20px;font-weight:800;letter-spacing:-0.5px;}
+.booking-route-city .city-time{font-size:11px;color:var(--muted);margin-top:2px;}
+.booking-route-arrow{color:var(--muted);font-size:18px;flex-shrink:0;}
+.log-add-btn{width:100%;padding:13px;border-radius:14px;border:1px dashed var(--border-up);background:none;color:var(--accent);font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;margin-bottom:20px;transition:all 0.15s;}
+.log-add-btn:hover{background:var(--accent-soft);border-color:var(--accent);}
+.log-empty{text-align:center;padding:24px 0;color:var(--muted);font-size:13px;}
+
+/* Booking modal (slide-up) */
+.booking-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:150;display:flex;align-items:flex-end;justify-content:center;}
+.booking-sheet{background:var(--surface);border-radius:24px 24px 0 0;padding:24px 20px 40px;width:100%;max-width:640px;max-height:90vh;overflow-y:auto;}
+.booking-sheet-handle{width:40px;height:4px;border-radius:4px;background:var(--border-up);margin:0 auto 20px;}
+.booking-sheet-title{font-size:18px;font-weight:800;letter-spacing:-0.3px;margin-bottom:20px;}
+.booking-field{margin-bottom:14px;}
+.booking-field label{display:block;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:6px;}
+.booking-field input{width:100%;background:var(--surface-up);border:1px solid var(--border);border-radius:12px;padding:11px 14px;color:var(--text);font-size:14px;font-family:inherit;outline:none;transition:border-color 0.15s;}
+.booking-field input:focus{border-color:var(--accent);}
+.booking-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.booking-sheet-actions{display:flex;gap:10px;margin-top:20px;}
+.booking-cancel-btn{flex:1;padding:13px;border-radius:12px;border:1px solid var(--border);background:none;color:var(--muted);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;}
+.book-external-header{font-size:15px;font-weight:700;margin-bottom:12px;}
+.book-external-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px;}
 
 /* Budget */
 .budget-hero{background:linear-gradient(135deg,#140a0a,#0a0a14);border:1px solid var(--border);border-radius:20px;padding:22px;margin-bottom:16px;text-align:center;}
@@ -743,41 +786,56 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
     <!-- Logistics Tab -->
     <div class="tab-panel" id="tab-logistics">
-      <div class="section-label">Bookings</div>
-      <div class="logistics-card">
-        <div class="logistics-icon">✈️</div>
-        <div style="flex:1"><div class="logistics-detail">Add your flight</div><div class="logistics-sub">Track departure, arrival &amp; airline</div></div>
-        <span style="color:var(--accent);font-size:13px;font-weight:700;cursor:pointer;">+ Add</span>
+      <!-- Sub-tabs -->
+      <div class="log-tabs">
+        <button class="log-tab on" data-log="book">✈️ Book Now</button>
+        <button class="log-tab" data-log="mine">📋 My Bookings</button>
       </div>
-      <div class="logistics-card">
-        <div class="logistics-icon">🏨</div>
-        <div style="flex:1"><div class="logistics-detail">Add accommodation</div><div class="logistics-sub">Hotel, Airbnb, hostel info</div></div>
-        <span style="color:var(--accent);font-size:13px;font-weight:700;cursor:pointer;">+ Add</span>
-      </div>
-      <div class="import-btn">+ Import confirmation email</div>
-      <div class="section-label">Quick Book</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px;">
-        <a id="link-booking" href="#" target="_blank" rel="noopener" class="logistics-card" style="cursor:pointer;">
-          <div class="logistics-icon" style="background:#003580;color:#fff;font-size:11px;font-weight:700;font-size:13px;">B.</div>
-          <div><div class="logistics-detail">Booking.com</div><div class="logistics-sub">Hotels</div></div>
-        </a>
+
+      <!-- Book externally panel -->
+      <div class="log-panel active" id="log-book">
+        <div class="section-label">Flights</div>
         <a id="link-flights" href="#" target="_blank" rel="noopener" class="logistics-card" style="cursor:pointer;">
           <div class="logistics-icon" style="background:#4285F4;color:#fff;">✈️</div>
-          <div><div class="logistics-detail">Google Flights</div><div class="logistics-sub">Flights</div></div>
+          <div style="flex:1"><div class="logistics-detail">Google Flights</div><div class="logistics-sub">Search and compare all airlines</div></div>
+          <span style="color:var(--muted);font-size:16px;">↗</span>
+        </a>
+
+        <div class="section-label" style="margin-top:16px;">Hotels &amp; Stays</div>
+        <a id="link-booking" href="#" target="_blank" rel="noopener" class="logistics-card" style="cursor:pointer;">
+          <div class="logistics-icon" style="background:#003580;color:#fff;font-size:13px;font-weight:800;">B.</div>
+          <div style="flex:1"><div class="logistics-detail">Booking.com</div><div class="logistics-sub">Hotels, apartments &amp; more</div></div>
+          <span style="color:var(--muted);font-size:16px;">↗</span>
         </a>
         <a id="link-airbnb" href="#" target="_blank" rel="noopener" class="logistics-card" style="cursor:pointer;">
           <div class="logistics-icon" style="background:#FF5A5F;color:#fff;">🏠</div>
-          <div><div class="logistics-detail">Airbnb</div><div class="logistics-sub">Stays</div></div>
+          <div style="flex:1"><div class="logistics-detail">Airbnb</div><div class="logistics-sub">Unique homes &amp; experiences</div></div>
+          <span style="color:var(--muted);font-size:16px;">↗</span>
         </a>
+
+        <div class="section-label" style="margin-top:16px;">Activities</div>
         <a id="link-viator" href="#" target="_blank" rel="noopener" class="logistics-card" style="cursor:pointer;">
           <div class="logistics-icon" style="background:#28A745;color:#fff;">🎫</div>
-          <div><div class="logistics-detail">Viator</div><div class="logistics-sub">Activities</div></div>
+          <div style="flex:1"><div class="logistics-detail">Viator</div><div class="logistics-sub">Tours, tickets &amp; activities</div></div>
+          <span style="color:var(--muted);font-size:16px;">↗</span>
         </a>
       </div>
-      <div class="section-label">Documents</div>
-      <div class="doc-row"><span class="doc-name">📄 Passport copy</span><span class="doc-view">View</span></div>
-      <div class="doc-row"><span class="doc-name">🛡️ Travel insurance</span><span class="doc-view">View</span></div>
-      <div class="doc-row"><span class="doc-name">🏨 Hotel voucher</span><span class="doc-view">View</span></div>
+
+      <!-- My Bookings panel -->
+      <div class="log-panel" id="log-mine">
+        <div class="section-label">Flights</div>
+        <div id="my-flights-list"></div>
+        <button class="log-add-btn" id="add-flight-btn">+ Add Flight</button>
+
+        <div class="section-label">Hotels &amp; Stays</div>
+        <div id="my-hotels-list"></div>
+        <button class="log-add-btn" id="add-hotel-btn">+ Add Hotel / Stay</button>
+
+        <div class="section-label">Documents</div>
+        <div class="doc-row"><span class="doc-name">📄 Passport copy</span><span class="doc-view">View</span></div>
+        <div class="doc-row"><span class="doc-name">🛡️ Travel insurance</span><span class="doc-view">View</span></div>
+        <div class="doc-row"><span class="doc-name">🏨 Hotel voucher</span><span class="doc-view">View</span></div>
+      </div>
     </div>
 
     <!-- Budget Tab -->
@@ -836,6 +894,92 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <div class="pwa-banner-text"><strong>Install Zeptour</strong>Add to home screen for the best experience.</div>
   <button class="pwa-banner-btn" id="pwa-install">Install</button>
   <button class="pwa-close" id="pwa-close">×</button>
+</div>
+
+<!-- FLIGHT BOOKING MODAL -->
+<div class="booking-overlay hidden" id="flight-overlay">
+  <div class="booking-sheet">
+    <div class="booking-sheet-handle"></div>
+    <div class="booking-sheet-title">✈️ Add Flight</div>
+    <div class="booking-row">
+      <div class="booking-field">
+        <label>Airline</label>
+        <input type="text" id="fl-airline" placeholder="e.g. Emirates" autocomplete="off"/>
+      </div>
+      <div class="booking-field">
+        <label>Flight No.</label>
+        <input type="text" id="fl-number" placeholder="e.g. EK203" autocomplete="off"/>
+      </div>
+    </div>
+    <div class="booking-row">
+      <div class="booking-field">
+        <label>From</label>
+        <input type="text" id="fl-from" placeholder="City or airport" autocomplete="off"/>
+      </div>
+      <div class="booking-field">
+        <label>To</label>
+        <input type="text" id="fl-to" placeholder="City or airport" autocomplete="off"/>
+      </div>
+    </div>
+    <div class="booking-row">
+      <div class="booking-field">
+        <label>Departure</label>
+        <input type="datetime-local" id="fl-depart" style="color-scheme:dark;"/>
+      </div>
+      <div class="booking-field">
+        <label>Arrival</label>
+        <input type="datetime-local" id="fl-arrive" style="color-scheme:dark;"/>
+      </div>
+    </div>
+    <div class="booking-field">
+      <label>Confirmation No.</label>
+      <input type="text" id="fl-conf" placeholder="e.g. ABC123" autocomplete="off"/>
+    </div>
+    <div class="booking-sheet-actions">
+      <button class="booking-cancel-btn" id="flight-cancel-btn">Cancel</button>
+      <button class="btn" id="flight-save-btn" style="flex:2;">Save Flight</button>
+    </div>
+  </div>
+</div>
+
+<!-- HOTEL BOOKING MODAL -->
+<div class="booking-overlay hidden" id="hotel-overlay">
+  <div class="booking-sheet">
+    <div class="booking-sheet-handle"></div>
+    <div class="booking-sheet-title">🏨 Add Hotel / Stay</div>
+    <div class="booking-field">
+      <label>Property Name</label>
+      <input type="text" id="ht-name" placeholder="e.g. The Ritz Carlton" autocomplete="off"/>
+    </div>
+    <div class="booking-field">
+      <label>Address</label>
+      <input type="text" id="ht-address" placeholder="Street address" autocomplete="off"/>
+    </div>
+    <div class="booking-row">
+      <div class="booking-field">
+        <label>Check-in</label>
+        <input type="date" id="ht-checkin" style="color-scheme:dark;"/>
+      </div>
+      <div class="booking-field">
+        <label>Check-out</label>
+        <input type="date" id="ht-checkout" style="color-scheme:dark;"/>
+      </div>
+    </div>
+    <div class="booking-row">
+      <div class="booking-field">
+        <label>Confirmation No.</label>
+        <input type="text" id="ht-conf" placeholder="e.g. HTL9982" autocomplete="off"/>
+      </div>
+      <div class="booking-field">
+        <label>Room Type</label>
+        <input type="text" id="ht-room" placeholder="e.g. Deluxe King" autocomplete="off"/>
+      </div>
+    </div>
+    <div class="booking-sheet-actions">
+      <button class="booking-cancel-btn" id="hotel-cancel-btn">Cancel</button>
+      <button class="btn" id="hotel-save-btn" style="flex:2;">Save Hotel</button>
+    </div>
+  </div>
 </div>
 
 <!-- AUTH MODAL -->
@@ -1236,6 +1380,10 @@ function openTrip(trip){
   // Reset explore filters
   document.querySelectorAll('.explore-filter').forEach(b=>b.classList.toggle('on',b.dataset.cat==='All'));
   document.getElementById('explore-search-input').value='';
+  // Reset logistics sub-tabs
+  document.querySelectorAll('.log-tab').forEach(b=>b.classList.toggle('on',b.dataset.log==='book'));
+  document.querySelectorAll('.log-panel').forEach(p=>p.classList.toggle('active',p.id==='log-book'));
+  renderBookings();
   switchTab('itinerary');
 }
 
@@ -1328,6 +1476,148 @@ window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;
 document.getElementById('pwa-install').addEventListener('click',()=>{if(deferred){deferred.prompt();deferred=null;}document.getElementById('pwa-banner').classList.add('hidden');});
 document.getElementById('pwa-close').addEventListener('click',()=>{document.getElementById('pwa-banner').classList.add('hidden');localStorage.setItem('pwa-d','1');});
 if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
+
+// ── LOGISTICS SUB-TABS ────────────────────────────────────────────────────────
+document.querySelectorAll('.log-tab').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.log-tab').forEach(b=>b.classList.remove('on'));
+    document.querySelectorAll('.log-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('on');
+    document.getElementById('log-'+btn.dataset.log).classList.add('active');
+  });
+});
+
+// ── BOOKINGS (Flight + Hotel) ─────────────────────────────────────────────────
+function getTripBookings(){
+  if(!currentTrip)return{flights:[],hotels:[]};
+  if(!currentTrip.bookings)currentTrip.bookings={flights:[],hotels:[]};
+  return currentTrip.bookings;
+}
+function saveTripBookings(){
+  if(!currentTrip)return;
+  const saved=getSaved();
+  const idx=saved.findIndex(t=>t.title===currentTrip.title&&t.generatedAt===currentTrip.generatedAt);
+  if(idx>=0)saved[idx]=currentTrip;
+  setSaved(saved);
+}
+
+function renderBookings(){
+  const{flights,hotels}=getTripBookings();
+  // Flights
+  const fl=document.getElementById('my-flights-list');
+  if(!flights.length){
+    fl.innerHTML='<div class="log-empty">No flights added yet</div>';
+  } else {
+    fl.innerHTML=flights.map((f,i)=>`
+      <div class="booking-card">
+        <button class="booking-card-delete" data-type="flight" data-idx="${i}">✕</button>
+        <div class="booking-card-header">
+          <div class="booking-card-icon flight">✈️</div>
+          <div>
+            <div class="booking-card-title">${f.airline||'Flight'}${f.number?' · '+f.number:''}</div>
+            <div class="booking-card-conf">${f.conf?'Conf: '+f.conf:''}</div>
+          </div>
+        </div>
+        <div class="booking-route">
+          <div class="booking-route-city">
+            <div class="city-code">${f.from||'—'}</div>
+            <div class="city-time">${f.depart?formatBookingDT(f.depart):''}</div>
+          </div>
+          <div class="booking-route-arrow">→</div>
+          <div class="booking-route-city">
+            <div class="city-code">${f.to||'—'}</div>
+            <div class="city-time">${f.arrive?formatBookingDT(f.arrive):''}</div>
+          </div>
+        </div>
+      </div>`).join('');
+  }
+  // Hotels
+  const ht=document.getElementById('my-hotels-list');
+  if(!hotels.length){
+    ht.innerHTML='<div class="log-empty">No hotels added yet</div>';
+  } else {
+    ht.innerHTML=hotels.map((h,i)=>`
+      <div class="booking-card">
+        <button class="booking-card-delete" data-type="hotel" data-idx="${i}">✕</button>
+        <div class="booking-card-header">
+          <div class="booking-card-icon hotel">🏨</div>
+          <div>
+            <div class="booking-card-title">${h.name||'Hotel'}</div>
+            <div class="booking-card-conf">${h.conf?'Conf: '+h.conf:''}</div>
+          </div>
+        </div>
+        <div class="booking-detail-row"><span class="booking-detail-label">Check-in</span><span class="booking-detail-val">${h.checkin?formatDate(h.checkin):'—'}</span></div>
+        <div class="booking-detail-row"><span class="booking-detail-label">Check-out</span><span class="booking-detail-val">${h.checkout?formatDate(h.checkout):'—'}</span></div>
+        ${h.room?`<div class="booking-detail-row"><span class="booking-detail-label">Room</span><span class="booking-detail-val">${h.room}</span></div>`:''}
+        ${h.address?`<div style="margin-top:8px;font-size:11px;color:var(--muted);">📍 ${h.address}</div>`:''}
+      </div>`).join('');
+  }
+  // Delete handlers
+  document.querySelectorAll('.booking-card-delete').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const{type,idx}=btn.dataset;
+      const bk=getTripBookings();
+      bk[type+'s'].splice(+idx,1);
+      saveTripBookings();renderBookings();
+    });
+  });
+}
+
+function formatBookingDT(dt){
+  if(!dt)return'';
+  const d=new Date(dt);
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric'})+' '+d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:true});
+}
+function formatDate(ds){
+  if(!ds)return'';
+  const d=new Date(ds+'T00:00:00');
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+}
+
+// Flight modal
+document.getElementById('add-flight-btn').addEventListener('click',()=>{
+  ['fl-airline','fl-number','fl-from','fl-to','fl-depart','fl-arrive','fl-conf'].forEach(id=>{document.getElementById(id).value='';});
+  document.getElementById('flight-overlay').classList.remove('hidden');
+});
+document.getElementById('flight-cancel-btn').addEventListener('click',()=>document.getElementById('flight-overlay').classList.add('hidden'));
+document.getElementById('flight-overlay').addEventListener('click',e=>{if(e.target===document.getElementById('flight-overlay'))document.getElementById('flight-overlay').classList.add('hidden');});
+document.getElementById('flight-save-btn').addEventListener('click',()=>{
+  const f={
+    airline:document.getElementById('fl-airline').value.trim(),
+    number:document.getElementById('fl-number').value.trim(),
+    from:document.getElementById('fl-from').value.trim(),
+    to:document.getElementById('fl-to').value.trim(),
+    depart:document.getElementById('fl-depart').value,
+    arrive:document.getElementById('fl-arrive').value,
+    conf:document.getElementById('fl-conf').value.trim(),
+  };
+  if(!f.from&&!f.to&&!f.airline){return;}
+  getTripBookings().flights.push(f);
+  saveTripBookings();renderBookings();
+  document.getElementById('flight-overlay').classList.add('hidden');
+});
+
+// Hotel modal
+document.getElementById('add-hotel-btn').addEventListener('click',()=>{
+  ['ht-name','ht-address','ht-checkin','ht-checkout','ht-conf','ht-room'].forEach(id=>{document.getElementById(id).value='';});
+  document.getElementById('hotel-overlay').classList.remove('hidden');
+});
+document.getElementById('hotel-cancel-btn').addEventListener('click',()=>document.getElementById('hotel-overlay').classList.add('hidden'));
+document.getElementById('hotel-overlay').addEventListener('click',e=>{if(e.target===document.getElementById('hotel-overlay'))document.getElementById('hotel-overlay').classList.add('hidden');});
+document.getElementById('hotel-save-btn').addEventListener('click',()=>{
+  const h={
+    name:document.getElementById('ht-name').value.trim(),
+    address:document.getElementById('ht-address').value.trim(),
+    checkin:document.getElementById('ht-checkin').value,
+    checkout:document.getElementById('ht-checkout').value,
+    conf:document.getElementById('ht-conf').value.trim(),
+    room:document.getElementById('ht-room').value.trim(),
+  };
+  if(!h.name&&!h.checkin){return;}
+  getTripBookings().hotels.push(h);
+  saveTripBookings();renderBookings();
+  document.getElementById('hotel-overlay').classList.add('hidden');
+});
 
 // ── NEAR ME ───────────────────────────────────────────────────────────────────
 document.getElementById('near-me-btn').addEventListener('click',async function(){
