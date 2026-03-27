@@ -207,7 +207,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .wz-spacer{flex:1;}
 /* Destination dropdown */
 .dest-dropdown-wrap{position:relative;}
-.dest-dropdown{position:absolute;left:0;right:0;top:0;background:var(--surface);border:1px solid var(--border-up);border-radius:14px;overflow:hidden;z-index:50;box-shadow:0 8px 32px rgba(0,0,0,0.5);}
+.dest-dropdown{position:absolute;left:0;right:0;top:calc(100% + 4px);background:var(--surface);border:1px solid var(--border-up);border-radius:14px;overflow:hidden;z-index:50;box-shadow:0 8px 32px rgba(0,0,0,0.5);}
 .dest-item{padding:13px 18px;font-size:14px;cursor:pointer;border-bottom:1px solid var(--faint);transition:background 0.1s;}
 .dest-item:last-child{border-bottom:none;}
 .dest-item:hover{background:var(--surface-up);}
@@ -506,7 +506,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
           <span class="wz-input-icon">📍</span>
           <input id="dest-input" type="text" placeholder="e.g. Tokyo, Japan" autocomplete="off"/>
         </div>
-        <div id="dest-dropdown" class="dest-dropdown hidden" style="top:calc(100% + 4px);"></div>
+        <div id="dest-dropdown" class="dest-dropdown hidden"></div>
       </div>
       <div class="wz-tags" id="popular-tags">
         <div class="tag" data-dest="Paris, France">🗼 Paris</div>
@@ -936,6 +936,9 @@ function startWizard(prefill){
   document.getElementById('days-display').textContent=7;
   document.querySelectorAll('#duration-tags .tag').forEach(t=>t.classList.toggle('on',t.dataset.days==='7'));
   document.querySelectorAll('.wz-traveler-card,.wz-budget-card,.wz-interest,[data-date]').forEach(e=>e.classList.remove('on'));
+  // Re-apply default dietary selection
+  const noneChip=document.querySelector('#dietary-list [data-did="none"]');
+  if(noneChip)noneChip.classList.add('on');
   document.getElementById('count-picker').classList.add('hidden');
   document.getElementById('step1-next').disabled=true;
   document.getElementById('step3-next').disabled=true;
@@ -1088,7 +1091,7 @@ document.querySelectorAll('.wz-budget-card').forEach(card=>{
 document.getElementById('step4-next').addEventListener('click',()=>{if(W.budget)showStep(5);});
 
 // Step 5: Interests
-document.querySelectorAll('.wz-interest').forEach(chip=>{
+document.querySelectorAll('#interests-list .wz-interest').forEach(chip=>{
   chip.addEventListener('click',()=>{
     chip.classList.toggle('on');
     const id=chip.dataset.id;
