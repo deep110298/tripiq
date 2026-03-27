@@ -1348,10 +1348,11 @@ TIMING RULES (critical — follow exactly):
 - Set realistic "dur" for each activity: museums 1.5–2 hrs, landmarks 45–60 min, meals 60–90 min, shopping 1 hr, nature/parks 1–2 hrs
 - Schedule activities back-to-back accounting for travel + duration so times never overlap
 - Do not schedule anything after 11:00 PM
-- Day 1 starts at 10:00 AM to allow for airport arrival and hotel check-in
+- Day 1: hotel check-in is at 3:00 PM — only schedule activities from 4:00 PM onward (dinner + evening only, no full day sightseeing)
+- Last day: hotel checkout is at 11:00 AM — only schedule activities from 9:00 AM to 10:30 AM (a quick breakfast/coffee, then pack and leave), no afternoon activities
 
 Respond ONLY with raw JSON (no markdown, no backticks, start with {):
-{"title":"${days} Days in ${dest.split(',')[0]}","subtitle":"${W.travelers||'Solo'} · ${days} days${W.date?' · Arriving '+W.date:''}","days":[{"day":1,"theme":"Theme","activities":[{"time":"10:00 AM","name":"Place Name","type":"Attraction","dur":"1.5 hrs","note":"Short tip."}]}]}`;
+{"title":"${days} Days in ${dest.split(',')[0]}","subtitle":"${W.travelers||'Solo'} · ${days} days${W.date?' · Arriving '+W.date:''}","days":[{"day":1,"theme":"Theme","activities":[{"time":"4:00 PM","name":"Place Name","type":"Attraction","dur":"1.5 hrs","note":"Short tip."}]}]}`;
 
   try{
     const res=await fetch('/api/itinerary',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
@@ -1557,6 +1558,8 @@ TIMING RULES (critical — follow exactly):
 - Set realistic "dur": museums 1.5–2 hrs, landmarks 45–60 min, meals 60–90 min, shopping 1 hr, nature 1–2 hrs
 - Schedule times sequentially — no overlaps
 - Do not schedule anything after 11:00 PM
+- If this is Day 1: check-in is at 3:00 PM, only schedule from 4:00 PM onward
+- If this is the last day: checkout is at 11:00 AM, only schedule 9:00–10:30 AM (breakfast/coffee only)
 Respond ONLY with raw JSON (no markdown, no backticks, start with {):
 {"theme":"Day Theme","activities":[{"time":"9:00 AM","name":"Place Name","type":"Attraction","dur":"1.5 hrs","note":"Short tip."}]}`;
   try{
