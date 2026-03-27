@@ -307,14 +307,33 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .act-time{font-size:11px;color:var(--muted);margin-bottom:4px;}
 .act-note{font-size:11px;color:var(--muted);font-style:italic;line-height:1.4;}
 .act-type{font-size:10px;padding:3px 9px;background:var(--faint);border-radius:10px;color:var(--muted);border:1px solid var(--border);white-space:nowrap;flex-shrink:0;align-self:flex-start;margin-top:2px;}
-.day-add-stop{padding:10px 16px;color:var(--accent);font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;}
-.day-add-day{border:1px dashed var(--faint);border-radius:14px;padding:14px;text-align:center;color:var(--muted);font-size:13px;cursor:pointer;margin-bottom:16px;}
-.day-vibe-bar{display:flex;align-items:center;gap:8px;padding:12px 16px 10px;background:#0e0e12;border:1px solid var(--border-up);border-top:none;border-bottom:1px solid var(--faint);}
-.day-vibe-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:0.3px;white-space:nowrap;}
-.day-vibe-btns{display:flex;gap:4px;flex:1;}
-.day-vibe-btn{flex:1;padding:5px 8px;border-radius:8px;border:1px solid var(--border);background:none;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;font-family:inherit;transition:all 0.15s;white-space:nowrap;text-align:center;}
-.day-vibe-btn:hover{border-color:var(--border-up);color:var(--text);}
-.day-vibe-btn.on{background:var(--accent-soft);border-color:var(--accent);color:var(--text);}
+.day-add-stop{padding:10px 16px;color:var(--accent);font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;border-top:1px solid var(--faint);}
+.day-add-stop:hover{background:rgba(232,56,13,0.06);}
+.day-add-day{border:1px dashed var(--border-up);border-radius:14px;padding:16px;text-align:center;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;margin-bottom:16px;transition:all 0.15s;}
+.day-add-day:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);}
+/* Add-stop inline form */
+.add-stop-form{padding:12px 16px;background:#0e0e12;border-top:1px solid var(--faint);}
+.add-stop-row{display:flex;gap:8px;align-items:center;}
+.add-stop-input{flex:1;background:var(--surface-up);border:1px solid var(--border);border-radius:10px;padding:9px 12px;color:var(--text);font-size:13px;font-family:inherit;outline:none;}
+.add-stop-input:focus{border-color:var(--accent);}
+.add-stop-type{background:var(--surface-up);border:1px solid var(--border);border-radius:10px;padding:9px 10px;color:var(--text);font-size:12px;font-family:inherit;outline:none;cursor:pointer;}
+.add-stop-save{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;}
+.add-stop-cancel{background:var(--surface-up);color:var(--muted);border:1px solid var(--border);border-radius:10px;padding:9px 12px;font-size:13px;cursor:pointer;font-family:inherit;}
+/* Activity type color accents */
+.activity-row{border-left:3px solid transparent;}
+.activity-row[data-type="Food"]{border-left-color:#f59e0b;}
+.activity-row[data-type="Nature"]{border-left-color:#22c55e;}
+.activity-row[data-type="Culture"],.activity-row[data-type="History"],.activity-row[data-type="Museum"]{border-left-color:#818cf8;}
+.activity-row[data-type="Nightlife"]{border-left-color:#ec4899;}
+.activity-row[data-type="Shopping"]{border-left-color:#a855f7;}
+.activity-row[data-type="Wellness"]{border-left-color:#14b8a6;}
+.activity-row[data-type="Attraction"],.activity-row[data-type="Beach"]{border-left-color:var(--accent);}
+.day-vibe-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#0a0a0e;border:1px solid var(--border-up);border-top:none;border-bottom:1px solid var(--faint);}
+.day-vibe-label{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap;width:38px;}
+.day-vibe-btns{display:flex;gap:0;flex:1;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:3px;overflow:hidden;}
+.day-vibe-btn{flex:1;padding:5px 6px;border-radius:7px;border:none;background:none;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;font-family:inherit;transition:all 0.15s;white-space:nowrap;text-align:center;}
+.day-vibe-btn:hover{color:var(--text);}
+.day-vibe-btn.on{background:var(--surface-up);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,0.4);}
 .day-regen-overlay{padding:28px 16px;text-align:center;background:#0e0e12;border:1px solid var(--border-up);border-top:none;border-radius:0 0 14px 14px;}
 .day-regen-spinner{font-size:13px;color:var(--muted);animation:pulse 1.2s infinite;}
 @keyframes pulse{0%,100%{opacity:0.4;}50%{opacity:1;}}
@@ -1469,8 +1488,42 @@ function renderDayCards(){
           else regenerateDay(day.day,day.vibe||'balanced',btn.dataset.start);
         });
       });
+      const addStopBtn=div.querySelector('.day-add-stop');
+      if(addStopBtn) addStopBtn.addEventListener('click',()=>showAddStopForm(day.day,div));
     }
   });
+}
+
+function showAddStopForm(dayNum,cardDiv){
+  const body=cardDiv.querySelector('.day-card-body');
+  if(!body||body.querySelector('.add-stop-form'))return;
+  const addBtn=body.querySelector('.day-add-stop');
+  if(addBtn)addBtn.style.display='none';
+  const form=document.createElement('div');
+  form.className='add-stop-form';
+  form.innerHTML=`<div class="add-stop-row">
+    <input class="add-stop-input" type="text" placeholder="e.g. Sunset viewpoint…"/>
+    <select class="add-stop-type">
+      <option>Attraction</option><option>Food</option><option>Nature</option>
+      <option>Culture</option><option>Shopping</option><option>Nightlife</option>
+      <option>Wellness</option><option>History</option><option>Museum</option><option>Beach</option>
+    </select>
+    <button class="add-stop-save">Add</button>
+    <button class="add-stop-cancel">✕</button>
+  </div>`;
+  body.appendChild(form);
+  const inp=form.querySelector('.add-stop-input');
+  inp.focus();
+  form.querySelector('.add-stop-save').addEventListener('click',()=>{
+    const name=inp.value.trim();
+    const type=form.querySelector('.add-stop-type').value;
+    if(!name)return;
+    const day=currentTrip.days.find(d=>d.day===dayNum);
+    if(day){day.activities.push({name,type,time:'',dur:'',note:''});saveTripBookings();}
+    renderDayCards();
+  });
+  form.querySelector('.add-stop-cancel').addEventListener('click',()=>renderDayCards());
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter')form.querySelector('.add-stop-save').click();});
 }
 
 function buildDayLogistics(dayIdx,totalDays){
@@ -1530,7 +1583,7 @@ function buildDayLogistics(dayIdx,totalDays){
 function buildActivities(acts){
   if(!acts.length)return'<div class="day-card-body" style="padding:14px 16px;color:var(--muted);font-size:13px;">No activities yet</div>';
   return`<div class="day-card-body">${acts.map(a=>`
-    <div class="activity-row">
+    <div class="activity-row" data-type="${a.type||''}">
       <div class="act-icon">${typeIcon(a.type)}</div>
       <div class="act-info">
         <div class="act-name">${a.name}</div>
@@ -1538,7 +1591,7 @@ function buildActivities(acts){
         <div class="act-note">${a.note||''}</div>
       </div>
       ${a.type?`<div class="act-type">${a.type}</div>`:''}
-    </div>`).join('')}<div class="day-add-stop">+ Add stop</div></div>`;
+    </div>`).join('')}<div class="day-add-stop">＋ Add a stop</div></div>`;
 }
 
 async function regenerateDay(dayNum,vibe,startTime){
@@ -1625,6 +1678,19 @@ document.querySelectorAll('.explore-filter').forEach(btn=>{
   btn.addEventListener('click',()=>{document.querySelectorAll('.explore-filter').forEach(b=>b.classList.remove('on'));btn.classList.add('on');exploreFilter=btn.dataset.cat;renderExploreGrid();});
 });
 document.getElementById('explore-search-input').addEventListener('input',e=>{exploreSearch=e.target.value;renderExploreGrid();});
+
+// ── ADD ANOTHER DAY ───────────────────────────────────────────────────────────
+document.querySelector('.day-add-day').addEventListener('click',()=>{
+  if(!currentTrip)return;
+  const days=currentTrip.days||[];
+  const newNum=days.length+1;
+  days.push({day:newNum,theme:'Day '+newNum,activities:[]});
+  currentTrip.days=days;
+  expandedDay=newNum;
+  saveTripBookings();
+  renderDayCards();
+  document.querySelector('.day-add-day').scrollIntoView({behavior:'smooth',block:'center'});
+});
 
 // ── TABS ──────────────────────────────────────────────────────────────────────
 function switchTab(tab){
