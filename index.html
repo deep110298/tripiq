@@ -1340,8 +1340,18 @@ STRICT RULES:
 - Each activity must have a "type" from: Attraction, Food, Nature, Nightlife, Shopping, Culture, Wellness, History, Museum, Beach
 - Each note ONE sentence only (max 15 words)
 
+TIMING RULES (critical — follow exactly):
+- Start the day no earlier than 9:00 AM
+- Include a lunch break (Food type) between 12:00 PM and 1:30 PM
+- Include a dinner (Food type) between 7:00 PM and 8:30 PM
+- Allow 30 minutes travel time between each activity
+- Set realistic "dur" for each activity: museums 1.5–2 hrs, landmarks 45–60 min, meals 60–90 min, shopping 1 hr, nature/parks 1–2 hrs
+- Schedule activities back-to-back accounting for travel + duration so times never overlap
+- Do not schedule anything after 11:00 PM
+- Day 1 starts at 10:00 AM to allow for airport arrival and hotel check-in
+
 Respond ONLY with raw JSON (no markdown, no backticks, start with {):
-{"title":"${days} Days in ${dest.split(',')[0]}","subtitle":"${W.travelers||'Solo'} · ${days} days${W.date?' · Arriving '+W.date:''}","days":[{"day":1,"theme":"Theme","activities":[{"time":"9:00 AM","name":"Place Name","type":"Attraction","note":"Short tip."}]}]}`;
+{"title":"${days} Days in ${dest.split(',')[0]}","subtitle":"${W.travelers||'Solo'} · ${days} days${W.date?' · Arriving '+W.date:''}","days":[{"day":1,"theme":"Theme","activities":[{"time":"10:00 AM","name":"Place Name","type":"Attraction","dur":"1.5 hrs","note":"Short tip."}]}]}`;
 
   try{
     const res=await fetch('/api/itinerary',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
@@ -1539,6 +1549,14 @@ STRICT RULES:
 - Include iconic landmarks and local restaurants
 - Each activity must have a "type" from: Attraction, Food, Nature, Nightlife, Shopping, Culture, Wellness, History, Museum, Beach
 - Each note ONE sentence only (max 15 words)
+TIMING RULES (critical — follow exactly):
+- Start no earlier than 9:00 AM
+- Include a lunch break (Food type) between 12:00 PM and 1:30 PM
+- Include a dinner (Food type) between 7:00 PM and 8:30 PM
+- Allow 30 minutes travel time between each activity
+- Set realistic "dur": museums 1.5–2 hrs, landmarks 45–60 min, meals 60–90 min, shopping 1 hr, nature 1–2 hrs
+- Schedule times sequentially — no overlaps
+- Do not schedule anything after 11:00 PM
 Respond ONLY with raw JSON (no markdown, no backticks, start with {):
 {"theme":"Day Theme","activities":[{"time":"9:00 AM","name":"Place Name","type":"Attraction","dur":"1.5 hrs","note":"Short tip."}]}`;
   try{
