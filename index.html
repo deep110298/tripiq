@@ -496,26 +496,27 @@ body{font-family:'Lato',sans-serif;background:var(--bg);color:var(--text);min-he
 .hidden{display:none!important;}
 
 /* ── AUTH MODAL ── */
-.auth-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;}
-.auth-modal{background:var(--surface);border:1px solid var(--border-up);border-radius:24px;padding:32px 28px;width:100%;max-width:400px;position:relative;}
-.auth-close{position:absolute;top:16px;right:16px;background:var(--surface-up);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);font-size:16px;}
-.auth-logo{display:flex;align-items:center;gap:10px;margin-bottom:24px;}
-.auth-logomark{width:36px;height:36px;border-radius:10px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#fff;}
-.auth-title{font-size:22px;font-weight:800;letter-spacing:-0.5px;margin-bottom:6px;}
-.auth-sub{font-size:13px;color:var(--muted);margin-bottom:24px;}
-.auth-tabs{display:flex;background:var(--surface-up);border-radius:12px;padding:3px;margin-bottom:24px;gap:3px;}
-.auth-tab{flex:1;padding:8px;border-radius:9px;border:none;background:none;font-family:inherit;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.15s;}
-.auth-tab.on{background:var(--surface);color:var(--text);box-shadow:var(--shadow);}
-.auth-field{margin-bottom:14px;}
-.auth-field label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px;letter-spacing:0.3px;}
-.auth-field input{width:100%;background:var(--surface-up);border:1px solid var(--border);border-radius:12px;padding:12px 14px;color:var(--text);font-size:14px;font-family:inherit;outline:none;transition:border-color 0.15s;}
-.auth-field input:focus{border-color:var(--accent);}
-.auth-err{color:#f87171;font-size:12px;margin-bottom:12px;display:none;}
-.auth-msg{color:var(--green);font-size:12px;margin-bottom:12px;display:none;}
-.auth-divider{display:flex;align-items:center;gap:10px;margin:18px 0;color:var(--muted);font-size:12px;}
-.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border);}
-.auth-magic-btn{width:100%;padding:12px;border-radius:12px;border:1px solid var(--border);background:var(--surface-up);color:var(--text);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.15s;}
-.auth-magic-btn:hover{border-color:var(--border-up);}
+.auth-overlay{position:fixed;inset:0;background:rgba(26,20,16,0.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;}
+.auth-modal{background:#faf8f5;border:1px solid #d4c9bb;border-radius:16px;padding:36px 32px;width:100%;max-width:420px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.2);}
+.auth-close{position:absolute;top:14px;right:14px;background:none;border:none;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#9c8f82;font-size:20px;line-height:1;border-radius:6px;transition:background 0.15s;}
+.auth-close:hover{background:#f0ebe4;}
+.auth-title{font-family:'Playfair Display',Georgia,serif;font-size:26px;font-weight:800;letter-spacing:-0.5px;margin-bottom:6px;color:#1a1410;}
+.auth-sub{font-size:13px;color:#9c8f82;margin-bottom:24px;font-family:'Lato',sans-serif;line-height:1.5;}
+.auth-tabs{display:flex;background:#f0ebe4;border-radius:8px;padding:3px;margin-bottom:24px;gap:3px;}
+.auth-tab{flex:1;padding:9px;border-radius:6px;border:none;background:none;font-family:'Lato',sans-serif;font-size:13px;font-weight:700;color:#9c8f82;cursor:pointer;transition:all 0.15s;letter-spacing:0.3px;}
+.auth-tab.on{background:#fff;color:#1a1410;box-shadow:0 1px 4px rgba(0,0,0,0.08);}
+.auth-field{margin-bottom:16px;}
+.auth-field label{display:block;font-size:11px;font-weight:700;color:#9c8f82;margin-bottom:6px;letter-spacing:1px;font-family:'Lato',sans-serif;text-transform:uppercase;}
+.auth-field input{width:100%;background:#fff;border:1.5px solid #e8e0d5;border-radius:8px;padding:12px 14px;color:#1a1410;font-size:14px;font-family:'Lato',sans-serif;outline:none;transition:border-color 0.15s;}
+.auth-field input:focus{border-color:#b8860b;}
+.auth-forgot{text-align:right;margin-top:6px;}
+.auth-forgot-btn{font-size:12px;color:#b8860b;cursor:pointer;font-weight:600;background:none;border:none;font-family:'Lato',sans-serif;padding:0;}
+.auth-err{color:#c0392b;font-size:12px;margin-bottom:12px;display:none;background:#fdf0ed;border:1px solid #f5c6bb;border-radius:6px;padding:8px 12px;font-family:'Lato',sans-serif;}
+.auth-msg{color:#3a7d44;font-size:12px;margin-bottom:12px;display:none;background:#edf7f0;border:1px solid #b8ddc1;border-radius:6px;padding:8px 12px;font-family:'Lato',sans-serif;}
+.auth-divider{display:flex;align-items:center;gap:10px;margin:18px 0;color:#d4c9bb;font-size:11px;font-family:'Lato',sans-serif;letter-spacing:1px;text-transform:uppercase;}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:#e8e0d5;}
+.auth-magic-btn{width:100%;padding:12px;border-radius:8px;border:1.5px solid #e8e0d5;background:#fff;color:#1a1410;font-family:'Lato',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.15s;letter-spacing:0.3px;}
+.auth-magic-btn:hover{border-color:#d4c9bb;background:#f4f1ec;}
 
 /* ── HOME AUTH BUTTON ── */
 .hs-auth-btn{padding:8px 20px;border-radius:4px;background:#1a1410;border:1px solid #1a1410;font-size:13px;font-weight:700;color:#faf8f5;cursor:pointer;transition:opacity 0.15s;white-space:nowrap;font-family:'Lato',sans-serif;letter-spacing:0.5px;}
@@ -944,23 +945,7 @@ body{font-family:'Lato',sans-serif;background:var(--bg);color:var(--text);min-he
 
     <!-- Group Tab -->
     <div class="tab-panel" id="tab-group">
-      <div class="section-label">Travelers (1)</div>
-      <div class="member-card">
-        <div class="member-avatar">👤</div>
-        <div style="flex:1"><div class="member-name">You</div><div class="member-role">Organizer</div></div>
-        <div class="member-online"></div>
-      </div>
-      <div class="invite-btn">+ Invite someone</div>
-      <div class="section-label">Vote</div>
-      <div class="vote-card">
-        <div class="vote-question">Day 2 evening plans?</div>
-        <div class="vote-option"><div class="vote-option-row"><span>Sky Bar</span><span style="color:var(--muted);">2 votes</span></div><div class="vote-bar-track"><div class="vote-bar-fill leader" style="width:100%"></div></div></div>
-        <div class="vote-option"><div class="vote-option-row"><span>Night Market</span><span style="color:var(--muted);">1 vote</span></div><div class="vote-bar-track"><div class="vote-bar-fill" style="width:50%"></div></div></div>
-        <div class="vote-option"><div class="vote-option-row"><span>Early night</span><span style="color:var(--muted);">0 votes</span></div><div class="vote-bar-track"><div class="vote-bar-fill" style="width:0%"></div></div></div>
-        <div class="vote-cast">Cast your vote</div>
-      </div>
-      <div class="section-label">Group Notes</div>
-      <div class="notes-card"><textarea class="notes-input" placeholder="Add a note for the group..."></textarea></div>
+      <div id="group-panel-content"></div>
     </div>
 
   </div>
@@ -1065,10 +1050,6 @@ body{font-family:'Lato',sans-serif;background:var(--bg);color:var(--text);min-he
 <div class="auth-overlay hidden" id="auth-overlay">
   <div class="auth-modal">
     <button class="auth-close" id="auth-close">×</button>
-    <div class="auth-logo">
-      <div class="auth-logomark">Z</div>
-      <span style="font-weight:800;font-size:16px;">Zeptour</span>
-    </div>
     <div class="auth-title" id="auth-modal-title">Welcome back</div>
     <div class="auth-sub" id="auth-modal-sub">Sign in to sync your trips across devices</div>
     <div class="auth-tabs">
@@ -1078,16 +1059,19 @@ body{font-family:'Lato',sans-serif;background:var(--bg);color:var(--text);min-he
     <div id="auth-err" class="auth-err"></div>
     <div id="auth-msg" class="auth-msg"></div>
     <div class="auth-field">
-      <label>EMAIL</label>
+      <label>Email</label>
       <input type="email" id="auth-email" placeholder="you@example.com" autocomplete="email"/>
     </div>
     <div class="auth-field" id="auth-pw-field">
-      <label>PASSWORD</label>
+      <label>Password</label>
       <input type="password" id="auth-password" placeholder="••••••••" autocomplete="current-password"/>
+      <div class="auth-forgot" id="auth-forgot-wrap">
+        <button class="auth-forgot-btn" id="auth-forgot-btn">Forgot password?</button>
+      </div>
     </div>
-    <button class="btn" id="auth-submit-btn" style="margin-top:4px;">Sign In</button>
+    <button class="btn" id="auth-submit-btn" style="margin-top:8px;border-radius:8px;font-family:'Lato',sans-serif;letter-spacing:0.5px;">Sign In</button>
     <div class="auth-divider">or</div>
-    <button class="auth-magic-btn" id="auth-magic-btn">✉️ Send magic link</button>
+    <button class="auth-magic-btn" id="auth-magic-btn">✉️ Send magic link instead</button>
   </div>
 </div>
 
@@ -1762,8 +1746,132 @@ function switchTab(tab){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('tab-'+tab).classList.add('active');
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+  if(tab==='group')renderGroupTab();
 }
 document.querySelectorAll('.nav-btn').forEach(btn=>btn.addEventListener('click',()=>switchTab(btn.dataset.tab)));
+
+// ── GROUP TAB ─────────────────────────────────────────────────────────────────
+function getGroupData(){
+  if(!currentTrip)return{votes:{},notes:'',members:[]};
+  return currentTrip.group||{votes:{},notes:'',members:[]};
+}
+function saveGroupData(g){
+  if(!currentTrip)return;
+  currentTrip.group=g;
+  saveTripBookings();
+}
+
+function renderGroupTab(){
+  const el=document.getElementById('group-panel-content');
+  if(!el||!currentTrip)return;
+  const g=getGroupData();
+  const travelers=currentTrip.travelers||'solo';
+  const count=currentTrip.travelerCount||1;
+  const dest=currentTrip.dest||currentTrip.title||'your trip';
+
+  // Build poll options from day activities (first nightlife/food of day 2)
+  const day2=( currentTrip.days||[]).find(d=>d.day===2);
+  const pollOptions=day2?(day2.activities||[]).filter(a=>a.name).slice(0,3).map(a=>a.name):['Option A','Option B','Option C'];
+  const pollKey='day2-evening';
+  const myVote=g.votes[pollKey]??null;
+  const voteCounts=pollOptions.map((_,i)=>g.votes['v-'+i]||0);
+  const totalVotes=voteCounts.reduce((a,b)=>a+b,0)||1;
+
+  el.innerHTML=`
+    <div class="section-label">Travelers (${count})</div>
+    <div class="member-card">
+      <div class="member-avatar">👤</div>
+      <div style="flex:1"><div class="member-name">You</div><div class="member-role">Organizer</div></div>
+      <div class="member-online"></div>
+    </div>
+    ${(g.members||[]).map(m=>`
+    <div class="member-card">
+      <div class="member-avatar" style="background:var(--surface-up);font-size:15px;font-weight:800;color:var(--accent);">${m[0].toUpperCase()}</div>
+      <div style="flex:1"><div class="member-name">${m}</div><div class="member-role">Member</div></div>
+    </div>`).join('')}
+    <div class="invite-btn" id="grp-invite-btn">+ Invite someone</div>
+    <div id="grp-invite-form" style="display:none;margin-bottom:20px;">
+      <div style="display:flex;gap:8px;align-items:center;">
+        <input id="grp-invite-input" type="text" placeholder="Name or email…" style="flex:1;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:10px 12px;font-size:13px;font-family:inherit;color:var(--text);outline:none;"/>
+        <button id="grp-invite-save" style="background:var(--accent);color:#fff;border:none;border-radius:8px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">Add</button>
+        <button id="grp-invite-copy" style="background:var(--surface-up);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:13px;cursor:pointer;font-family:inherit;" title="Copy link">🔗</button>
+      </div>
+      <div id="grp-copy-msg" style="font-size:11px;color:var(--green);margin-top:6px;display:none;">Link copied to clipboard!</div>
+    </div>
+
+    <div class="section-label">Vote — what should you do?</div>
+    <div class="vote-card">
+      <div class="vote-question">Best activity in ${dest}?</div>
+      ${pollOptions.map((opt,i)=>{
+        const pct=Math.round((voteCounts[i]/totalVotes)*100);
+        const isLeader=voteCounts[i]===Math.max(...voteCounts)&&voteCounts[i]>0;
+        const voted=myVote===i;
+        return `<div class="vote-option" data-poll="${pollKey}" data-idx="${i}" style="cursor:pointer;${voted?'opacity:1':''}">
+          <div class="vote-option-row">
+            <span style="font-weight:${voted?'700':'400'}">${voted?'✓ ':''}${opt}</span>
+            <span style="color:var(--muted);">${voteCounts[i]} vote${voteCounts[i]!==1?'s':''}</span>
+          </div>
+          <div class="vote-bar-track"><div class="vote-bar-fill${isLeader?' leader':''}" style="width:${totalVotes>1||voteCounts[i]>0?pct:0}%"></div></div>
+        </div>`;
+      }).join('')}
+      <div class="vote-cast" style="color:${myVote!==null?'var(--green)':'var(--accent)'}">
+        ${myVote!==null?'✓ Vote recorded':'Tap an option to vote'}
+      </div>
+    </div>
+
+    <div class="section-label">Group Notes</div>
+    <div class="notes-card">
+      <textarea class="notes-input" id="grp-notes" placeholder="Jot down ideas, links, anything for the group…" style="height:80px;">${g.notes||''}</textarea>
+    </div>`;
+
+  // Invite toggle
+  el.querySelector('#grp-invite-btn').addEventListener('click',()=>{
+    const f=el.querySelector('#grp-invite-form');
+    f.style.display=f.style.display==='none'?'block':'none';
+  });
+  el.querySelector('#grp-invite-save').addEventListener('click',()=>{
+    const name=el.querySelector('#grp-invite-input').value.trim();
+    if(!name)return;
+    const gd=getGroupData();
+    gd.members=[...(gd.members||[]),name];
+    saveGroupData(gd);
+    renderGroupTab();
+  });
+  el.querySelector('#grp-invite-copy').addEventListener('click',()=>{
+    navigator.clipboard.writeText(window.location.href).then(()=>{
+      const msg=el.querySelector('#grp-copy-msg');
+      msg.style.display='block';
+      setTimeout(()=>msg.style.display='none',2500);
+    });
+  });
+
+  // Voting
+  el.querySelectorAll('.vote-option').forEach(opt=>{
+    opt.addEventListener('click',()=>{
+      const idx=+opt.dataset.idx;
+      const gd=getGroupData();
+      const prev=gd.votes[pollKey]??null;
+      if(prev===idx)return;
+      if(prev!==null)gd.votes['v-'+prev]=Math.max(0,(gd.votes['v-'+prev]||1)-1);
+      gd.votes['v-'+idx]=(gd.votes['v-'+idx]||0)+1;
+      gd.votes[pollKey]=idx;
+      saveGroupData(gd);
+      renderGroupTab();
+    });
+  });
+
+  // Notes auto-save
+  const notesEl=el.querySelector('#grp-notes');
+  let notesTimer;
+  notesEl.addEventListener('input',()=>{
+    clearTimeout(notesTimer);
+    notesTimer=setTimeout(()=>{
+      const gd=getGroupData();
+      gd.notes=notesEl.value;
+      saveGroupData(gd);
+    },600);
+  });
+}
 
 // ── PWA ───────────────────────────────────────────────────────────────────────
 let deferred;
@@ -1959,7 +2067,20 @@ function switchAuthTab(mode){
   document.getElementById('auth-submit-btn').textContent=mode==='signin'?'Sign In':'Create Account';
   document.getElementById('auth-err').style.display='none';
   document.getElementById('auth-msg').style.display='none';
+  const fw=document.getElementById('auth-forgot-wrap');
+  if(fw)fw.style.display=mode==='signin'?'block':'none';
 }
+
+document.getElementById('auth-forgot-btn').addEventListener('click',async()=>{
+  const email=document.getElementById('auth-email').value.trim();
+  const errEl=document.getElementById('auth-err');
+  const msgEl=document.getElementById('auth-msg');
+  errEl.style.display='none';msgEl.style.display='none';
+  if(!email){errEl.textContent='Enter your email address first.';errEl.style.display='block';return;}
+  const{error}=await _supa.auth.resetPasswordForEmail(email,{redirectTo:window.location.origin});
+  if(error){errEl.textContent=error.message;errEl.style.display='block';}
+  else{msgEl.textContent='Password reset email sent — check your inbox.';msgEl.style.display='block';}
+});
 
 function updateAuthUI(user){
   currentUser=user;
