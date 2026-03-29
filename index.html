@@ -9,7 +9,7 @@
 <link rel="apple-touch-icon" href="/icon-192.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,300&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,800;1,9..144,900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,300&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,800;1,9..144,900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,600;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const _supa=supabase.createClient('https://earklxhdnnhrkqyslhnj.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVhcmtseGhkbm5ocmtxeXNsaG5qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwOTAxNzEsImV4cCI6MjA4OTY2NjE3MX0.Mg7rsuRYJ-ST-zaPKw2xzaRw72E4RHKdVUu-4GCnsqA');
@@ -39,56 +39,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   body{overflow-x:hidden;}
   .screen{max-width:100%;box-shadow:none;}
 
-  /* ── HOME: full-width desktop layout ── */
+  /* ── HOME: centered editorial layout ── */
   #screen-home.active{
-    max-width:1280px;
-    margin:0 auto;
+    max-width:100%;
     display:flex!important;
     flex-direction:column;
     min-height:100vh;
   }
-  .hs-navbar{padding:0 56px;}
-  /* Hero: 2-col layout — content left, trending right */
-  .hs-hero-section{
-    display:flex;
-    flex-direction:row;
-    align-items:stretch;
-    padding:56px 56px 0;
-    border-bottom:1px solid var(--border);
-  }
-  .hs-hero-inner{
-    flex:1;
-    max-width:none;
-    padding-right:48px;
-    padding-bottom:52px;
-  }
-  .hs-headline{font-size:72px;letter-spacing:-1.5px;}
-  .hs-search-bar{max-width:none;}
-  .hs-discover-col{
-    width:300px;
-    flex-shrink:0;
-    border-top:none!important;
-    border-left:1px solid var(--border);
-    padding:0 0 40px 40px;
-    margin-top:0;
-  }
-  /* Trips: full-width below hero */
-  .hs-content-row{
-    display:block;
-    flex:1;
-  }
-  .hs-trips-col{
-    padding:32px 56px 48px;
-    flex:unset;
-    border-right:none;
-  }
-  #home-trips-list{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
-  }
-  #home-trips-list .hs-empty{grid-column:1/-1;}
-  .hs-trending-grid{grid-template-columns:1fr 1fr;}
+  .hs-navbar{padding:18px 48px;}
+  .hs-hero-section{padding:64px 40px 72px;}
+  .hs-search-wrap{max-width:580px;}
+  .hs-dest-grid{max-width:680px;}
+  #home-trips-section{padding:32px 80px 44px;}
+  #home-trips-list{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
 
   /* ── WIZARD: centered card ── */
   #screen-wizard{
@@ -178,53 +141,64 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .tag{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:24px;background:var(--surface-up);border:1px solid var(--border);color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;transition:all 0.15s;user-select:none;white-space:nowrap;}
 .tag.on{background:var(--accent-soft);border-color:var(--accent);color:var(--text);}
 
-/* ════════════ HOME SCREEN ════════════ */
+/* ════════════ HOME SCREEN — EDITORIAL THEME ════════════ */
+#screen-home{background:#faf8f5;color:#1a1410;position:relative;}
+/* Texture overlay */
+.hs-texture{position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.012'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none;z-index:0;}
 /* Navbar */
-.hs-navbar{display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:60px;background:rgba(247,245,240,0.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;flex-shrink:0;}
-.hs-logo{display:flex;align-items:center;gap:8px;}
-.hs-logomark{width:28px;height:28px;border-radius:7px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff;}
-.hs-brandname{font-weight:800;font-size:16px;letter-spacing:-0.3px;color:var(--text);}
+.hs-navbar{position:sticky;top:0;z-index:50;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e8e0d5;background:rgba(250,248,245,0.93);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);flex-shrink:0;}
+.hs-logo{display:flex;align-items:center;}
+.hs-brandname{font-family:'Playfair Display',Georgia,serif;font-weight:800;font-size:20px;letter-spacing:-0.5px;color:#1a1410;}
+.hs-brandname em{font-style:italic;color:#b8860b;}
+.hs-nav-actions{display:flex;gap:10px;align-items:center;}
+.hs-nav-btn-outline{padding:8px 20px;border-radius:4px;background:transparent;border:1px solid #e8e0d5;color:#9c8f82;font-size:13px;font-weight:700;cursor:pointer;font-family:'Lato',sans-serif;letter-spacing:0.5px;transition:all 0.15s;}
+.hs-nav-btn-outline:hover{border-color:#d4c9bb;color:#1a1410;}
 /* Hero */
-.hs-hero-section{padding:48px 24px 24px;border-bottom:1px solid var(--border);}
-.hs-hero-inner{max-width:640px;}
-.hs-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);margin-bottom:20px;background:var(--accent-soft);border:1px solid var(--accent-glow);padding:5px 12px;border-radius:100px;}
-.hs-headline{font-family:'Fraunces',Georgia,serif;font-size:52px;font-weight:900;letter-spacing:-1px;line-height:1.08;margin-bottom:16px;color:var(--text);font-style:italic;}
-.hs-headline span{color:var(--accent);font-style:italic;}
-.hs-subhead{font-size:16px;color:var(--muted);line-height:1.6;margin-bottom:36px;font-weight:400;max-width:480px;}
-/* Search bar */
-.hs-search-bar{display:flex;align-items:center;gap:0;background:var(--surface);border:1.5px solid var(--border);border-radius:100px;padding:8px 8px 8px 26px;cursor:pointer;max-width:640px;box-shadow:0 2px 12px rgba(0,0,0,0.07),0 8px 32px rgba(0,0,0,0.05);transition:all 0.2s;margin-bottom:20px;}
-.hs-search-bar:hover{border-color:var(--accent);box-shadow:0 4px 24px rgba(232,56,13,0.12);}
-.hs-search-icon{font-size:18px;margin-right:14px;flex-shrink:0;}
-.hs-search-placeholder{flex:1;font-size:16px;color:var(--muted);font-weight:500;}
-.hs-search-cta{background:var(--accent);color:#fff;border-radius:100px;padding:13px 28px;font-size:14px;font-weight:700;flex-shrink:0;white-space:nowrap;letter-spacing:-0.2px;}
-/* Quick tags */
-.hs-quick-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
-.hs-quick-label{font-size:13px;color:var(--muted);font-weight:500;flex-shrink:0;}
-/* Content row */
-.hs-content-row{display:flex;flex-direction:column;}
-.hs-trips-col{padding:28px 28px 20px;}
-.hs-discover-col{padding:20px 0 0;border-top:1px solid var(--border);margin-top:8px;}
+.hs-hero-section{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;z-index:5;padding:52px 24px 64px;text-align:center;}
+.hs-eyebrow{font-family:'Lato',sans-serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#b8860b;margin-bottom:20px;font-weight:700;}
+.hs-headline-1{font-family:'Playfair Display',Georgia,serif;font-size:clamp(36px,6.5vw,72px);font-weight:800;letter-spacing:-2px;line-height:1.0;margin-bottom:8px;color:#1a1410;}
+.hs-headline-2{font-family:'Playfair Display',Georgia,serif;font-size:clamp(36px,6.5vw,72px);font-weight:400;font-style:italic;letter-spacing:-1px;line-height:1.0;margin-bottom:28px;color:#3d3028;}
+/* Ornamental divider */
+.hs-divider{display:flex;align-items:center;gap:12px;margin:0 0 24px;width:100%;max-width:420px;}
+.hs-divider-line{flex:1;height:1px;background:#e8e0d5;}
+.hs-divider-star{font-size:10px;color:#9c8f82;letter-spacing:2px;}
+/* Subhead */
+.hs-subhead{font-family:'Lato',sans-serif;font-size:clamp(14px,1.8vw,16px);color:#9c8f82;line-height:1.8;max-width:420px;margin-bottom:40px;font-weight:300;}
+/* Search */
+.hs-search-wrap{width:100%;max-width:560px;margin-bottom:36px;}
+.hs-search-bar{background:#fff;border:1.5px solid #e8e0d5;border-radius:6px;padding:6px 6px 6px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 12px rgba(0,0,0,0.06);cursor:pointer;transition:all 0.25s;}
+.hs-search-bar:hover{border-color:#2c2420;box-shadow:0 4px 24px rgba(0,0,0,0.1);}
+.hs-search-icon{font-size:16px;flex-shrink:0;opacity:0.4;color:#1a1410;}
+.hs-search-placeholder{flex:1;font-size:15px;color:#9c8f82;font-weight:300;font-family:'Lato',sans-serif;text-align:left;}
+.hs-search-cta{background:#1a1410;border:none;border-radius:4px;padding:12px 24px;color:#faf8f5;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'Lato',sans-serif;letter-spacing:0.5px;flex-shrink:0;transition:opacity 0.15s;}
+.hs-search-cta:hover{opacity:0.85;}
+/* Curated destinations */
+.hs-curated-label{font-family:'Lato',sans-serif;font-size:10px;color:#d4c9bb;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;}
+.hs-dest-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;width:100%;max-width:660px;}
+.hs-dest-card{background:#f4f1ec!important;border:1px solid #e8e0d5!important;border-radius:6px!important;padding:14px 18px!important;cursor:pointer;text-align:left;display:flex!important;flex-direction:column;align-items:flex-start;gap:0;transition:all 0.18s;min-width:108px;}
+.hs-dest-card:hover{background:#fff!important;border-color:#d4c9bb!important;transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.08)!important;}
+.hs-dest-card.on{background:#f4f1ec!important;border-color:#e8e0d5!important;}
+.hs-dest-emoji{font-size:22px;margin-bottom:6px;line-height:1;}
+.hs-dest-city{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:13px;color:#1a1410;margin-bottom:2px;}
+.hs-dest-tag{font-family:'Lato',sans-serif;font-size:10px;color:#9c8f82;font-weight:400;font-style:italic;}
+/* Saved trips section */
+#home-trips-section{position:relative;z-index:5;border-top:1px solid #e8e0d5;padding:28px 28px 36px;}
+.hs-trips-inner{}
 .hs-col-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
-.hs-col-title{font-size:17px;font-weight:800;letter-spacing:-0.5px;color:var(--text);}
-.hs-section-see{font-size:13px;color:var(--accent);cursor:pointer;font-weight:600;}
+.hs-col-title{font-family:'Playfair Display',Georgia,serif;font-size:18px;font-weight:700;letter-spacing:-0.3px;color:#1a1410;}
+.hs-section-see{font-size:13px;color:#b8860b;cursor:pointer;font-weight:600;font-family:'Lato',sans-serif;}
 /* Trip cards */
-.trip-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all 0.15s;box-shadow:var(--shadow);}
-.trip-card:hover{box-shadow:var(--shadow-md);border-color:var(--border-up);transform:translateY(-1px);}
-.trip-card-img{width:48px;height:48px;border-radius:11px;background:var(--faint);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
-.trip-card-dest{font-weight:700;font-size:14px;margin-bottom:2px;color:var(--text);}
-.trip-card-meta{font-size:12px;color:var(--muted);}
-.trip-card-arrow{color:var(--border-up);font-size:14px;margin-left:auto;flex-shrink:0;}
-.hs-empty{text-align:center;padding:32px 0;color:var(--muted);font-size:14px;}
-/* Trending grid */
-.hs-trending-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
-.trending-item{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;transition:all 0.15s;box-shadow:var(--shadow);}
-.trending-item:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow-md);}
-.trending-icon{font-size:28px;margin-bottom:7px;}
-.trending-name{font-size:11px;font-weight:700;color:var(--text);}
-/* Legacy compat */
-.hs-section-title{font-weight:800;font-size:17px;letter-spacing:-0.5px;color:var(--text);}
-.hs-trending-row{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;}
-.hs-trending-row::-webkit-scrollbar{display:none;}
+.trip-card{background:#fff;border:1px solid #e8e0d5;border-radius:8px;padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all 0.15s;box-shadow:0 1px 4px rgba(0,0,0,0.05);}
+.trip-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.08);border-color:#d4c9bb;transform:translateY(-1px);}
+.trip-card-img{width:44px;height:44px;border-radius:8px;background:#f4f1ec;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.trip-card-dest{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:14px;margin-bottom:2px;color:#1a1410;}
+.trip-card-meta{font-size:12px;color:#9c8f82;font-family:'Lato',sans-serif;}
+.trip-card-arrow{color:#d4c9bb;font-size:16px;margin-left:auto;flex-shrink:0;}
+.hs-empty{text-align:center;padding:24px 0;color:#9c8f82;font-size:14px;font-family:'Lato',sans-serif;}
+/* Footer trust bar */
+.hs-trust-bar{position:relative;z-index:5;padding:16px 24px 28px;border-top:1px solid #e8e0d5;display:flex;justify-content:center;gap:clamp(16px,5vw,48px);flex-wrap:wrap;flex-shrink:0;}
+.hs-trust-item{font-family:'Lato',sans-serif;display:flex;align-items:center;gap:8px;font-size:12px;color:#9c8f82;font-weight:400;letter-spacing:0.5px;}
+.hs-trust-icon{color:#b8860b;font-size:10px;}
 
 /* ════════════ WIZARD SCREEN ════════════ */
 #screen-wizard .wz-topbar{padding:52px 24px 20px;flex-shrink:0;}
@@ -544,10 +518,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .auth-magic-btn:hover{border-color:var(--border-up);}
 
 /* ── HOME AUTH BUTTON ── */
-.hs-auth-btn{padding:8px 16px;border-radius:20px;background:var(--surface-up);border:1px solid var(--border);font-size:13px;font-weight:700;color:var(--text);cursor:pointer;transition:all 0.15s;white-space:nowrap;}
-.hs-auth-btn:hover{border-color:var(--border-up);}
-.hs-user-pill{display:flex;align-items:center;gap:8px;padding:6px 12px;border-radius:20px;background:var(--surface-up);border:1px solid var(--border);cursor:pointer;}
-.hs-user-avatar{width:26px;height:26px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;}
+.hs-auth-btn{padding:8px 20px;border-radius:4px;background:#1a1410;border:1px solid #1a1410;font-size:13px;font-weight:700;color:#faf8f5;cursor:pointer;transition:opacity 0.15s;white-space:nowrap;font-family:'Lato',sans-serif;letter-spacing:0.5px;}
+.hs-auth-btn:hover{opacity:0.85;}
+.hs-user-pill{display:flex;align-items:center;gap:8px;padding:6px 14px;border-radius:4px;background:#f4f1ec;border:1px solid #e8e0d5;cursor:pointer;font-family:'Lato',sans-serif;}
+.hs-user-avatar{width:26px;height:26px;border-radius:50%;background:#b8860b;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;}
 
 /* ── NEAR ME ── */
 .near-me-btn{display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:14px;background:var(--accent-soft);border:1px solid var(--accent-glow);color:var(--accent);font-size:13px;font-weight:700;cursor:pointer;margin-bottom:16px;width:100%;justify-content:center;transition:all 0.15s;}
@@ -566,64 +540,67 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 ══════════════════════════════════════════════════════ -->
 <div id="screen-home" class="screen active">
 
-  <!-- Top navbar -->
-  <div class="hs-navbar">
+  <!-- Subtle paper texture -->
+  <div class="hs-texture" aria-hidden="true"></div>
+
+  <!-- Navbar -->
+  <nav class="hs-navbar">
     <div class="hs-logo">
-      <div class="hs-logomark">Z</div>
-      <span class="hs-brandname">Zeptour</span>
+      <span class="hs-brandname">Zep<em>tour</em></span>
     </div>
-    <div id="hs-auth-area">
-      <button class="hs-auth-btn" id="hs-login-btn">Sign in</button>
+    <div class="hs-nav-actions">
+      <button class="hs-nav-btn-outline" id="hs-mytrips-btn">My Trips</button>
+      <div id="hs-auth-area">
+        <button class="hs-auth-btn" id="hs-login-btn">Sign in</button>
+      </div>
     </div>
-  </div>
+  </nav>
 
-  <!-- Hero: left = content, right = trending destinations -->
+  <!-- Hero -->
   <div class="hs-hero-section">
-    <div class="hs-hero-inner">
-      <div class="hs-eyebrow">✦ AI-powered travel planning</div>
-      <h1 class="hs-headline">Your next trip,<br>planned in <span>seconds.</span></h1>
-      <p class="hs-subhead">Tell us where you're headed. We'll build a day-by-day itinerary tailored just for you.</p>
+    <div class="hs-eyebrow">AI-Powered Travel Planning</div>
+    <h1 class="hs-headline-1">Your next journey,</h1>
+    <h1 class="hs-headline-2">perfectly composed.</h1>
+    <div class="hs-divider">
+      <div class="hs-divider-line"></div>
+      <span class="hs-divider-star">✦</span>
+      <div class="hs-divider-line"></div>
+    </div>
+    <p class="hs-subhead">Tell us where you're headed. We'll craft a thoughtful day-by-day itinerary tailored to your style, pace, and curiosity.</p>
+    <div class="hs-search-wrap">
       <div class="hs-search-bar" id="home-new-trip">
-        <span class="hs-search-icon">📍</span>
-        <span class="hs-search-placeholder">Where do you want to go?</span>
-        <span class="hs-search-cta">Plan trip →</span>
-      </div>
-      <div class="hs-quick-row" id="popular-tags">
-        <span class="hs-quick-label">Popular:</span>
-        <div class="tag" data-dest="Paris, France">🗼 Paris</div>
-        <div class="tag" data-dest="Kyoto, Japan">⛩️ Kyoto</div>
-        <div class="tag" data-dest="Santorini, Greece">🏝️ Santorini</div>
-        <div class="tag" data-dest="Bali, Indonesia">🌴 Bali</div>
-        <div class="tag" data-dest="Tokyo, Japan">🗾 Tokyo</div>
-        <div class="tag" data-dest="Dubai, UAE">🏙️ Dubai</div>
+        <span class="hs-search-icon">✈</span>
+        <span class="hs-search-placeholder" id="hs-typewriter">Where are you dreaming of?</span>
+        <button class="hs-search-cta">Begin →</button>
       </div>
     </div>
-    <div class="hs-discover-col">
-      <div class="hs-col-hdr">
-        <span class="hs-col-title">Trending</span>
-      </div>
-      <div class="hs-trending-grid">
-        <div class="trending-item" data-dest="Paris, France"><div class="trending-icon">🗼</div><div class="trending-name">Paris</div></div>
-        <div class="trending-item" data-dest="Kyoto, Japan"><div class="trending-icon">⛩️</div><div class="trending-name">Kyoto</div></div>
-        <div class="trending-item" data-dest="Santorini, Greece"><div class="trending-icon">🏝️</div><div class="trending-name">Santorini</div></div>
-        <div class="trending-item" data-dest="Bali, Indonesia"><div class="trending-icon">🌴</div><div class="trending-name">Bali</div></div>
-        <div class="trending-item" data-dest="Banff, Canada"><div class="trending-icon">🏔️</div><div class="trending-name">Banff</div></div>
-        <div class="trending-item" data-dest="Tokyo, Japan"><div class="trending-icon">🗾</div><div class="trending-name">Tokyo</div></div>
-        <div class="trending-item" data-dest="Dubai, UAE"><div class="trending-icon">🏙️</div><div class="trending-name">Dubai</div></div>
-        <div class="trending-item" data-dest="New York, United States"><div class="trending-icon">🗽</div><div class="trending-name">New York</div></div>
-      </div>
+    <div class="hs-curated-label">Curated destinations</div>
+    <div class="hs-dest-grid" id="popular-tags">
+      <div class="tag hs-dest-card" data-dest="Kyoto, Japan"><div class="hs-dest-emoji">⛩️</div><div class="hs-dest-city">Kyoto</div><div class="hs-dest-tag">Ancient &amp; Still</div></div>
+      <div class="tag hs-dest-card" data-dest="Florence, Italy"><div class="hs-dest-emoji">🏛️</div><div class="hs-dest-city">Florence</div><div class="hs-dest-tag">Art &amp; Grandeur</div></div>
+      <div class="tag hs-dest-card" data-dest="Lisbon, Portugal"><div class="hs-dest-emoji">🌊</div><div class="hs-dest-city">Lisbon</div><div class="hs-dest-tag">Light &amp; Soul</div></div>
+      <div class="tag hs-dest-card" data-dest="Marrakech, Morocco"><div class="hs-dest-emoji">🕌</div><div class="hs-dest-city">Marrakech</div><div class="hs-dest-tag">Spice &amp; Color</div></div>
+      <div class="tag hs-dest-card" data-dest="Edinburgh, Scotland"><div class="hs-dest-emoji">🏰</div><div class="hs-dest-city">Edinburgh</div><div class="hs-dest-tag">Mist &amp; Mystery</div></div>
+      <div class="tag hs-dest-card" data-dest="Havana, Cuba"><div class="hs-dest-emoji">🎺</div><div class="hs-dest-city">Havana</div><div class="hs-dest-tag">Music &amp; Warmth</div></div>
     </div>
   </div>
 
-  <!-- My Trips — full width below hero -->
-  <div class="hs-content-row">
-    <div class="hs-trips-col">
+  <!-- Saved trips — shown only when trips exist -->
+  <div id="home-trips-section" style="display:none">
+    <div class="hs-trips-inner">
       <div class="hs-col-hdr">
         <span class="hs-col-title">My Trips</span>
         <span class="hs-section-see">See all</span>
       </div>
-      <div id="home-trips-list"><div class="hs-empty">No saved trips yet — plan your first!</div></div>
+      <div id="home-trips-list"></div>
     </div>
+  </div>
+
+  <!-- Footer trust bar -->
+  <div class="hs-trust-bar">
+    <span class="hs-trust-item"><span class="hs-trust-icon">✦</span> 10,000+ trips crafted</span>
+    <span class="hs-trust-item"><span class="hs-trust-icon">◈</span> Built in seconds</span>
+    <span class="hs-trust-item"><span class="hs-trust-icon">◻</span> Tailored to you</span>
   </div>
 
 </div>
@@ -1140,8 +1117,10 @@ function typeIcon(t){return TYPE_ICON[t]||TYPE_ICON.default;}
 function renderHome(){
   const trips=getSaved();
   const list=document.getElementById('home-trips-list');
-  if(!trips.length){list.innerHTML='<div class="hs-empty">No saved trips yet — plan your first!</div>';return;}
-  list.innerHTML=trips.slice(0,5).map((t,i)=>`
+  const section=document.getElementById('home-trips-section');
+  if(!trips.length){if(section)section.style.display='none';return;}
+  if(section)section.style.display='block';
+  list.innerHTML=trips.slice(0,6).map((t,i)=>`
     <div class="trip-card" data-idx="${i}">
       <div class="trip-card-img">${destEmoji(t.title||'')}</div>
       <div style="flex:1"><div class="trip-card-dest">${t.title||'Unknown'}</div><div class="trip-card-meta">${(t.days||[]).length} days · ${t.subtitle||''}</div></div>
@@ -1153,7 +1132,33 @@ function renderHome(){
 }
 
 document.getElementById('home-new-trip').addEventListener('click',()=>startWizard());
-document.querySelectorAll('.trending-item').forEach(item=>item.addEventListener('click',()=>startWizard(item.dataset.dest)));
+document.querySelectorAll('.hs-dest-card').forEach(card=>card.addEventListener('click',()=>startWizard(card.dataset.dest)));
+document.getElementById('hs-mytrips-btn').addEventListener('click',()=>{
+  const section=document.getElementById('home-trips-section');
+  if(section&&section.style.display!=='none')section.scrollIntoView({behavior:'smooth',block:'start'});
+});
+
+// Typewriter effect for search placeholder
+(function(){
+  const el=document.getElementById('hs-typewriter');
+  if(!el)return;
+  const phrases=['Where are you dreaming of?','A week lost in Florence...','Kyoto at cherry blossom time...','The misty streets of Lisbon...','Under Havana\u2019s golden sun...'];
+  let pi=0,ci=0,deleting=false;
+  function tick(){
+    const full=phrases[pi];
+    if(!deleting){
+      ci++;
+      el.textContent=full.slice(0,ci);
+      if(ci===full.length){deleting=true;setTimeout(tick,2000);return;}
+    } else {
+      ci--;
+      el.textContent=full.slice(0,ci);
+      if(ci===0){deleting=false;pi=(pi+1)%phrases.length;setTimeout(tick,400);return;}
+    }
+    setTimeout(tick,deleting?40:70);
+  }
+  setTimeout(tick,1200);
+})();
 
 // ── WIZARD ────────────────────────────────────────────────────────────────────
 const W={step:0,destination:'',date:'',days:7,travelers:'',travelerCount:1,budget:'',interests:[],dietary:['none'],surprise:false};
