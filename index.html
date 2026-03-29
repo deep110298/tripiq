@@ -1522,12 +1522,23 @@ function renderDayCards(){
           <div class="day-num${i===0?' today':''}">${day.day}</div>
           <div><div class="day-card-name">${day.theme||'Day '+day.day}</div><div class="day-card-meta">${ds?ds+' · ':''}${(day.activities||[]).length} stops</div></div>
         </div>
-        <span class="day-chevron">${open?'▲':'▼'}</span>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <button class="day-delete-btn" title="Delete day" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:14px;padding:4px 6px;border-radius:6px;line-height:1;opacity:0.6;transition:all 0.15s;" onmouseover="this.style.opacity='1';this.style.background='var(--faint)'" onmouseout="this.style.opacity='0.6';this.style.background='none'">🗑</button>
+          <span class="day-chevron">${open?'▲':'▼'}</span>
+        </div>
       </div>
       ${open?vibeBar+bodyContent:''}`;
     container.appendChild(div);
     div.querySelector('.day-card-header').addEventListener('click',()=>{
       expandedDay=(expandedDay===day.day?null:day.day);renderDayCards();
+    });
+    div.querySelector('.day-delete-btn').addEventListener('click',e=>{
+      e.stopPropagation();
+      if(!confirm(`Delete Day ${day.day}? This can't be undone.`))return;
+      currentTrip.days=currentTrip.days.filter(d=>d.day!==day.day);
+      currentTrip.days.forEach((d,idx)=>d.day=idx+1);
+      if(expandedDay===day.day)expandedDay=null;
+      saveTripBookings();renderDayCards();
     });
     if(open){
       div.querySelectorAll('.day-vibe-btn').forEach(btn=>{
@@ -1829,17 +1840,35 @@ function renderGroupTab(){
     const f=el.querySelector('#grp-invite-form');
     f.style.display=f.style.display==='none'?'block':'none';
   });
-  el.querySelector('#grp-invite-save').addEventListener('click',()=>{
-    const name=el.querySelector('#grp-invite-input').value.trim();
-    if(!name)return;
-    const gd=getGroupData();
-    gd.members=[...(gd.members||[]),name];
-    saveGroupData(gd);
-    renderGroupTab();
+  el.querySelector('#grp-invite-save').addEventListener('click',async()=>{
+    const input=el.querySelector('#grp-invite-input');
+    const val=input.value.trim();
+    if(!val)return;
+    const msg=el.querySelector('#grp-copy-msg');
+    const isEmail=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+    if(isEmail){
+      const btn=el.querySelector('#grp-invite-save');
+      btn.textContent='Sending…';btn.disabled=true;
+      const{error}=await _supa.auth.signInWithOtp({email:val,options:{shouldCreateUser:true}});
+      btn.textContent='Add';btn.disabled=false;
+      if(error){msg.style.color='var(--red,#c0392b)';msg.textContent='Could not send invite: '+error.message;}
+      else{msg.style.color='var(--green)';msg.textContent='✓ Invite link sent to '+val;}
+      msg.style.display='block';
+      setTimeout(()=>msg.style.display='none',4000);
+      input.value='';
+    } else {
+      const gd=getGroupData();
+      gd.members=[...(gd.members||[]),val];
+      saveGroupData(gd);
+      input.value='';
+      renderGroupTab();
+    }
   });
   el.querySelector('#grp-invite-copy').addEventListener('click',()=>{
     navigator.clipboard.writeText(window.location.href).then(()=>{
       const msg=el.querySelector('#grp-copy-msg');
+      msg.style.color='var(--green)';
+      msg.textContent='✓ Link copied to clipboard!';
       msg.style.display='block';
       setTimeout(()=>msg.style.display='none',2500);
     });
