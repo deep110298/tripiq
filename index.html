@@ -532,6 +532,72 @@ body{font-family:'Lato',sans-serif;background:var(--bg);color:var(--text);min-he
 /* ── DATE RANGE HINT ── */
 #date-range-hint{text-align:center;font-size:14px;color:var(--muted);margin-top:-16px;margin-bottom:20px;min-height:20px;}
 #date-range-hint span{color:var(--text);font-weight:700;}
+
+/* ── THEME TOGGLE ── */
+.theme-toggle{background:none;border:1px solid var(--border);border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:all 0.15s;flex-shrink:0;}
+.theme-toggle:hover{background:var(--surface-up);border-color:var(--border-up);}
+
+/* ── EXPLORE DAY PICKER ── */
+.explore-card{position:relative;}
+.explore-day-picker{position:absolute;bottom:calc(100% + 4px);left:0;right:0;background:var(--surface);border:1px solid var(--border-up);border-radius:10px;box-shadow:var(--shadow-md);z-index:50;overflow:hidden;}
+.explore-day-opt{padding:10px 14px;font-size:12px;cursor:pointer;color:var(--text);font-weight:600;border-bottom:1px solid var(--faint);transition:background 0.1s;}
+.explore-day-opt:last-child{border-bottom:none;}
+.explore-day-opt:hover{background:var(--faint);}
+
+/* ════════════ DARK THEME ════════════ */
+[data-theme="dark"]{
+  --bg:#1c1814;--surface:#251f18;--surface-up:#2e2620;
+  --border:#3d3028;--border-up:#4d3e34;
+  --accent:#d4a520;--accent-soft:rgba(212,165,32,0.1);--accent-glow:rgba(212,165,32,0.22);
+  --text:#f0ebe4;--muted:#9c8f82;--faint:#2e2620;
+  --green:#4ade80;--amber:#fbbf24;--blue:#60a5fa;--purple:#a78bfa;
+  --shadow:0 1px 4px rgba(0,0,0,0.4),0 4px 16px rgba(0,0,0,0.3);
+  --shadow-md:0 2px 8px rgba(0,0,0,0.5),0 8px 32px rgba(0,0,0,0.4);
+}
+/* Home screen hardcoded-color overrides */
+[data-theme="dark"] #screen-home{background:#1c1814;}
+[data-theme="dark"] .hs-navbar{background:rgba(28,24,20,0.96);border-color:#3d3028;}
+[data-theme="dark"] .hs-brandname{color:#f0ebe4;}
+[data-theme="dark"] .hs-eyebrow{color:#d4a520;}
+[data-theme="dark"] .hs-headline-1{color:#f0ebe4;}
+[data-theme="dark"] .hs-headline-2{color:#c8b89a;}
+[data-theme="dark"] .hs-divider-line{background:#3d3028;}
+[data-theme="dark"] .hs-divider-star{color:#4d3e34;}
+[data-theme="dark"] .hs-subhead{color:#9c8f82;}
+[data-theme="dark"] .hs-search-bar{background:#251f18;border-color:#3d3028;box-shadow:none;}
+[data-theme="dark"] .hs-search-bar:hover{border-color:#f0ebe4;box-shadow:0 4px 24px rgba(0,0,0,0.4);}
+[data-theme="dark"] .hs-search-icon{color:#9c8f82;}
+[data-theme="dark"] .hs-search-placeholder{color:#9c8f82;}
+[data-theme="dark"] .hs-search-cta{background:#f0ebe4;color:#1a1410;}
+[data-theme="dark"] .hs-curated-label{color:#4d3e34;}
+[data-theme="dark"] .hs-dest-card{background:#2e2620!important;border-color:#3d3028!important;}
+[data-theme="dark"] .hs-dest-card:hover{background:#3d3028!important;border-color:#4d3e34!important;box-shadow:0 8px 24px rgba(0,0,0,0.4)!important;}
+[data-theme="dark"] .hs-dest-city{color:#f0ebe4;}
+[data-theme="dark"] .hs-dest-tag{color:#9c8f82;}
+[data-theme="dark"] .hs-trust-bar{border-color:#3d3028;}
+[data-theme="dark"] .hs-trust-item{color:#9c8f82;}
+[data-theme="dark"] .hs-trust-icon{color:#d4a520;}
+[data-theme="dark"] .hs-nav-btn-outline{border-color:#3d3028;color:#9c8f82;}
+[data-theme="dark"] .hs-nav-btn-outline:hover{border-color:#4d3e34;color:#f0ebe4;}
+[data-theme="dark"] .hs-auth-btn{background:#f0ebe4;color:#1c1814;border-color:#f0ebe4;}
+[data-theme="dark"] .hs-user-pill{background:#2e2620;border-color:#3d3028;color:#f0ebe4;}
+[data-theme="dark"] #home-trips-section{border-color:#3d3028;}
+[data-theme="dark"] .hs-col-title{color:#f0ebe4;}
+[data-theme="dark"] .trip-card{background:#251f18;border-color:#3d3028;}
+[data-theme="dark"] .trip-card-img{background:#2e2620;}
+[data-theme="dark"] .trip-card-dest{color:#f0ebe4;}
+/* Auth modal dark */
+[data-theme="dark"] .auth-modal{background:#251f18;border-color:#4d3e34;}
+[data-theme="dark"] .auth-title{color:#f0ebe4;}
+[data-theme="dark"] .auth-sub{color:#9c8f82;}
+[data-theme="dark"] .auth-tabs{background:#2e2620;}
+[data-theme="dark"] .auth-tab{color:#9c8f82;}
+[data-theme="dark"] .auth-tab.on{background:#3d3028;color:#f0ebe4;}
+[data-theme="dark"] .auth-field input{background:#2e2620;border-color:#3d3028;color:#f0ebe4;}
+[data-theme="dark"] .auth-field input:focus{border-color:#d4a520;}
+[data-theme="dark"] .auth-close:hover{background:#2e2620;}
+[data-theme="dark"] .auth-magic-btn{background:#251f18;border-color:#3d3028;color:#f0ebe4;}
+[data-theme="dark"] .auth-magic-btn:hover{background:#2e2620;border-color:#4d3e34;}
 </style>
 </head>
 <body>
@@ -550,6 +616,7 @@ body{font-family:'Lato',sans-serif;background:var(--bg);color:var(--text);min-he
       <span class="hs-brandname">Zep<em>tour</em></span>
     </div>
     <div class="hs-nav-actions">
+      <button class="theme-toggle" id="theme-toggle-home" title="Toggle dark mode">🌙</button>
       <button class="hs-nav-btn-outline" id="hs-mytrips-btn">My Trips</button>
       <div id="hs-auth-area">
         <button class="hs-auth-btn" id="hs-login-btn">Sign in</button>
@@ -826,6 +893,7 @@ body{font-family:'Lato',sans-serif;background:var(--bg);color:var(--text);min-he
           <div class="app-dest-meta" id="app-dest-meta">7 days · 1 traveler</div>
         </div>
       </div>
+      <button class="theme-toggle" id="theme-toggle-app" title="Toggle dark mode">🌙</button>
     </div>
   </div>
 
@@ -1721,7 +1789,7 @@ function renderExploreGrid(){
   const g=document.getElementById('explore-grid');
   if(!f.length){g.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:32px 0;font-size:14px;">No places found</div>';return;}
   g.innerHTML=f.map(item=>`
-    <div class="explore-card">
+    <div class="explore-card" data-name="${item.name}" data-type="${item.type}" data-icon="${item.icon}" data-note="${item.note||''}">
       <div class="explore-save" data-name="${item.name}">${exploreSaved[item.name]?'❤️':'🤍'}</div>
       <div class="explore-icon">${item.icon}</div>
       <div class="explore-name">${item.name}</div>
@@ -1731,6 +1799,35 @@ function renderExploreGrid(){
     </div>`).join('');
   g.querySelectorAll('.explore-save').forEach(btn=>{
     btn.addEventListener('click',e=>{e.stopPropagation();const n=btn.dataset.name;exploreSaved[n]=!exploreSaved[n];btn.textContent=exploreSaved[n]?'❤️':'🤍';});
+  });
+  g.querySelectorAll('.explore-add').forEach(btn=>{
+    btn.addEventListener('click',e=>{
+      e.stopPropagation();
+      if(!currentTrip||!(currentTrip.days||[]).length){alert('Generate a trip first!');return;}
+      // close any open picker
+      document.querySelectorAll('.explore-day-picker').forEach(p=>p.remove());
+      const card=btn.closest('.explore-card');
+      const picker=document.createElement('div');
+      picker.className='explore-day-picker';
+      picker.innerHTML=currentTrip.days.map(d=>`<div class="explore-day-opt" data-day="${d.day}">Day ${d.day}${d.theme&&d.theme!=='Day '+d.day?' — '+d.theme:''}</div>`).join('');
+      card.appendChild(picker);
+      picker.querySelectorAll('.explore-day-opt').forEach(opt=>{
+        opt.addEventListener('click',ev=>{
+          ev.stopPropagation();
+          const dayNum=+opt.dataset.day;
+          const day=currentTrip.days.find(d=>d.day===dayNum);
+          if(day){
+            day.activities.push({name:card.dataset.name,type:card.dataset.type,icon:card.dataset.icon,note:card.dataset.note,time:'',dur:''});
+            saveTripBookings();
+            btn.textContent='✓ Added';
+            btn.style.color='var(--green)';
+            btn.style.background='rgba(58,125,68,0.1)';
+          }
+          picker.remove();
+        });
+      });
+      setTimeout(()=>document.addEventListener('click',()=>picker.remove(),{once:true}),0);
+    });
   });
 }
 
@@ -2079,6 +2176,24 @@ document.getElementById('near-me-btn').addEventListener('click',async function()
     setTimeout(()=>{btn.textContent='📍 Explore Near Me';},3000);
   },err=>{btn.classList.remove('near-me-loading');btn.textContent='📍 Explore Near Me';alert('Location access denied. Please allow location access and try again.');});
 });
+
+// ── THEME TOGGLE ──────────────────────────────────────────────────────────────
+(function(){
+  const root=document.documentElement;
+  const saved=localStorage.getItem('zeptour-theme');
+  const dark=saved?saved==='dark':window.matchMedia('(prefers-color-scheme:dark)').matches;
+  if(dark)root.setAttribute('data-theme','dark');
+  function setTheme(isDark){
+    if(isDark)root.setAttribute('data-theme','dark');
+    else root.removeAttribute('data-theme');
+    localStorage.setItem('zeptour-theme',isDark?'dark':'light');
+    document.querySelectorAll('.theme-toggle').forEach(btn=>btn.textContent=isDark?'☀️':'🌙');
+  }
+  setTheme(dark);
+  document.querySelectorAll('.theme-toggle').forEach(btn=>{
+    btn.addEventListener('click',()=>setTheme(root.getAttribute('data-theme')!=='dark'));
+  });
+})();
 
 // ── AUTH ──────────────────────────────────────────────────────────────────────
 let currentUser=null;
