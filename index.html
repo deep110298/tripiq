@@ -807,28 +807,8 @@ body{font-family:'Lato',sans-serif;background:var(--bg);color:var(--text);min-he
       <button class="btn" id="step4-next" disabled>Continue →</button>
     </div>
 
-    <!-- Step 5: Interests -->
+    <!-- Step 5: Dietary preferences -->
     <div class="wz-step" id="step-5">
-      <div class="wz-heading">What are your<br><span>interests?</span></div>
-      <div class="wz-sub">Pick as many as you like</div>
-      <div class="wz-interests" id="interests-list">
-        <div class="wz-interest" data-id="food">🍜 Food &amp; Drink</div>
-        <div class="wz-interest" data-id="culture">🎭 Culture</div>
-        <div class="wz-interest" data-id="nature">🌿 Nature</div>
-        <div class="wz-interest" data-id="nightlife">🌃 Nightlife</div>
-        <div class="wz-interest" data-id="shopping">🛍️ Shopping</div>
-        <div class="wz-interest" data-id="adventure">🧗 Adventure</div>
-        <div class="wz-interest" data-id="wellness">🧘 Wellness</div>
-        <div class="wz-interest" data-id="history">🏛️ History</div>
-        <div class="wz-interest" data-id="photography">📷 Photography</div>
-        <div class="wz-interest" data-id="local">🏘️ Local Life</div>
-      </div>
-      <div class="wz-spacer"></div>
-      <button class="btn" id="step5-next" disabled>Continue →</button>
-    </div>
-
-    <!-- Step 6: Dietary preferences -->
-    <div class="wz-step" id="step-6">
       <div class="wz-heading">Any dietary<br><span>preferences?</span></div>
       <div class="wz-sub">We'll tailor restaurant and food recommendations</div>
       <div class="wz-interests" id="dietary-list">
@@ -843,11 +823,11 @@ body{font-family:'Lato',sans-serif;background:var(--bg);color:var(--text);min-he
         <div class="wz-interest" data-did="no-shellfish">🦞 No Shellfish</div>
       </div>
       <div class="wz-spacer"></div>
-      <button class="btn" id="step6-next">Continue →</button>
+      <button class="btn" id="step5-next">Continue →</button>
     </div>
 
-    <!-- Step 7: Surprise me -->
-    <div class="wz-step" id="step-7">
+    <!-- Step 6: Surprise me -->
+    <div class="wz-step" id="step-6">
       <div class="wz-heading">One last<br><span>thing…</span></div>
       <div class="wz-sub">Let AI surprise you with hidden gems</div>
       <div class="wz-surprise-card" id="surprise-card">
@@ -859,11 +839,11 @@ body{font-family:'Lato',sans-serif;background:var(--bg);color:var(--text);min-he
           <div class="wz-toggle"><div class="wz-toggle-knob"></div></div>
         </div>
       </div>
-      <button class="btn" id="step7-next">Build my itinerary →</button>
+      <button class="btn" id="step6-next">Build my itinerary →</button>
     </div>
 
-    <!-- Step 8: Generating -->
-    <div class="wz-step" id="step-8">
+    <!-- Step 7: Generating -->
+    <div class="wz-step" id="step-7">
       <div class="wz-generating">
         <div class="wz-gen-star">✦</div>
         <div class="wz-gen-title">Building your trip</div>
@@ -1213,8 +1193,8 @@ document.getElementById('hs-mytrips-btn').addEventListener('click',()=>{
 })();
 
 // ── WIZARD ────────────────────────────────────────────────────────────────────
-const W={step:0,destination:'',date:'',days:7,travelers:'',travelerCount:1,budget:'',interests:[],dietary:['none'],surprise:false};
-const TOTAL_STEPS=8;
+const W={step:0,destination:'',date:'',days:7,travelers:'',travelerCount:1,budget:'',dietary:['none'],surprise:false};
+const TOTAL_STEPS=7;
 
 function showStep(n){
   document.querySelectorAll('.wz-step').forEach(s=>s.classList.remove('active'));
@@ -1246,7 +1226,6 @@ function startWizard(prefill){
   document.getElementById('step1-next').disabled=true;
   document.getElementById('step3-next').disabled=true;
   document.getElementById('step4-next').disabled=true;
-  document.getElementById('step5-next').disabled=true;
   document.getElementById('surprise-card').classList.remove('on');
   document.getElementById('surprise-status').textContent="Off — I'll plan everything myself";
   document.getElementById('dest-dropdown').classList.add('hidden');
@@ -1391,19 +1370,7 @@ document.querySelectorAll('.wz-budget-card').forEach(card=>{
 });
 document.getElementById('step4-next').addEventListener('click',()=>{if(W.budget)showStep(5);});
 
-// Step 5: Interests
-document.querySelectorAll('#interests-list .wz-interest').forEach(chip=>{
-  chip.addEventListener('click',()=>{
-    chip.classList.toggle('on');
-    const id=chip.dataset.id;
-    if(chip.classList.contains('on')){if(!W.interests.includes(id))W.interests.push(id);}
-    else{W.interests=W.interests.filter(x=>x!==id);}
-    document.getElementById('step5-next').disabled=W.interests.length===0;
-  });
-});
-document.getElementById('step5-next').addEventListener('click',()=>{if(W.interests.length)showStep(6);});
-
-// Step 6: Dietary
+// Step 5: Dietary
 document.querySelectorAll('#dietary-list .wz-interest').forEach(chip=>{
   chip.addEventListener('click',()=>{
     const did=chip.dataset.did;
@@ -1421,20 +1388,20 @@ document.querySelectorAll('#dietary-list .wz-interest').forEach(chip=>{
     }
   });
 });
-document.getElementById('step6-next').addEventListener('click',()=>showStep(7));
+document.getElementById('step5-next').addEventListener('click',()=>showStep(6));
 
-// Step 7: Surprise
+// Step 6: Surprise
 document.getElementById('surprise-card').addEventListener('click',()=>{
   W.surprise=!W.surprise;
   document.getElementById('surprise-card').classList.toggle('on',W.surprise);
   document.getElementById('surprise-status').textContent=W.surprise?"On — bring on the surprises!":"Off — I'll plan everything myself";
 });
-document.getElementById('step7-next').addEventListener('click',generateItinerary);
+document.getElementById('step6-next').addEventListener('click',generateItinerary);
 
 // Back button
 document.getElementById('wz-back').addEventListener('click',()=>{
   if(W.step===0){showScreen('screen-home');renderHome();}
-  else if(W.step===8){showStep(7);}
+  else if(W.step===7){showStep(6);}
   else showStep(W.step-1);
 });
 
@@ -1442,15 +1409,14 @@ document.getElementById('wz-back').addEventListener('click',()=>{
 document.getElementById('app-back').addEventListener('click',()=>{showScreen('screen-home');renderHome();});
 
 // ── GENERATION ─────────────────────────────────────────────────────────────────
-const GEN_MSGS=['Researching your destination...','Curating top experiences...','Optimizing your route...','Adding local secrets...','Finalizing your itinerary...'];
-const INTEREST_LABELS={food:'🍜 Food',culture:'🎭 Culture',nature:'🌿 Nature',nightlife:'🌃 Nightlife',shopping:'🛍️ Shopping',adventure:'🧗 Adventure',wellness:'🧘 Wellness',history:'🏛️ History',photography:'📷 Photography',local:'🏘️ Local Life'};
+const GEN_MSGS=['Researching your destination...','Curating iconic landmarks...','Optimizing your route...','Adding hidden gems...','Finalizing your itinerary...'];
 
 async function generateItinerary(){
-  showStep(8);
+  showStep(7);
   const dest=W.destination,days=W.days;
   document.getElementById('gen-dest-label').textContent=`${days} days in ${dest.split(',')[0]}`;
   document.getElementById('gen-err').style.display='none';
-  document.getElementById('gen-interest-tags').innerHTML=W.interests.slice(0,4).map(i=>`<div class="wz-gen-tag">${INTEREST_LABELS[i]||i}</div>`).join('');
+  document.getElementById('gen-interest-tags').innerHTML='';
 
   let prog=0,mIdx=0;
   document.getElementById('gen-fill').style.width='0%';
@@ -1462,32 +1428,34 @@ async function generateItinerary(){
     if(ni!==mIdx){mIdx=ni;document.getElementById('gen-msg').textContent=GEN_MSGS[mIdx];}
   },400);
 
-  const interestStr=W.interests.map(i=>INTEREST_LABELS[i]||i).join(', ');
   const arrInfo=W.date?`, arriving ${W.date}`:'';
-  const surpriseNote=W.surprise?' Include 1-2 hidden gems or unexpected local experiences.':'';
-  const dietaryNote=(!W.dietary.includes('none')&&W.dietary.length)?` Dietary requirements: ${W.dietary.join(', ')}. Only recommend food/restaurants that meet these requirements.`:'';
-  const prompt=`You are an expert travel planner. Create a ${days}-day itinerary for ${dest} for a ${W.travelers||'Solo'} traveler${W.travelers!=='Solo'?' ('+W.travelerCount+' people)':''} with ${W.budget||'mid-range'} budget${arrInfo}${interestStr?', interests: '+interestStr:''}.${surpriseNote}${dietaryNote}
+  const surpriseNote=W.surprise?' Also include 1-2 off-the-beaten-path hidden gems per day — secret spots locals love.':'';
+  const dietaryNote=(!W.dietary.includes('none')&&W.dietary.length)?` Dietary: ${W.dietary.join(', ')} — only recommend restaurants that meet this.`:'';
+  const budgetNote=W.budget==='budget'?'Focus on free/cheap attractions and street food.'
+    :W.budget==='luxury'?'Prioritize exclusive experiences, fine dining, rooftop bars, premium venues.':'';
+  const prompt=`You are a world-class travel curator. Create a ${days}-day itinerary for ${dest} for ${W.travelers||'solo'} traveler${W.travelerCount>1?' ('+W.travelerCount+' people)':''} on a ${W.budget||'mid-range'} budget${arrInfo}.${surpriseNote}${dietaryNote} ${budgetNote}
 
-STRICT RULES:
-- Only real verified places in ${dest}
-- 4-6 activities per day with specific place names
-- Always include iconic landmarks
-- Mix famous spots with local gems and restaurants
-- Each activity must have a "type" from: Attraction, Food, Nature, Nightlife, Shopping, Culture, Wellness, History, Museum, Beach
-- Each note ONE sentence only (max 15 words)
+MANDATORY — MUST-SEE FIRST:
+- Every day MUST include the most iconic, famous, bucket-list attractions of ${dest} that every visitor should see
+- Do NOT skip world-famous landmarks just because the vibe is "chill" — always include them, just pace around them
+- Research the actual top-rated places in ${dest}: famous temples, iconic viewpoints, celebrated restaurants, UNESCO sites, etc.
+- Use REAL specific place names (e.g. "Senso-ji Temple" not "local temple", "Jiro Honten" not "sushi restaurant")
 
-TIMING RULES (critical — follow exactly):
-- Start the day no earlier than 9:00 AM
-- Include a lunch break (Food type) between 12:00 PM and 1:30 PM
-- Include a dinner (Food type) between 7:00 PM and 8:30 PM
-- Allow 30 minutes travel time between each activity
-- Set realistic "dur" for each activity: museums 1.5–2 hrs, landmarks 45–60 min, meals 60–90 min, shopping 1 hr, nature/parks 1–2 hrs
-- Schedule activities back-to-back accounting for travel + duration so times never overlap
-- Do not schedule anything after 11:00 PM
-- Day 1: hotel check-in is at 3:00 PM — only schedule activities from 4:00 PM onward (dinner + evening only, no full day sightseeing)
-- Last day: hotel checkout is at 11:00 AM — only schedule activities from 9:00 AM to 10:30 AM (a quick breakfast/coffee, then pack and leave), no afternoon activities
+ACTIVITY RULES:
+- 5-6 activities per day (chill days: 4-5, still include must-sees)
+- Mix: 1-2 iconic landmarks + 1 great local restaurant for lunch + neighbourhood exploration + dinner at a notable spot + optional evening
+- Each activity must have "type": Attraction, Food, Nature, Nightlife, Shopping, Culture, Wellness, History, Museum, Beach
+- Notes: one punchy sentence, max 12 words, include a useful local tip
 
-Respond ONLY with raw JSON (no markdown, no backticks, start with {):
+TIMING RULES:
+- Day 1: check-in 3 PM — schedule from 4 PM only (evening/dinner)
+- Last day: checkout 11 AM — only 9–10:30 AM (breakfast, then leave)
+- All other days: start 9:00 AM unless a custom startTime is specified
+- Lunch (Food) between 12–1:30 PM; Dinner (Food) between 7–8:30 PM
+- 30 min travel buffer between activities; realistic durations: museums 1.5–2 h, landmarks 45–60 min, meals 60–90 min
+- No activities after 11 PM; no time overlaps
+
+Respond ONLY with raw JSON (no markdown, no backticks):
 {"title":"${days} Days in ${dest.split(',')[0]}","subtitle":"${W.travelers||'Solo'} · ${days} days${W.date?' · Arriving '+W.date:''}","days":[{"day":1,"theme":"Theme","activities":[{"time":"4:00 PM","name":"Place Name","type":"Attraction","dur":"1.5 hrs","note":"Short tip."}]}]}`;
 
   try{
@@ -1566,20 +1534,20 @@ function renderDayCards(){
     const div=document.createElement('div');div.className='day-card';
     const vibe=day.vibe||'balanced';
     const start=day.startTime||'early';
+    const customTime=day.customStartTime||'';
     const vibeBar=`<div class="day-vibe-bar">
       <span class="day-vibe-label">Vibe:</span>
       <div class="day-vibe-btns">
-        <button class="day-vibe-btn${vibe==='chill'?' on':''}" data-action="vibe" data-vibe="chill">😌 Make it chill</button>
+        <button class="day-vibe-btn${vibe==='chill'?' on':''}" data-action="vibe" data-vibe="chill">😌 Chill</button>
         <button class="day-vibe-btn${vibe==='balanced'?' on':''}" data-action="vibe" data-vibe="balanced">⚖️ Balanced</button>
-        <button class="day-vibe-btn${vibe==='packed'?' on':''}" data-action="vibe" data-vibe="packed">⚡ See everything</button>
+        <button class="day-vibe-btn${vibe==='packed'?' on':''}" data-action="vibe" data-vibe="packed">⚡ Packed</button>
       </div>
     </div>
-    <div class="day-vibe-bar" style="border-top:1px solid var(--faint);padding-top:10px;">
+    <div class="day-vibe-bar" style="border-top:1px solid var(--faint);padding-top:10px;gap:12px;">
       <span class="day-vibe-label">Start:</span>
-      <div class="day-vibe-btns">
-        <button class="day-vibe-btn${start==='early'?' on':''}" data-action="start" data-start="early">🌅 Early (9 AM)</button>
-        <button class="day-vibe-btn${start==='late'?' on':''}" data-action="start" data-start="late">🌆 Late (1 PM)</button>
-      </div>
+      <input class="day-start-time" type="time" value="${customTime||'09:00'}" style="background:var(--surface-up);border:1px solid var(--border);border-radius:8px;padding:5px 10px;font-size:13px;font-family:inherit;color:var(--text);cursor:pointer;outline:none;"/>
+      <span style="font-size:11px;color:var(--muted);">${customTime?'Custom':'Default (9 AM)'}</span>
+      <button class="day-regen-start-btn" style="background:var(--accent);color:#fff;border:none;border-radius:8px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;">Regenerate</button>
     </div>`;
     const bodyContent=day._regenerating
       ?`<div class="day-regen-overlay"><div class="day-regen-spinner">✨ Regenerating your day…</div></div>`
@@ -1612,10 +1580,18 @@ function renderDayCards(){
       div.querySelectorAll('.day-vibe-btn').forEach(btn=>{
         btn.addEventListener('click',e=>{
           e.stopPropagation();
-          if(btn.dataset.action==='vibe') regenerateDay(day.day,btn.dataset.vibe,day.startTime||'early');
-          else regenerateDay(day.day,day.vibe||'balanced',btn.dataset.start);
+          regenerateDay(day.day,btn.dataset.vibe,day.customStartTime||'09:00');
         });
       });
+      const regenStartBtn=div.querySelector('.day-regen-start-btn');
+      if(regenStartBtn){
+        regenStartBtn.addEventListener('click',e=>{
+          e.stopPropagation();
+          const timeVal=div.querySelector('.day-start-time').value||'09:00';
+          day.customStartTime=timeVal;
+          regenerateDay(day.day,day.vibe||'balanced',timeVal,true);
+        });
+      }
       const addStopBtn=div.querySelector('.day-add-stop');
       if(addStopBtn) addStopBtn.addEventListener('click',()=>showAddStopForm(day.day,div));
     }
@@ -1722,40 +1698,37 @@ function buildActivities(acts){
     </div>`).join('')}<div class="day-add-stop">＋ Add a stop</div></div>`;
 }
 
-async function regenerateDay(dayNum,vibe,startTime){
+async function regenerateDay(dayNum,vibe,startTime,forceRegen){
   const dayIdx=currentTrip.days.findIndex(d=>d.day===dayNum);
   if(dayIdx<0)return;
   const day=currentTrip.days[dayIdx];
-  if(day.vibe===vibe&&(day.startTime||'early')===startTime&&!day._regenerating)return;
+  if(!forceRegen&&day.vibe===vibe&&day.customStartTime===startTime&&!day._regenerating)return;
   day.vibe=vibe;
-  day.startTime=startTime||'early';
+  day.customStartTime=startTime||'09:00';
   day._regenerating=true;
   renderDayCards();
   const dest=currentTrip.dest||currentTrip.title||'the destination';
+  const totalDays=(currentTrip.days||[]).length;
+  const isFirstDay=dayNum===1;
+  const isLastDay=dayNum===totalDays;
   const vibeInstruction=vibe==='chill'
-    ?'Make this a relaxed, chill day with only 3-4 activities, a leisurely pace, plenty of café time, and rest built in. No rushing.'
+    ?'Relaxed pace — 4-5 activities max. Still include the must-see iconic spots, but space them out with café breaks and leisurely meals. No rushing.'
     :vibe==='packed'
-    ?'Pack in as many activities as possible — 7-8 activities with efficient routing to maximize sightseeing and experiences.'
-    :'4-6 activities with a balanced mix of sightseeing, food, and downtime.';
-  const prompt=`You are an expert travel planner. Regenerate Day ${dayNum} of an itinerary for ${dest}. Original theme: "${day.theme||'Day '+dayNum}".
-${vibeInstruction}
-STRICT RULES:
-- Only real verified places in ${dest}
-- Include iconic landmarks and local restaurants
-- Each activity must have a "type" from: Attraction, Food, Nature, Nightlife, Shopping, Culture, Wellness, History, Museum, Beach
-- Each note ONE sentence only (max 15 words)
-TIMING RULES (critical — follow exactly):
-- Start time: ${startTime==='late'?'1:00 PM (late start — skip morning, begin with lunch then afternoon/evening activities)':'9:00 AM'}
-- ${startTime==='late'?'Skip morning sightseeing. Begin with a leisurely lunch at 1:00 PM, then afternoon and evening activities.':'Include a lunch break (Food type) between 12:00 PM and 1:30 PM'}
-- Include a dinner (Food type) between 7:00 PM and 8:30 PM
-- Allow 30 minutes travel time between each activity
-- Set realistic "dur": museums 1.5–2 hrs, landmarks 45–60 min, meals 60–90 min, shopping 1 hr, nature 1–2 hrs
-- Schedule times sequentially — no overlaps
-- Do not schedule anything after 11:00 PM
-- If this is Day 1: check-in is at 3:00 PM, only schedule from 4:00 PM onward
-- If this is the last day: checkout is at 11:00 AM, only schedule 9:00–10:30 AM (breakfast/coffee only)
-Respond ONLY with raw JSON (no markdown, no backticks, start with {):
-{"theme":"Day Theme","activities":[{"time":"9:00 AM","name":"Place Name","type":"Attraction","dur":"1.5 hrs","note":"Short tip."}]}`;
+    ?'Action-packed — 7-8 activities. Prioritize famous landmarks, hit as many bucket-list spots as possible, efficient routing.'
+    :'Balanced — 5-6 activities. Mix iconic landmarks, a great restaurant, neighbourhood exploration, and an evening activity.';
+  const fmt=t=>{const[h,m]=t.split(':');const hr=+h;return `${hr>12?hr-12:hr||12}:${m} ${hr>=12?'PM':'AM'}`;};
+  const startFmt=fmt(startTime||'09:00');
+  const prompt=`You are a world-class travel curator. Regenerate Day ${dayNum} of a ${totalDays}-day itinerary for ${dest}.
+VIBE: ${vibeInstruction}
+MANDATORY: Always include the most famous, iconic, must-see attractions of ${dest} — never skip world-famous landmarks. Use REAL specific place names.
+TIMING:
+- Start time: ${isFirstDay?'4:00 PM (Day 1, check-in day — evening only)':isLastDay?'9:00 AM (last day, checkout 11 AM — only breakfast/coffee, then leave)':startFmt+' (user-set start time)'}
+${isFirstDay?'- Only dinner + one evening activity. No sightseeing before 4 PM.':isLastDay?'- Only breakfast/coffee 9:00–10:30 AM. No afternoon activities.':
+`- Lunch (Food) between 12:00–1:30 PM\n- Dinner (Food) between 7:00–8:30 PM\n- 30 min travel buffer between activities\n- No activities after 11:00 PM`}
+- Realistic durations: museums 1.5–2 h, landmarks 45–60 min, meals 60–90 min, shopping 1 h
+- No time overlaps
+Respond ONLY with raw JSON (no markdown):
+{"theme":"Day Theme","activities":[{"time":"${isFirstDay?'4:00 PM':startFmt}","name":"Real Place Name","type":"Attraction","dur":"1 hr","note":"One useful local tip."}]}`;
   try{
     const res=await fetch('/api/itinerary',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
     if(!res.ok)throw new Error('Server error');
