@@ -1614,7 +1614,9 @@ function renderDayCards(){
       div.querySelectorAll('.day-vibe-btn').forEach(btn=>{
         btn.addEventListener('click',e=>{
           e.stopPropagation();
-          regenerateDay(day.day,btn.dataset.vibe,day.customStartTime||'09:00');
+          const newVibe=btn.dataset.vibe;
+          if(newVibe===day.vibe)return; // already this vibe, no-op
+          regenerateDay(day.day,newVibe,day.customStartTime||'09:00',true);
         });
       });
       const regenStartBtn=div.querySelector('.day-regen-start-btn');
@@ -1622,7 +1624,6 @@ function renderDayCards(){
         regenStartBtn.addEventListener('click',e=>{
           e.stopPropagation();
           const timeVal=div.querySelector('.day-start-time').value||'09:00';
-          day.customStartTime=timeVal;
           regenerateDay(day.day,day.vibe||'balanced',timeVal,true);
         });
       }
@@ -1736,7 +1737,7 @@ async function regenerateDay(dayNum,vibe,startTime,forceRegen){
   const dayIdx=currentTrip.days.findIndex(d=>d.day===dayNum);
   if(dayIdx<0)return;
   const day=currentTrip.days[dayIdx];
-  if(!forceRegen&&day.vibe===vibe&&day.customStartTime===startTime&&!day._regenerating)return;
+  if(day._regenerating)return;
   day.vibe=vibe;
   day.customStartTime=startTime||'09:00';
   day._regenerating=true;
